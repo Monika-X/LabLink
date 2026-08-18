@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | LuminaLab Premium Diagnostics</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
+        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
+        .nav-links a { font-weight: 500; color: var(--text-primary); }
+        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
+        .contact-info-card { padding: var(--spacing-8); background: var(--deep-teal); color: white; border-radius: 16px; }
+        .contact-info-card h3 { color: var(--champagne); }
+        .contact-form { padding: var(--spacing-8); background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); }
+        .form-group { margin-bottom: var(--spacing-4); }
+        .form-group label { display: block; margin-bottom: var(--spacing-2); font-weight: 600; }
+        .form-control { width: 100%; padding: var(--spacing-3); border-radius: 8px; border: 1px solid var(--gray-300); background: var(--bg-primary); color: var(--text-primary); font-family: inherit; }
+        .form-control:focus { outline: none; border-color: var(--medical-emerald); box-shadow: 0 0 0 3px rgba(22, 134, 106, 0.1); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container flex justify-between items-center" style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4);">
+            <div class="logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav class="nav-links flex gap-6 items-center">
+                <a href="../index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="contact.html" class="active">Contact</a>
+                <a href="dashboard.html" class="btn btn-primary">Patient Portal</a>
+                <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">🌓</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="py-24">
+        <div class="container text-center reveal mb-4" style="margin-bottom: var(--spacing-16);">
+            <h1 style="font-size: 3.5rem;">Get in Touch</h1>
+            <p style="font-size: 1.25rem; max-width: 600px; margin: 0 auto; color: var(--text-secondary);">Have a question or need assistance? Our support team is here to help you 24/7.</p>
+        </div>
+
+        <div class="container grid grid-cols-2 gap-8">
+            <div class="contact-info-card reveal">
+                <h3 style="font-size: 2rem; margin-bottom: var(--spacing-6);">Contact Information</h3>
+                
+                <div style="margin-bottom: var(--spacing-6);">
+                    <div style="color: var(--soft-aqua); font-weight: bold; margin-bottom: var(--spacing-1);">Headquarters</div>
+                    <p style="opacity: 0.9;">123 Healthcare Boulevard,<br>Medical District,<br>New York, NY 10001</p>
+                </div>
+                
+                <div style="margin-bottom: var(--spacing-6);">
+                    <div style="color: var(--soft-aqua); font-weight: bold; margin-bottom: var(--spacing-1);">Direct Line</div>
+                    <p style="opacity: 0.9;">+1 (800) 555-0199<br>+1 (800) 555-0198 (Home Collection)</p>
+                </div>
+                
+                <div style="margin-bottom: var(--spacing-6);">
+                    <div style="color: var(--soft-aqua); font-weight: bold; margin-bottom: var(--spacing-1);">Email Support</div>
+                    <p style="opacity: 0.9;">support@luminalab.com<br>reports@luminalab.com</p>
+                </div>
+            </div>
+
+            <div class="contact-form reveal">
+                <h3 style="font-size: 1.5rem; margin-bottom: var(--spacing-6);">Send us a Message</h3>
+                <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <select class="form-control">
+                            <option>General Inquiry</option>
+                            <option>Report Issue</option>
+                            <option>Home Collection</option>
+                            <option>Corporate Tie-up</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea class="form-control" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--spacing-4);">Submit Inquiry</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

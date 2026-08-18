@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Tracking | LuminaLab</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        body { background: var(--bg-primary); }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 280px; background: var(--bg-secondary); border-right: 1px solid var(--border-color); padding: var(--spacing-6) 0; position: fixed; height: 100vh; overflow-y: auto; }
+        .sidebar-logo { padding: 0 var(--spacing-6); margin-bottom: var(--spacing-8); }
+        .nav-item { display: flex; align-items: center; padding: var(--spacing-3) var(--spacing-6); color: var(--text-secondary); font-weight: 500; transition: all 0.2s; }
+        .nav-item:hover, .nav-item.active { background: rgba(22, 134, 106, 0.1); color: var(--medical-emerald); border-right: 4px solid var(--medical-emerald); }
+        .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-8); }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-8); padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--border-color); }
+        .report-card { background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); padding: var(--spacing-6); margin-bottom: var(--spacing-6); }
+        .timeline { position: relative; padding-left: var(--spacing-8); border-left: 2px solid var(--gray-200); margin-top: var(--spacing-6); }
+        .timeline-item { position: relative; margin-bottom: var(--spacing-6); }
+        .timeline-item::before { content: ''; position: absolute; left: calc(-2rem - 9px); top: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--bg-secondary); border: 2px solid var(--gray-300); }
+        .timeline-item.completed::before { background: var(--medical-emerald); border-color: var(--medical-emerald); }
+        .timeline-item.active::before { border-color: var(--medical-emerald); border-width: 4px; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item">Dashboard Overview</a>
+                <a href="dashboard-booking.html" class="nav-item">Book Lab Test</a>
+                <a href="dashboard-prescription.html" class="nav-item">Upload Prescription</a>
+                <a href="dashboard-reports.html" class="nav-item active">Report Tracking</a>
+                <a href="dashboard-history.html" class="nav-item">Test History</a>
+                <a href="dashboard-profile.html" class="nav-item">Profile</a>
+                <a href="dashboard-settings.html" class="nav-item">Settings</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <h1 style="font-size: 2rem; margin: 0;">Report Tracking</h1>
+                    <p class="text-secondary" style="margin: 0;">Track the status of your current diagnostic tests.</p>
+                </div>
+            </header>
+
+            <div class="report-card">
+                <div class="flex justify-between items-center" style="border-bottom: 1px solid var(--border-color); padding-bottom: var(--spacing-4);">
+                    <div>
+                        <h3 style="margin: 0;">Comprehensive Plus Health Check</h3>
+                        <p class="text-secondary" style="margin: 0; font-size: 0.875rem;">Order ID: #LL-89245 • Date: Aug 18, 2026</p>
+                    </div>
+                    <div>
+                        <span style="background: #fef08a; color: #854d0e; padding: 6px 16px; border-radius: 20px; font-weight: bold;">PROCESSING</span>
+                    </div>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item completed">
+                        <div style="font-weight: 600;">Sample Collected</div>
+                        <div class="text-secondary" style="font-size: 0.875rem;">Aug 18, 08:30 AM</div>
+                    </div>
+                    <div class="timeline-item completed">
+                        <div style="font-weight: 600;">Sample Reached Laboratory</div>
+                        <div class="text-secondary" style="font-size: 0.875rem;">Aug 18, 10:15 AM</div>
+                    </div>
+                    <div class="timeline-item active">
+                        <div style="font-weight: 600; color: var(--medical-emerald);">Processing in Analyzer</div>
+                        <div class="text-secondary" style="font-size: 0.875rem;">In Progress...</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div style="font-weight: 600; color: var(--gray-400);">Quality Verification</div>
+                        <div class="text-secondary" style="font-size: 0.875rem;">Pending</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div style="font-weight: 600; color: var(--gray-400);">Report Generation</div>
+                        <div class="text-secondary" style="font-size: 0.875rem;">Expected by 08:00 PM today</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-card">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 style="margin: 0;">Vitamin D & B12 Panel</h3>
+                        <p class="text-secondary" style="margin: 0; font-size: 0.875rem;">Order ID: #LL-89201 • Date: Aug 17, 2026</p>
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../js/main.js"></script>
+</body>
+</html>

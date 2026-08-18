@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | LuminaLab</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        body { background: var(--bg-primary); }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 280px; background: var(--bg-secondary); border-right: 1px solid var(--border-color); padding: var(--spacing-6) 0; position: fixed; height: 100vh; overflow-y: auto; }
+        .sidebar-logo { padding: 0 var(--spacing-6); margin-bottom: var(--spacing-8); }
+        .nav-item { display: flex; align-items: center; padding: var(--spacing-3) var(--spacing-6); color: var(--text-secondary); font-weight: 500; transition: all 0.2s; }
+        .nav-item:hover, .nav-item.active { background: rgba(22, 134, 106, 0.1); color: var(--medical-emerald); border-right: 4px solid var(--medical-emerald); }
+        .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-8); }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-8); padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--border-color); }
+        .settings-section { background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); padding: var(--spacing-6); margin-bottom: var(--spacing-6); max-width: 800px; }
+        .toggle-switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--gray-300); transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--medical-emerald); }
+        input:checked + .slider:before { transform: translateX(26px); }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item">Dashboard Overview</a>
+                <a href="dashboard-booking.html" class="nav-item">Book Lab Test</a>
+                <a href="dashboard-prescription.html" class="nav-item">Upload Prescription</a>
+                <a href="dashboard-reports.html" class="nav-item">Report Tracking</a>
+                <a href="dashboard-history.html" class="nav-item">Test History</a>
+                <a href="dashboard-profile.html" class="nav-item">Profile</a>
+                <a href="dashboard-settings.html" class="nav-item active">Settings</a>
+            </nav>
+            <div style="padding: var(--spacing-6); margin-top: auto; position: absolute; bottom: 0; width: 100%;">
+                <a href="login.html" class="btn btn-secondary" style="width: 100%;">Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <h1 style="font-size: 2rem; margin: 0;">Settings</h1>
+                    <p class="text-secondary" style="margin: 0;">Manage your preferences and security.</p>
+                </div>
+            </header>
+
+            <div class="settings-section">
+                <h3 style="margin-bottom: var(--spacing-4);">Appearance</h3>
+                <div class="flex justify-between items-center" style="padding: var(--spacing-3) 0; border-bottom: 1px solid var(--border-color);">
+                    <div>
+                        <div style="font-weight: 600;">Dark Mode</div>
+                        <div class="text-secondary" style="font-size: 0.875rem;">Enable dark theme for the application</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="settings-theme-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="flex justify-between items-center" style="padding: var(--spacing-3) 0;">
+                    <div>
+                        <div style="font-weight: 600;">RTL Layout</div>
+                        <div class="text-secondary" style="font-size: 0.875rem;">Switch text direction to Right-to-Left</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="settings-dir-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3 style="margin-bottom: var(--spacing-4);">Notifications</h3>
+                <div class="flex justify-between items-center" style="padding: var(--spacing-3) 0; border-bottom: 1px solid var(--border-color);">
+                    <div>
+                        <div style="font-weight: 600;">Email Alerts</div>
+                        <div class="text-secondary" style="font-size: 0.875rem;">Receive emails when reports are ready</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="flex justify-between items-center" style="padding: var(--spacing-3) 0;">
+                    <div>
+                        <div style="font-weight: 600;">SMS Notifications</div>
+                        <div class="text-secondary" style="font-size: 0.875rem;">Get SMS text alerts for appointment updates</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3 style="margin-bottom: var(--spacing-4);">Security</h3>
+                <button class="btn btn-secondary">Change Password</button>
+            </div>
+        </main>
+    </div>
+    <script src="../js/main.js"></script>
+    <script>
+        // Sync settings toggles with main.js toggles
+        const settingsTheme = document.getElementById('settings-theme-toggle');
+        if (settingsTheme) {
+            settingsTheme.checked = document.documentElement.getAttribute('data-theme') === 'dark';
+            settingsTheme.addEventListener('change', (e) => {
+                const newTheme = e.target.checked ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+        }
+
+        const settingsDir = document.getElementById('settings-dir-toggle');
+        if (settingsDir) {
+            settingsDir.checked = document.documentElement.getAttribute('dir') === 'rtl';
+            settingsDir.addEventListener('change', (e) => {
+                const newDir = e.target.checked ? 'rtl' : 'ltr';
+                document.documentElement.setAttribute('dir', newDir);
+                localStorage.setItem('dir', newDir);
+            });
+        }
+    </script>
+</body>
+</html>

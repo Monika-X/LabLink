@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | LuminaLab Premium Diagnostics</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
+        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
+        .nav-links a { font-weight: 500; color: var(--text-primary); }
+        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
+        .page-header { padding: var(--spacing-20) 0; background: linear-gradient(to right, var(--deep-teal), var(--medical-emerald)); color: white; text-align: center; }
+        .page-header h1 { color: white; margin-bottom: var(--spacing-4); }
+        .service-list-card { display: flex; gap: var(--spacing-8); padding: var(--spacing-8); background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: var(--spacing-8); transition: all var(--transition-normal); }
+        .service-list-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--medical-emerald); }
+        .service-list-card img { width: 300px; height: 200px; object-fit: cover; border-radius: 12px; }
+        .service-content { flex: 1; }
+        
+        @media (max-width: 768px) {
+            .service-list-card { flex-direction: column; }
+            .service-list-card img { width: 100%; height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container flex justify-between items-center" style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4);">
+            <div class="logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav class="nav-links flex gap-6 items-center">
+                <a href="../index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html" class="active">Services</a>
+                <a href="dashboard.html" class="btn btn-primary">Patient Portal</a>
+                <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">🌓</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container reveal">
+                <h1 style="font-size: 3.5rem;">Diagnostic Services</h1>
+                <p style="font-size: 1.25rem; max-width: 800px; margin: 0 auto; color: var(--pearl); opacity: 0.9;">Comprehensive testing solutions tailored for your proactive health management.</p>
+            </div>
+        </section>
+
+        <!-- Services List -->
+        <section class="py-24" style="background-color: var(--bg-primary);">
+            <div class="container">
+                
+                <div class="service-list-card reveal">
+                    <img src="../images/lab_hero.png" alt="Advanced Blood Tests">
+                    <div class="service-content flex flex-col justify-center">
+                        <span style="color: var(--medical-emerald); font-weight: 600; text-transform: uppercase; font-size: 0.875rem;">Core Diagnostics</span>
+                        <h3 style="font-size: 2rem; margin-top: var(--spacing-2); margin-bottom: var(--spacing-2);">Advanced Blood Panels</h3>
+                        <p class="text-secondary mb-4">Complete hemograms, lipid profiles, thyroid function tests, and metabolic panels using high-throughput clinical chemistry analyzers for maximum precision.</p>
+                        <div>
+                            <a href="dashboard.html" class="btn btn-secondary">Book Test</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-list-card reveal">
+                    <img src="../images/lab_hero.png" alt="Home Sample Collection">
+                    <div class="service-content flex flex-col justify-center">
+                        <span style="color: var(--medical-emerald); font-weight: 600; text-transform: uppercase; font-size: 0.875rem;">Convenience</span>
+                        <h3 style="font-size: 2rem; margin-top: var(--spacing-2); margin-bottom: var(--spacing-2);">Home Sample Collection</h3>
+                        <p class="text-secondary mb-4">Schedule a visit from our highly trained phlebotomists. We maintain the cold chain integrity of your sample from your home directly to our analytical instruments.</p>
+                        <div>
+                            <a href="dashboard.html" class="btn btn-secondary">Schedule Visit</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-list-card reveal">
+                    <img src="../images/lab_hero.png" alt="Corporate Health Checkup">
+                    <div class="service-content flex flex-col justify-center">
+                        <span style="color: var(--medical-emerald); font-weight: 600; text-transform: uppercase; font-size: 0.875rem;">Preventive Care</span>
+                        <h3 style="font-size: 2rem; margin-top: var(--spacing-2); margin-bottom: var(--spacing-2);">Comprehensive Health Packages</h3>
+                        <p class="text-secondary mb-4">Curated diagnostic packages for men, women, and seniors to detect potential health issues before they become symptomatic. Detailed digital reports with physician summaries.</p>
+                        <div>
+                            <a href="dashboard.html" class="btn btn-secondary">View Packages</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | LuminaLab</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        body { background: var(--bg-primary); }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 280px; background: var(--bg-secondary); border-right: 1px solid var(--border-color); padding: var(--spacing-6) 0; position: fixed; height: 100vh; overflow-y: auto; }
+        .sidebar-logo { padding: 0 var(--spacing-6); margin-bottom: var(--spacing-8); }
+        .nav-item { display: flex; align-items: center; padding: var(--spacing-3) var(--spacing-6); color: var(--text-secondary); font-weight: 500; transition: all 0.2s; }
+        .nav-item:hover, .nav-item.active { background: rgba(22, 134, 106, 0.1); color: var(--medical-emerald); border-right: 4px solid var(--medical-emerald); }
+        .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-8); }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-8); padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--border-color); }
+        .form-control { width: 100%; padding: var(--spacing-3); border-radius: 8px; border: 1px solid var(--gray-300); background: var(--bg-primary); color: var(--text-primary); font-family: inherit; margin-top: var(--spacing-2); margin-bottom: var(--spacing-4); }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item">Dashboard Overview</a>
+                <a href="dashboard-booking.html" class="nav-item">Book Lab Test</a>
+                <a href="dashboard-prescription.html" class="nav-item">Upload Prescription</a>
+                <a href="dashboard-reports.html" class="nav-item">Report Tracking</a>
+                <a href="dashboard-history.html" class="nav-item">Test History</a>
+                <a href="dashboard-profile.html" class="nav-item active">Profile</a>
+                <a href="dashboard-settings.html" class="nav-item">Settings</a>
+            </nav>
+            <div style="padding: var(--spacing-6); margin-top: auto; position: absolute; bottom: 0; width: 100%;">
+                <a href="login.html" class="btn btn-secondary" style="width: 100%;">Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <h1 style="font-size: 2rem; margin: 0;">Patient Profile</h1>
+                    <p class="text-secondary" style="margin: 0;">Manage your personal information.</p>
+                </div>
+            </header>
+
+            <div style="background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); padding: var(--spacing-8); max-width: 800px;">
+                <div class="flex items-center gap-6 mb-8" style="margin-bottom: var(--spacing-8);">
+                    <div style="width: 100px; height: 100px; background: var(--medical-emerald); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold;">JD</div>
+                    <div>
+                        <button class="btn btn-secondary mb-2">Change Photo</button>
+                        <p class="text-secondary" style="font-size: 0.875rem;">JPG, GIF or PNG. Max size of 800K</p>
+                    </div>
+                </div>
+
+                <form>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label style="font-weight: 600;">First Name</label>
+                            <input type="text" class="form-control" value="John">
+                        </div>
+                        <div>
+                            <label style="font-weight: 600;">Last Name</label>
+                            <input type="text" class="form-control" value="Doe">
+                        </div>
+                        <div>
+                            <label style="font-weight: 600;">Date of Birth</label>
+                            <input type="date" class="form-control" value="1985-05-15">
+                        </div>
+                        <div>
+                            <label style="font-weight: 600;">Gender</label>
+                            <select class="form-control">
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div style="grid-column: span 2;">
+                            <label style="font-weight: 600;">Email Address</label>
+                            <input type="email" class="form-control" value="john.doe@example.com">
+                        </div>
+                        <div style="grid-column: span 2;">
+                            <label style="font-weight: 600;">Address</label>
+                            <textarea class="form-control" rows="3">123 Health Ave, Apt 4B, New York, NY 10001</textarea>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" style="margin-top: var(--spacing-4);">Save Changes</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test History | LuminaLab</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        body { background: var(--bg-primary); }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 280px; background: var(--bg-secondary); border-right: 1px solid var(--border-color); padding: var(--spacing-6) 0; position: fixed; height: 100vh; overflow-y: auto; }
+        .sidebar-logo { padding: 0 var(--spacing-6); margin-bottom: var(--spacing-8); }
+        .nav-item { display: flex; align-items: center; padding: var(--spacing-3) var(--spacing-6); color: var(--text-secondary); font-weight: 500; transition: all 0.2s; }
+        .nav-item:hover, .nav-item.active { background: rgba(22, 134, 106, 0.1); color: var(--medical-emerald); border-right: 4px solid var(--medical-emerald); }
+        .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-8); }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-8); padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--border-color); }
+        .data-table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); overflow: hidden; }
+        .data-table th, .data-table td { padding: var(--spacing-4); text-align: left; border-bottom: 1px solid var(--border-color); }
+        .data-table th { background: rgba(0,0,0,0.02); font-weight: 600; color: var(--text-secondary); }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tbody tr:hover { background: rgba(0,0,0,0.01); }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item">Dashboard Overview</a>
+                <a href="dashboard-booking.html" class="nav-item">Book Lab Test</a>
+                <a href="dashboard-prescription.html" class="nav-item">Upload Prescription</a>
+                <a href="dashboard-reports.html" class="nav-item">Report Tracking</a>
+                <a href="dashboard-history.html" class="nav-item active">Test History</a>
+                <a href="dashboard-profile.html" class="nav-item">Profile</a>
+                <a href="dashboard-settings.html" class="nav-item">Settings</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <h1 style="font-size: 2rem; margin: 0;">Test History</h1>
+                    <p class="text-secondary" style="margin: 0;">View and download past diagnostic reports.</p>
+                </div>
+                <div>
+                    <input type="text" placeholder="Search tests..." style="padding: var(--spacing-2) var(--spacing-4); border-radius: 8px; border: 1px solid var(--gray-300); background: var(--bg-primary); color: var(--text-primary);">
+                </div>
+            </header>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Test Name</th>
+                        <th>Patient Name</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Aug 17, 2026</td>
+                        <td>Vitamin D & B12 Panel</td>
+                        <td>John Doe</td>
+                        <td><span style="color: var(--medical-emerald); font-weight: bold;">Completed</span></td>
+                        <td><a href="#" style="font-weight: 600; color: var(--medical-emerald);">Download</a></td>
+                    </tr>
+                    <tr>
+                        <td>Jul 10, 2026</td>
+                        <td>Complete Blood Count (CBC)</td>
+                        <td>John Doe</td>
+                        <td><span style="color: var(--medical-emerald); font-weight: bold;">Completed</span></td>
+                        <td><a href="#" style="font-weight: 600; color: var(--medical-emerald);">Download</a></td>
+                    </tr>
+                    <tr>
+                        <td>Feb 15, 2026</td>
+                        <td>Thyroid Profile (T3, T4, TSH)</td>
+                        <td>John Doe</td>
+                        <td><span style="color: var(--medical-emerald); font-weight: bold;">Completed</span></td>
+                        <td><a href="#" style="font-weight: 600; color: var(--medical-emerald);">Download</a></td>
+                    </tr>
+                    <tr>
+                        <td>Nov 05, 2025</td>
+                        <td>Advanced Cardiac Package</td>
+                        <td>John Doe</td>
+                        <td><span style="color: var(--medical-emerald); font-weight: bold;">Completed</span></td>
+                        <td><a href="#" style="font-weight: 600; color: var(--medical-emerald);">Download</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="flex justify-between items-center" style="margin-top: var(--spacing-6);">
+                <p class="text-secondary" style="font-size: 0.875rem;">Showing 4 of 15 entries</p>
+                <div class="flex gap-2">
+                    <button class="btn btn-secondary" style="padding: 4px 12px; font-size: 0.875rem;" disabled>&laquo; Prev</button>
+                    <button class="btn btn-primary" style="padding: 4px 12px; font-size: 0.875rem;">1</button>
+                    <button class="btn btn-secondary" style="padding: 4px 12px; font-size: 0.875rem;">2</button>
+                    <button class="btn btn-secondary" style="padding: 4px 12px; font-size: 0.875rem;">Next &raquo;</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../js/main.js"></script>
+</body>
+</html>

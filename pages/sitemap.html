@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap | LuminaLab</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
+        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
+        .nav-links a { font-weight: 500; color: var(--text-primary); }
+        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
+        .sitemap-list { list-style: none; padding-left: 0; }
+        .sitemap-list li { margin-bottom: var(--spacing-2); }
+        .sitemap-list ul { list-style: none; padding-left: var(--spacing-6); margin-top: var(--spacing-2); margin-bottom: var(--spacing-4); border-left: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container flex justify-between items-center" style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4);">
+            <div class="logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav class="nav-links flex gap-6 items-center">
+                <a href="../index.html">Home</a>
+                <a href="dashboard.html" class="btn btn-primary">Patient Portal</a>
+                <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">🌓</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="py-24">
+        <div class="container reveal">
+            <h1 style="margin-bottom: var(--spacing-8);">Sitemap</h1>
+            <div class="grid grid-cols-2 gap-8">
+                <div>
+                    <h3 style="color: var(--medical-emerald);">Public Pages</h3>
+                    <ul class="sitemap-list text-secondary">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="index-2.html">Home (Alternative)</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services & Packages</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="blog-details.html">Blog Details</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                    
+                    <h3 style="color: var(--medical-emerald); margin-top: var(--spacing-6);">Legal & Support</h3>
+                    <ul class="sitemap-list text-secondary">
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="404.html">404 Error Page</a></li>
+                        <li><a href="maintenance.html">Maintenance Page</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--medical-emerald);">Patient Dashboard</h3>
+                    <ul class="sitemap-list text-secondary">
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="signup.html">Sign Up</a></li>
+                        <li>
+                            <a href="dashboard.html">Dashboard Overview</a>
+                            <ul>
+                                <li><a href="dashboard-booking.html">Book Lab Test</a></li>
+                                <li><a href="dashboard-prescription.html">Upload Prescription</a></li>
+                                <li><a href="dashboard-reports.html">Report Tracking</a></li>
+                                <li><a href="dashboard-history.html">Test History</a></li>
+                                <li><a href="dashboard-profile.html">Profile Settings</a></li>
+                                <li><a href="dashboard-settings.html">Account Settings</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../js/main.js"></script>
+</body>
+</html>

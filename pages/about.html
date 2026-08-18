@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | LuminaLab Premium Diagnostics</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
+        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
+        .nav-links a { font-weight: 500; color: var(--text-primary); }
+        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
+        .page-header { padding: var(--spacing-20) 0; background: linear-gradient(to right, var(--deep-teal), var(--medical-emerald)); color: white; text-align: center; }
+        .page-header h1 { color: white; margin-bottom: var(--spacing-4); }
+        .timeline { border-left: 2px solid var(--medical-emerald); padding-left: var(--spacing-8); margin-left: var(--spacing-4); }
+        .timeline-item { position: relative; margin-bottom: var(--spacing-8); }
+        .timeline-item::before { content: ''; position: absolute; left: calc(-2rem - 9px); top: 0; width: 16px; height: 16px; background: var(--champagne); border-radius: 50%; border: 4px solid var(--bg-primary); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container flex justify-between items-center" style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4);">
+            <div class="logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav class="nav-links flex gap-6 items-center">
+                <a href="../index.html">Home</a>
+                <a href="about.html" class="active">About</a>
+                <a href="services.html">Services</a>
+                <a href="dashboard.html" class="btn btn-primary">Patient Portal</a>
+                <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">🌓</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container reveal">
+                <h1 style="font-size: 3.5rem;">Pioneering Healthcare Excellence</h1>
+                <p style="font-size: 1.25rem; max-width: 800px; margin: 0 auto; color: var(--pearl); opacity: 0.9;">A legacy of trust, precision, and technological innovation in diagnostic medicine.</p>
+            </div>
+        </section>
+
+        <!-- Our Story -->
+        <section class="py-24">
+            <div class="container grid grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <img src="../images/lab_hero.png" alt="Lab History" style="width: 100%; border-radius: 24px; box-shadow: var(--shadow-lg);">
+                </div>
+                <div class="reveal">
+                    <span style="color: var(--medical-emerald); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Our Story</span>
+                    <h2 style="font-size: 2.5rem; margin-top: var(--spacing-2);">Setting the Gold Standard in Diagnostics</h2>
+                    <p class="text-secondary mb-4">Founded with a vision to revolutionize clinical testing, LuminaLab has grown into a premier healthcare institution. We combine human expertise with robotic automation to deliver results you can trust.</p>
+                    <p class="text-secondary mb-4">Our facilities are equipped with next-generation analyzers capable of processing thousands of samples with zero cross-contamination and unprecedented accuracy.</p>
+                    <ul class="text-secondary" style="list-style: none; padding-left: 0; margin-top: var(--spacing-6);">
+                        <li style="margin-bottom: var(--spacing-2); display: flex; align-items: center; gap: var(--spacing-2);"><span style="color: var(--medical-emerald);">✓</span> ISO 15189:2012 Certified</li>
+                        <li style="margin-bottom: var(--spacing-2); display: flex; align-items: center; gap: var(--spacing-2);"><span style="color: var(--medical-emerald);">✓</span> CAP Accredited</li>
+                        <li style="display: flex; align-items: center; gap: var(--spacing-2);"><span style="color: var(--medical-emerald);">✓</span> 24/7 Processing Center</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quality Standards -->
+        <section class="py-24" style="background-color: var(--bg-secondary);">
+            <div class="container text-center reveal">
+                <h2 style="font-size: 2.5rem; margin-bottom: var(--spacing-12);">Our Quality Promise</h2>
+                <div class="grid grid-cols-3 gap-8">
+                    <div style="padding: var(--spacing-8); background: var(--bg-primary); border-radius: 16px; border: 1px solid var(--border-color);">
+                        <h3 style="color: var(--medical-emerald);">Pre-Analytical</h3>
+                        <p class="text-secondary">Barcoded sample collection and automated sorting eliminate human error before testing even begins.</p>
+                    </div>
+                    <div style="padding: var(--spacing-8); background: var(--bg-primary); border-radius: 16px; border: 1px solid var(--border-color);">
+                        <h3 style="color: var(--medical-emerald);">Analytical</h3>
+                        <p class="text-secondary">Six Sigma quality controls and bidirectional interfacing with equipment ensure precise measurements.</p>
+                    </div>
+                    <div style="padding: var(--spacing-8); background: var(--bg-primary); border-radius: 16px; border: 1px solid var(--border-color);">
+                        <h3 style="color: var(--medical-emerald);">Post-Analytical</h3>
+                        <p class="text-secondary">AI-assisted result verification by senior pathologists before digital delivery to your portal.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions | LuminaLab</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
+        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
+        .nav-links a { font-weight: 500; color: var(--text-primary); }
+        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
+        .legal-content { max-width: 800px; margin: 0 auto; line-height: 1.8; color: var(--text-secondary); }
+        .legal-content h2 { color: var(--text-primary); margin-top: var(--spacing-8); margin-bottom: var(--spacing-4); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container flex justify-between items-center" style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4);">
+            <div class="logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav class="nav-links flex gap-6 items-center">
+                <a href="../index.html">Home</a>
+                <a href="dashboard.html" class="btn btn-primary">Patient Portal</a>
+                <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">🌓</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="py-24">
+        <div class="container reveal">
+            <h1 style="text-align: center; margin-bottom: var(--spacing-8);">Terms & Conditions</h1>
+            <div class="legal-content">
+                <p>Last updated: August 18, 2026</p>
+                <p>Please read these Terms and Conditions carefully before using the LuminaLab website or our Patient Portal.</p>
+                
+                <h2>1. Acceptance of Terms</h2>
+                <p>By accessing or using our services, you agree to be bound by these Terms. If you disagree with any part of the terms, you may not access the service.</p>
+                
+                <h2>2. Diagnostic Services</h2>
+                <p>Our reports are meant for clinical correlation by your consulting physician. LuminaLab is not liable for any medical decisions made solely based on these reports without professional medical consultation.</p>
+                
+                <h2>3. Payment & Cancellation</h2>
+                <p>Payments for tests must be made in advance. Cancellations for Home Sample Collection must be made at least 4 hours prior to the scheduled slot for a full refund.</p>
+            </div>
+        </div>
+    </main>
+    <script src="../js/main.js"></script>
+</body>
+</html>

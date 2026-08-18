@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | LuminaLab Premium Diagnostics</title>
+    <meta name="description" content="Experience premium clinical laboratory services with our state-of-the-art diagnostic center.">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
+        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
+        .nav-links a { font-weight: 500; color: var(--text-primary); }
+        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
+        .service-card { padding: var(--spacing-8); border-radius: 16px; background: var(--bg-secondary); border: 1px solid var(--border-color); transition: all var(--transition-normal); }
+        .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--medical-emerald); }
+        .icon-box { width: 60px; height: 60px; border-radius: 12px; background: var(--soft-aqua); display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-4); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container flex justify-between items-center" style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4);">
+            <div class="logo">
+                <a href="index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav class="nav-links flex gap-6 items-center">
+                <a href="index.html" class="active">Home</a>
+                <a href="pages/about.html">About</a>
+                <a href="pages/services.html">Services</a>
+                <a href="pages/dashboard.html" class="btn btn-primary">Patient Portal</a>
+                <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">🌓</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" style="position: relative; padding: var(--spacing-24) 0; overflow: hidden; background: linear-gradient(135deg, var(--bg-primary) 0%, #e6f0f2 100%);">
+            <div class="container grid grid-cols-2 gap-8 items-center">
+                <div class="hero-content reveal">
+                    <span style="color: var(--medical-emerald); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.875rem; margin-bottom: var(--spacing-2); display: block;">Premium Diagnostics Center</span>
+                    <h1 style="font-size: 4rem; line-height: 1.1; margin-bottom: var(--spacing-6);">Precision Diagnostics.<br>Premium Care.</h1>
+                    <p class="text-secondary mb-4" style="font-size: 1.125rem; max-width: 90%;">Experience world-class clinical testing with our state-of-the-art laboratory infrastructure and expert medical professionals.</p>
+                    <div class="flex gap-4 mt-4" style="margin-top: var(--spacing-8);">
+                        <a href="pages/services.html" class="btn btn-primary">Book a Test</a>
+                        <a href="pages/about.html" class="btn btn-secondary">Our Technology</a>
+                    </div>
+                    <div class="stats flex gap-8" style="margin-top: var(--spacing-12);">
+                        <div>
+                            <h3 style="margin-bottom:0; font-size: 2rem;">500+</h3>
+                            <p class="text-secondary" style="font-size:0.875rem; font-weight: 600;">Tests Available</p>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom:0; font-size: 2rem;">99.9%</h3>
+                            <p class="text-secondary" style="font-size:0.875rem; font-weight: 600;">Accuracy Rate</p>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom:0; font-size: 2rem;">24hr</h3>
+                            <p class="text-secondary" style="font-size:0.875rem; font-weight: 600;">Report Delivery</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image reveal" style="position: relative;">
+                    <img src="images/lab_hero.png" alt="Modern Clinical Laboratory" style="width: 100%; border-radius: 24px; box-shadow: var(--shadow-xl); object-fit: cover; height: 600px;">
+                    <div class="glass" style="position: absolute; bottom: 40px; left: -40px; padding: var(--spacing-4); border-radius: 16px; display: flex; align-items: center; gap: var(--spacing-4);">
+                        <div style="width: 50px; height: 50px; background: var(--medical-emerald); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">✓</div>
+                        <div>
+                            <h4 style="margin:0; font-size: 1rem; color: var(--text-primary);">NABL Accredited</h4>
+                            <p style="margin:0; font-size: 0.875rem; color: var(--text-secondary);">Highest Quality Standards</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="py-24" style="background-color: var(--bg-secondary);">
+            <div class="container">
+                <div class="text-center reveal mb-4" style="max-width: 600px; margin: 0 auto var(--spacing-16);">
+                    <h2 style="font-size: 2.5rem;">Comprehensive Diagnostic Services</h2>
+                    <p class="text-secondary">We offer a wide range of specialized tests and full body checkups utilizing cutting-edge medical technology.</p>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-8">
+                    <div class="service-card reveal">
+                        <div class="icon-box">
+                            <span style="font-size: 24px;">🔬</span>
+                        </div>
+                        <h3>Advanced Pathology</h3>
+                        <p class="text-secondary">Comprehensive blood work, cellular analysis, and precise biochemical testing with rapid turnaround times.</p>
+                        <a href="pages/services.html" style="display: inline-block; margin-top: var(--spacing-4); font-weight: 600;">Learn More &rarr;</a>
+                    </div>
+                    <div class="service-card reveal" style="transition-delay: 0.1s;">
+                        <div class="icon-box" style="background: #fdf2f8;">
+                            <span style="font-size: 24px;">🧬</span>
+                        </div>
+                        <h3>Molecular Diagnostics</h3>
+                        <p class="text-secondary">State-of-the-art genetic testing, PCR, and infectious disease screening with unmatched accuracy.</p>
+                        <a href="pages/services.html" style="display: inline-block; margin-top: var(--spacing-4); font-weight: 600;">Learn More &rarr;</a>
+                    </div>
+                    <div class="service-card reveal" style="transition-delay: 0.2s;">
+                        <div class="icon-box" style="background: #fef3c7;">
+                            <span style="font-size: 24px;">🏠</span>
+                        </div>
+                        <h3>Home Sample Collection</h3>
+                        <p class="text-secondary">Experience our premium services from the comfort of your home with our certified phlebotomists.</p>
+                        <a href="pages/services.html" style="display: inline-block; margin-top: var(--spacing-4); font-weight: 600;">Learn More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

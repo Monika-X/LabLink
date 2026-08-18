@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | LuminaLab Premium Diagnostics</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        body { background: var(--bg-primary); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .auth-card { background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); padding: var(--spacing-10); width: 100%; max-width: 500px; box-shadow: var(--shadow-xl); }
+        .form-control { width: 100%; padding: var(--spacing-3); border-radius: 8px; border: 1px solid var(--gray-300); background: var(--bg-primary); color: var(--text-primary); font-family: inherit; margin-bottom: var(--spacing-4); }
+        .form-control:focus { outline: none; border-color: var(--medical-emerald); }
+    </style>
+</head>
+<body>
+    <div class="auth-card reveal">
+        <div class="text-center mb-4" style="margin-bottom: var(--spacing-8);">
+            <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            <p class="text-secondary" style="margin-top: var(--spacing-2);">Create your patient account</p>
+        </div>
+        <form action="dashboard.html" method="GET">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label style="font-weight: 600; display: block; margin-bottom: var(--spacing-2);">First Name</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div>
+                    <label style="font-weight: 600; display: block; margin-bottom: var(--spacing-2);">Last Name</label>
+                    <input type="text" class="form-control" required>
+                </div>
+            </div>
+            
+            <label style="font-weight: 600; display: block; margin-bottom: var(--spacing-2);">Email Address</label>
+            <input type="email" class="form-control" required placeholder="you@example.com">
+            
+            <label style="font-weight: 600; display: block; margin-bottom: var(--spacing-2);">Password</label>
+            <input type="password" class="form-control" required placeholder="••••••••">
+            
+            <label style="font-weight: 600; display: block; margin-bottom: var(--spacing-2);">Confirm Password</label>
+            <input type="password" class="form-control" required placeholder="••••••••">
+            
+            <div style="margin-bottom: var(--spacing-6); font-size: 0.875rem;">
+                <label><input type="checkbox" required> I agree to the <a href="terms.html">Terms & Conditions</a> and <a href="privacy.html">Privacy Policy</a></label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+        </form>
+        <p class="text-center mt-4" style="margin-top: var(--spacing-6); font-size: 0.875rem; color: var(--text-secondary);">
+            Already have an account? <a href="login.html" style="font-weight: 600;">Sign In</a>
+        </p>
+    </div>
+    <script src="../js/main.js"></script>
+</body>
+</html>

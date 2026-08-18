@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | LuminaLab Premium Diagnostics</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        body { background: var(--bg-primary); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .auth-card { background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); padding: var(--spacing-10); width: 100%; max-width: 400px; box-shadow: var(--shadow-xl); }
+        .form-control { width: 100%; padding: var(--spacing-3); border-radius: 8px; border: 1px solid var(--gray-300); background: var(--bg-primary); color: var(--text-primary); font-family: inherit; margin-bottom: var(--spacing-4); }
+        .form-control:focus { outline: none; border-color: var(--medical-emerald); }
+    </style>
+</head>
+<body>
+    <div class="auth-card reveal">
+        <div class="text-center mb-4" style="margin-bottom: var(--spacing-8);">
+            <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            <p class="text-secondary" style="margin-top: var(--spacing-2);">Sign in to your patient portal</p>
+        </div>
+        <form action="dashboard.html" method="GET">
+            <label style="font-weight: 600; display: block; margin-bottom: var(--spacing-2);">Email Address</label>
+            <input type="email" class="form-control" required placeholder="you@example.com">
+            
+            <label style="font-weight: 600; display: block; margin-bottom: var(--spacing-2);">Password</label>
+            <input type="password" class="form-control" required placeholder="••••••••">
+            
+            <div class="flex justify-between items-center" style="margin-bottom: var(--spacing-6); font-size: 0.875rem;">
+                <label><input type="checkbox"> Remember me</label>
+                <a href="#" style="color: var(--medical-emerald); font-weight: 600;">Forgot Password?</a>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+        </form>
+        <p class="text-center mt-4" style="margin-top: var(--spacing-6); font-size: 0.875rem; color: var(--text-secondary);">
+            Don't have an account? <a href="signup.html" style="font-weight: 600;">Create Account</a>
+        </p>
+    </div>
+    <script src="../js/main.js"></script>
+</body>
+</html>

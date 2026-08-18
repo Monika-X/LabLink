@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | LuminaLab Premium Diagnostics</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
+        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
+        .nav-links a { font-weight: 500; color: var(--text-primary); }
+        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
+        .page-header { padding: var(--spacing-20) 0; background: var(--bg-secondary); text-align: center; border-bottom: 1px solid var(--border-color); }
+        .blog-card { background: var(--bg-secondary); border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); transition: all var(--transition-normal); }
+        .blog-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .blog-card img { width: 100%; height: 240px; object-fit: cover; }
+        .blog-content { padding: var(--spacing-6); }
+        .blog-meta { display: flex; gap: var(--spacing-4); color: var(--text-secondary); font-size: 0.875rem; margin-bottom: var(--spacing-2); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container flex justify-between items-center" style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4);">
+            <div class="logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav class="nav-links flex gap-6 items-center">
+                <a href="../index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="blog.html" class="active">Blog</a>
+                <a href="dashboard.html" class="btn btn-primary">Patient Portal</a>
+                <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">🌓</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container reveal">
+                <h1 style="font-size: 3.5rem;">Health Insights</h1>
+                <p style="font-size: 1.25rem; max-width: 800px; margin: 0 auto; color: var(--text-secondary);">Expert articles, medical research, and wellness tips from our specialists.</p>
+            </div>
+        </section>
+
+        <section class="py-24">
+            <div class="container grid grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <div class="blog-card reveal">
+                    <img src="../images/lab_hero.png" alt="Understanding Lipid Profiles">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>August 15, 2026</span>
+                            <span>•</span>
+                            <span style="color: var(--medical-emerald); font-weight: 600;">Cardiology</span>
+                        </div>
+                        <h3 style="margin-bottom: var(--spacing-2);"><a href="blog-details.html" style="color: inherit;">Decoding Your Lipid Profile Results</a></h3>
+                        <p class="text-secondary mb-4">A comprehensive guide to understanding HDL, LDL, and what those cholesterol numbers actually mean for your heart health.</p>
+                        <a href="blog-details.html" style="font-weight: 600; color: var(--medical-emerald);">Read Article &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Blog Post 2 -->
+                <div class="blog-card reveal" style="transition-delay: 0.1s;">
+                    <img src="../images/lab_hero.png" alt="Importance of Vitamin D">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>August 10, 2026</span>
+                            <span>•</span>
+                            <span style="color: var(--medical-emerald); font-weight: 600;">Nutrition</span>
+                        </div>
+                        <h3 style="margin-bottom: var(--spacing-2);"><a href="blog-details.html" style="color: inherit;">The Silent Epidemic: Vitamin D Deficiency</a></h3>
+                        <p class="text-secondary mb-4">Why regular screening for Vitamin D is crucial, especially in urban environments, and how it impacts immunity.</p>
+                        <a href="blog-details.html" style="font-weight: 600; color: var(--medical-emerald);">Read Article &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Blog Post 3 -->
+                <div class="blog-card reveal" style="transition-delay: 0.2s;">
+                    <img src="../images/lab_hero.png" alt="Advanced Pathology">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>August 05, 2026</span>
+                            <span>•</span>
+                            <span style="color: var(--medical-emerald); font-weight: 600;">Technology</span>
+                        </div>
+                        <h3 style="margin-bottom: var(--spacing-2);"><a href="blog-details.html" style="color: inherit;">How AI is Revolutionizing Pathology</a></h3>
+                        <p class="text-secondary mb-4">Explore how machine learning algorithms are assisting pathologists in achieving unprecedented accuracy in diagnostics.</p>
+                        <a href="blog-details.html" style="font-weight: 600; color: var(--medical-emerald);">Read Article &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

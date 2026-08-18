@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Prescription | LuminaLab</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        body { background: var(--bg-primary); }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 280px; background: var(--bg-secondary); border-right: 1px solid var(--border-color); padding: var(--spacing-6) 0; position: fixed; height: 100vh; overflow-y: auto; }
+        .sidebar-logo { padding: 0 var(--spacing-6); margin-bottom: var(--spacing-8); }
+        .nav-item { display: flex; align-items: center; padding: var(--spacing-3) var(--spacing-6); color: var(--text-secondary); font-weight: 500; transition: all 0.2s; }
+        .nav-item:hover, .nav-item.active { background: rgba(22, 134, 106, 0.1); color: var(--medical-emerald); border-right: 4px solid var(--medical-emerald); }
+        .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-8); }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-8); padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--border-color); }
+        .upload-area { border: 2px dashed var(--medical-emerald); border-radius: 16px; padding: var(--spacing-16); text-align: center; background: rgba(22, 134, 106, 0.05); cursor: pointer; transition: all var(--transition-fast); margin-bottom: var(--spacing-8); }
+        .upload-area:hover { background: rgba(22, 134, 106, 0.1); }
+        .upload-area h3 { color: var(--medical-emerald); margin-bottom: var(--spacing-2); }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item">Dashboard Overview</a>
+                <a href="dashboard-booking.html" class="nav-item">Book Lab Test</a>
+                <a href="dashboard-prescription.html" class="nav-item active">Upload Prescription</a>
+                <a href="dashboard-reports.html" class="nav-item">Report Tracking</a>
+                <a href="dashboard-history.html" class="nav-item">Test History</a>
+                <a href="dashboard-profile.html" class="nav-item">Profile</a>
+                <a href="dashboard-settings.html" class="nav-item">Settings</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <h1 style="font-size: 2rem; margin: 0;">Upload Prescription</h1>
+                    <p class="text-secondary" style="margin: 0;">Not sure which tests to select? Upload your prescription and we'll do it for you.</p>
+                </div>
+            </header>
+
+            <div style="background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); padding: var(--spacing-8); max-width: 800px;">
+                <div class="upload-area" onclick="document.getElementById('fileUpload').click();">
+                    <h3>Drag & Drop your prescription here</h3>
+                    <p class="text-secondary mb-4">or click to browse from your device</p>
+                    <input type="file" id="fileUpload" style="display: none;" accept=".pdf,.jpg,.jpeg,.png">
+                    <button class="btn btn-primary">Select File</button>
+                    <p class="text-secondary mt-4" style="font-size: 0.875rem;">Supported formats: PDF, JPG, PNG (Max 5MB)</p>
+                </div>
+
+                <div style="background: var(--bg-primary); padding: var(--spacing-6); border-radius: 8px; border-left: 4px solid var(--champagne);">
+                    <h4 style="margin-top: 0; color: var(--deep-teal);">How it works</h4>
+                    <ol class="text-secondary" style="margin-bottom: 0; padding-left: var(--spacing-4);">
+                        <li>Upload a clear photo or scan of your valid doctor's prescription.</li>
+                        <li>Our medical team will review the prescription within 1 hour.</li>
+                        <li>We will create a custom cart with the exact tests prescribed.</li>
+                        <li>You will receive an email to review the cart, select a time slot, and make payment.</li>
+                    </ol>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../js/main.js"></script>
+</body>
+</html>

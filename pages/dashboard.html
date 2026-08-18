@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard | LuminaLab</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        body { background: var(--bg-primary); }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 280px; background: var(--bg-secondary); border-right: 1px solid var(--border-color); padding: var(--spacing-6) 0; position: fixed; height: 100vh; overflow-y: auto; }
+        .sidebar-logo { padding: 0 var(--spacing-6); margin-bottom: var(--spacing-8); }
+        .nav-item { display: flex; align-items: center; padding: var(--spacing-3) var(--spacing-6); color: var(--text-secondary); font-weight: 500; transition: all 0.2s; }
+        .nav-item:hover, .nav-item.active { background: rgba(22, 134, 106, 0.1); color: var(--medical-emerald); border-right: 4px solid var(--medical-emerald); }
+        .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-8); }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-8); padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--border-color); }
+        .stat-card { background: var(--bg-secondary); padding: var(--spacing-6); border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+        .stat-card h4 { color: var(--text-secondary); font-size: 0.875rem; text-transform: uppercase; margin-bottom: var(--spacing-2); }
+        .stat-card .value { font-size: 2rem; font-weight: bold; color: var(--medical-emerald); font-family: var(--font-heading); }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item active">Dashboard Overview</a>
+                <a href="dashboard-booking.html" class="nav-item">Book Lab Test</a>
+                <a href="dashboard-prescription.html" class="nav-item">Upload Prescription</a>
+                <a href="dashboard-reports.html" class="nav-item">Report Tracking</a>
+                <a href="dashboard-history.html" class="nav-item">Test History</a>
+                <a href="dashboard-profile.html" class="nav-item">Profile</a>
+                <a href="dashboard-settings.html" class="nav-item">Settings</a>
+            </nav>
+            <div style="padding: var(--spacing-6); margin-top: auto; position: absolute; bottom: 0; width: 100%;">
+                <a href="login.html" class="btn btn-secondary" style="width: 100%;">Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <h1 style="font-size: 2rem; margin: 0;">Welcome, John Doe</h1>
+                    <p class="text-secondary" style="margin: 0;">Here is your health summary.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">🌓</button>
+                    <div style="width: 40px; height: 40px; background: var(--medical-emerald); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">JD</div>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-3 gap-8 mb-8" style="margin-bottom: var(--spacing-8);">
+                <div class="stat-card">
+                    <h4>Pending Reports</h4>
+                    <div class="value">2</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Upcoming Appointments</h4>
+                    <div class="value">1</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Total Tests Done</h4>
+                    <div class="value">15</div>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); padding: var(--spacing-6);">
+                <h3 style="margin-bottom: var(--spacing-4);">Recent Activity</h3>
+                <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--border-color); color: var(--text-secondary);">
+                            <th style="padding: var(--spacing-3) 0;">Date</th>
+                            <th style="padding: var(--spacing-3) 0;">Activity</th>
+                            <th style="padding: var(--spacing-3) 0;">Status</th>
+                            <th style="padding: var(--spacing-3) 0;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: var(--spacing-4) 0;">Aug 18, 2026</td>
+                            <td style="padding: var(--spacing-4) 0;">Comprehensive Plus Health Check</td>
+                            <td style="padding: var(--spacing-4) 0;"><span style="background: #fef08a; color: #854d0e; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">PROCESSING</span></td>
+                            <td style="padding: var(--spacing-4) 0;"><a href="dashboard-reports.html" style="font-weight: 600;">Track</a></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: var(--spacing-4) 0;">Jul 10, 2026</td>
+                            <td style="padding: var(--spacing-4) 0;">Complete Blood Count (CBC)</td>
+                            <td style="padding: var(--spacing-4) 0;"><span style="background: #bbf7d0; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">COMPLETED</span></td>
+                            <td style="padding: var(--spacing-4) 0;"><a href="#" style="font-weight: 600;">Download PDF</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="../js/main.js"></script>
+</body>
+</html>

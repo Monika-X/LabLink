@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decoding Your Lipid Profile Results | LuminaLab</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
+        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
+        .nav-links a { font-weight: 500; color: var(--text-primary); }
+        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
+        .article-content { max-width: 800px; margin: 0 auto; font-size: 1.125rem; line-height: 1.8; color: var(--text-secondary); }
+        .article-content h2 { color: var(--text-primary); margin-top: var(--spacing-8); margin-bottom: var(--spacing-4); }
+        .article-hero { border-radius: 24px; overflow: hidden; margin-bottom: var(--spacing-8); }
+        .article-hero img { width: 100%; height: 500px; object-fit: cover; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container flex justify-between items-center" style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4);">
+            <div class="logo">
+                <a href="../index.html"><h2 style="margin:0; font-weight: 700;">Lumina<span style="color:var(--champagne)">Lab</span></h2></a>
+            </div>
+            <nav class="nav-links flex gap-6 items-center">
+                <a href="../index.html">Home</a>
+                <a href="blog.html">Blog</a>
+                <a href="dashboard.html" class="btn btn-primary">Patient Portal</a>
+                <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">🌓</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="py-24">
+        <article class="container reveal">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center; margin-bottom: var(--spacing-8);">
+                <div style="color: var(--medical-emerald); font-weight: 600; text-transform: uppercase; margin-bottom: var(--spacing-4);">Cardiology</div>
+                <h1 style="font-size: 3rem; margin-bottom: var(--spacing-4);">Decoding Your Lipid Profile Results</h1>
+                <div style="color: var(--text-secondary); display: flex; justify-content: center; gap: var(--spacing-4); align-items: center;">
+                    <span>By Dr. Sarah Jenkins</span>
+                    <span>•</span>
+                    <span>August 15, 2026</span>
+                    <span>•</span>
+                    <span>5 min read</span>
+                </div>
+            </div>
+
+            <div class="article-hero">
+                <img src="../images/lab_hero.png" alt="Lipid Profile Test">
+            </div>
+
+            <div class="article-content">
+                <p>When your doctor orders a lipid profile (also known as a lipid panel), they are looking for specific types of fat in your blood. These tests are crucial for assessing your risk of cardiovascular diseases. But when you receive the report, the numbers can be confusing.</p>
+                
+                <h2>The Good, The Bad, and The Triglycerides</h2>
+                <p>A standard lipid profile measures four key components:</p>
+                <ul>
+                    <li><strong>Total Cholesterol:</strong> The overall amount of cholesterol in your blood.</li>
+                    <li><strong>LDL (Low-Density Lipoprotein):</strong> Often called "bad" cholesterol because it can build up in the walls of your arteries.</li>
+                    <li><strong>HDL (High-Density Lipoprotein):</strong> The "good" cholesterol that helps carry LDL away from the arteries and back to the liver.</li>
+                    <li><strong>Triglycerides:</strong> A type of fat found in your blood that your body uses for energy.</li>
+                </ul>
+
+                <h2>Understanding Your Numbers</h2>
+                <p>While target ranges can vary slightly based on individual risk factors, generally, you want your HDL to be high and your LDL and triglycerides to be low. At LuminaLab, our reports use advanced visual indicators to help you immediately understand where your numbers fall within the optimal ranges.</p>
+
+                <div style="background: var(--bg-secondary); padding: var(--spacing-6); border-radius: 12px; border-left: 4px solid var(--medical-emerald); margin: var(--spacing-8) 0;">
+                    <h4 style="margin-top: 0;">Clinical Tip</h4>
+                    <p style="margin-bottom: 0;">Always fast for 10-12 hours before a lipid profile test. Consuming food or beverages (other than water) can significantly alter your triglyceride levels, leading to inaccurate risk assessments.</p>
+                </div>
+                
+                <p>If your numbers are outside the healthy range, your doctor may recommend lifestyle changes such as a diet low in saturated fats, regular exercise, weight management, or medication.</p>
+            </div>
+        </article>
+    </main>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
