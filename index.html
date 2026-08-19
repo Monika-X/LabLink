@@ -72,19 +72,109 @@
         .faq-item.open .faq-icon { background: var(--medical-emerald); color: var(--pearl); transform: rotate(135deg); border-color: var(--medical-emerald); }
         .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
         .faq-a-inner { padding: 0 var(--spacing-8) var(--spacing-6); color: var(--text-secondary); font-size: 0.925rem; line-height: 1.8; }
+        .hero-1 h1 .grad { background-size: 200% auto; animation: hero-shimmer 6s linear infinite; }
+        @keyframes hero-shimmer { to { background-position: 200% center; } }
+        .marquee { position: relative; overflow: hidden; margin-top: var(--spacing-12); padding: var(--spacing-4) 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); }
+        .marquee-track { display: flex; gap: var(--spacing-10); width: max-content; animation: marquee-scroll 36s linear infinite; }
+        .marquee:hover .marquee-track { animation-play-state: paused; }
+        .marquee-track span { display: inline-flex; align-items: center; gap: var(--spacing-10); color: var(--soft-aqua); font-size: 0.85rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
+        .marquee-track i { color: var(--champagne); font-style: normal; }
+        @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .pkg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-6); }
+        .pkg-card { position: relative; border-radius: 24px; border: 1px solid var(--border-color); background: var(--bg-secondary); overflow: hidden; display: flex; flex-direction: column; transition: all 0.35s ease; }
+        .pkg-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: rgba(22,134,106,0.4); }
+        .pkg-art { height: 96px; position: relative; display: flex; align-items: flex-end; padding: var(--spacing-4) var(--spacing-6); }
+        .pkg-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,30,27,0.4), transparent); }
+        .pkg-card:nth-child(1) .pkg-art { background: linear-gradient(135deg, #0f4f46, var(--medical-emerald)); }
+        .pkg-card:nth-child(2) .pkg-art { background: linear-gradient(135deg, #123f3a, #1e7a63); }
+        .pkg-card:nth-child(3) .pkg-art { background: linear-gradient(135deg, #0c3b35, #0f4f46); }
+        .pkg-tag { position: relative; z-index: 1; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); color: var(--champagne); font-size: 0.65rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; border-radius: 50px; }
+        .pkg-body { padding: var(--spacing-6) var(--spacing-8) var(--spacing-8); display: flex; flex-direction: column; flex: 1; }
+        .pkg-price { display: flex; align-items: baseline; gap: 8px; margin-bottom: var(--spacing-3); flex-wrap: wrap; }
+        .pkg-price b { font-size: 1.9rem; color: var(--text-primary); font-family: var(--font-heading); }
+        .pkg-price s { color: var(--text-secondary); font-size: 0.95rem; }
+        .pkg-price em { font-style: normal; color: var(--medical-emerald); font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; }
+        .pkg-body h3 { font-size: 1.3rem; margin-bottom: var(--spacing-2); }
+        .pkg-body > p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; margin-bottom: var(--spacing-5); }
+        .pkg-list { list-style: none; padding: 0; margin: 0 0 var(--spacing-6); display: flex; flex-direction: column; gap: var(--spacing-2); }
+        .pkg-list li { display: flex; align-items: center; gap: 10px; font-size: 0.86rem; color: var(--text-primary); }
+        .pkg-list svg { color: var(--medical-emerald); flex-shrink: 0; }
+        .pkg-card .btn { margin-top: auto; }
+        .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-6); }
+        .testi-card { border-radius: 24px; border: 1px solid var(--border-color); background: var(--bg-secondary); padding: var(--spacing-8); display: flex; flex-direction: column; gap: var(--spacing-4); transition: all 0.35s ease; position: relative; overflow: hidden; }
+        .testi-card::before { content: ''; position: absolute; top: 0; inset-inline: 0; height: 3px; background: linear-gradient(90deg, var(--medical-emerald), var(--champagne)); opacity: 0; transition: opacity 0.35s ease; }
+        .testi-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+        .testi-card:hover::before { opacity: 1; }
+        .testi-stars { display: flex; gap: 4px; color: var(--champagne); }
+        .testi-quote { font-size: 0.92rem; line-height: 1.8; color: var(--text-primary); }
+        .testi-who { display: flex; align-items: center; gap: var(--spacing-4); margin-top: auto; }
+        .testi-avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--medical-emerald), var(--deep-teal)); color: var(--pearl); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; border: 2px solid rgba(213,183,122,0.4); }
+        .testi-who b { display: block; font-size: 0.9rem; }
+        .testi-who span { font-size: 0.75rem; color: var(--text-secondary); }
+        .cta-band { border-radius: 32px; background: linear-gradient(140deg, var(--deep-teal) 0%, var(--medical-emerald) 100%); position: relative; overflow: hidden; padding: var(--spacing-16) var(--spacing-10); text-align: center; }
+        .cta-band::before { content: ''; position: absolute; inset: 0; background: radial-gradient(600px 300px at 20% 0%, rgba(213,183,122,0.18), transparent 60%), radial-gradient(500px 300px at 85% 100%, rgba(255,255,255,0.12), transparent 60%); }
+        .cta-band > * { position: relative; z-index: 1; }
+        .cta-band h2 { color: var(--pearl); font-size: 2.6rem; margin-bottom: var(--spacing-4); }
+        .cta-band p { color: var(--soft-aqua); font-size: 1.05rem; max-width: 560px; margin: 0 auto var(--spacing-10); line-height: 1.8; }
         @media (max-width: 992px) {
             .hero-1 h1 { font-size: 3rem; }
             .bento { grid-template-columns: repeat(2, 1fr); }
             .bento-photo { min-height: 240px; }
+            .pkg-grid, .testi-grid { grid-template-columns: 1fr 1fr; }
+            .pkg-card:last-child, .testi-card:last-child { grid-column: span 2; }
         }
         @media (max-width: 768px) {
-            .hero-1 { padding: var(--spacing-16) 0; }
-            .hero-1 .grid, .home-band .grid { grid-template-columns: 1fr; }
-            .chip-a { inset-inline-start: 12px; }
-            .chip-b { inset-inline-end: 12px; }
-            .bento { grid-template-columns: 1fr; }
-            .bento-photo { grid-column: span 1; }
-            .section-title { font-size: 2.25rem; }
+            .hero-1 { padding: var(--spacing-12) 0; }
+            .hero-1 .grid, .home-band .grid { grid-template-columns: 1fr; gap: var(--spacing-8); }
+            .hero-1 h1 { font-size: 2.35rem; margin-bottom: var(--spacing-4); }
+            .hero-sub { font-size: 0.95rem; line-height: 1.7; margin-bottom: var(--spacing-6); }
+            .hero-badge { font-size: 0.65rem; padding: var(--spacing-2) var(--spacing-3); }
+            .quick-book { padding: var(--spacing-2); border-radius: 14px; }
+            .quick-book input { font-size: 0.85rem; }
+            .hero-stats { gap: var(--spacing-8); margin-top: var(--spacing-8); }
+            .hero-stats h3 { font-size: 1.7rem; }
+            .hero-frame img { height: 320px; }
+            .float-chip { padding: var(--spacing-2) var(--spacing-3); border-radius: 12px; }
+            .chip-icon { width: 34px; height: 34px; }
+            .float-chip strong { font-size: 0.75rem; }
+            .float-chip small { font-size: 0.65rem; }
+            .marquee { margin-top: var(--spacing-8); }
+            .marquee-track { gap: var(--spacing-6); }
+            .marquee-track span { gap: var(--spacing-6); font-size: 0.7rem; letter-spacing: 1.5px; }
+            .cert-strip { gap: var(--spacing-3); margin-top: var(--spacing-8); padding-top: var(--spacing-4); }
+            .cert-strip span { font-size: 0.68rem; }
+            .py-24 { padding-top: var(--spacing-14); padding-bottom: var(--spacing-14); }
+            .section-title { font-size: 1.75rem; margin-bottom: var(--spacing-3); }
+            .eyebrow { font-size: 0.68rem; }
+            .bento { gap: var(--spacing-4); }
+            .bento-card { padding: var(--spacing-6); border-radius: 18px; }
+            .bento-photo { min-height: 200px; padding: var(--spacing-5); border-radius: 18px; }
+            .bento-icon { width: 44px; height: 44px; border-radius: 12px; }
+            .pkg-grid, .testi-grid { gap: var(--spacing-4); }
+            .pkg-card:last-child, .testi-card:last-child { grid-column: span 1; }
+            .pkg-body { padding: var(--spacing-5); }
+            .pkg-price b { font-size: 1.6rem; }
+            .pkg-art { height: 72px; }
+            .testi-card { padding: var(--spacing-6); border-radius: 18px; }
+            .testi-quote { font-size: 0.86rem; }
+            .band-media img { height: 280px; border-radius: 20px; }
+            .band-step { gap: var(--spacing-4); margin-bottom: var(--spacing-6); }
+            .step-num { width: 42px; height: 42px; min-width: 42px; font-size: 0.95rem; }
+            .cta-band { padding: var(--spacing-10) var(--spacing-6); border-radius: 24px; }
+            .cta-band h2 { font-size: 1.6rem; margin-bottom: var(--spacing-3); }
+            .cta-band p { font-size: 0.92rem; margin-bottom: var(--spacing-8); }
+            .faq-q { padding: var(--spacing-4) var(--spacing-5); font-size: 0.92rem; }
+            .faq-a-inner { padding: 0 var(--spacing-5) var(--spacing-4); font-size: 0.85rem; }
+        }
+        @media (max-width: 480px) {
+            .hero-1 h1 { font-size: 2rem; }
+            .hero-stats { gap: var(--spacing-6); }
+            .hero-stats h3 { font-size: 1.5rem; }
+            .hero-frame img { height: 260px; }
+            .chip-a { inset-inline-start: 8px; bottom: 16px; }
+            .chip-b { inset-inline-end: 8px; top: 16px; }
+            .section-title { font-size: 1.6rem; }
+            .pkg-price s { display: none; }
         }
     </style>
     <link rel="icon" type="image/png" href="images/favicon.png">
@@ -219,6 +309,12 @@
                     <span>HIPAA <i>·</i></span>
                     <span>NABL</span>
                 </div>
+                <div class="marquee reveal">
+                    <div class="marquee-track">
+                        <span>Full Body Checkup <i>✦</i></span><span>Lipid Profile <i>✦</i></span><span>Thyroid Panel <i>✦</i></span><span>HbA1c <i>✦</i></span><span>Vitamin D <i>✦</i></span><span>Liver Function <i>✦</i></span><span>Kidney Function <i>✦</i></span><span>Complete Blood Count <i>✦</i></span><span>Cardiac Markers <i>✦</i></span><span>Hormone Panel <i>✦</i></span>
+                        <span>Full Body Checkup <i>✦</i></span><span>Lipid Profile <i>✦</i></span><span>Thyroid Panel <i>✦</i></span><span>HbA1c <i>✦</i></span><span>Vitamin D <i>✦</i></span><span>Liver Function <i>✦</i></span><span>Kidney Function <i>✦</i></span><span>Complete Blood Count <i>✦</i></span><span>Cardiac Markers <i>✦</i></span><span>Hormone Panel <i>✦</i></span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -269,6 +365,67 @@
             </div>
         </section>
 
+        <!-- Popular Packages -->
+        <section class="py-24">
+            <div class="container">
+                <div class="text-center reveal" style="max-width: 620px; margin: 0 auto var(--spacing-14);">
+                    <span class="eyebrow">Popular Packages</span>
+                    <h2 class="section-title">Health Checks, Curated</h2>
+                    <p class="text-secondary">Physician-designed panels with lab-tested pricing — free home collection included on every package.</p>
+                </div>
+                <div class="pkg-grid">
+                    <div class="pkg-card reveal">
+                        <div class="pkg-art"><span class="pkg-tag">Most Popular</span></div>
+                        <div class="pkg-body">
+                            <div class="pkg-price"><b>₹1,499</b><s>₹2,400</s><em>Save 38%</em></div>
+                            <h3>Essential Health Check</h3>
+                            <p>40+ parameters covering the fundamentals — the smartest first step toward preventive health.</p>
+                            <ul class="pkg-list">
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Fasting Blood Sugar + HbA1c</li>
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lipid Profile + CBC</li>
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Vitamin D + Urinalysis</li>
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Physician Summary Report</li>
+                            </ul>
+                            <a href="pages/services.html" class="btn btn-primary">Book This Checkup</a>
+                        </div>
+                    </div>
+                    <div class="pkg-card reveal" style="transition-delay: 0.1s;">
+                        <div class="pkg-art"><span class="pkg-tag">Best Value</span></div>
+                        <div class="pkg-body">
+                            <div class="pkg-price"><b>₹3,999</b><s>₹6,800</s><em>Save 41%</em></div>
+                            <h3>Comprehensive Wellness</h3>
+                            <p>75+ parameters across organ systems — a complete annual health audit for the whole family.</p>
+                            <ul class="pkg-list">
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Essential</li>
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Thyroid + Liver + Kidney Panels</li>
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>ECG Report + Dietitian Review</li>
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Doctor Tele-Consultation</li>
+                            </ul>
+                            <a href="pages/services.html" class="btn btn-primary">Book This Checkup</a>
+                        </div>
+                    </div>
+                    <div class="pkg-card reveal" style="transition-delay: 0.2s;">
+                        <div class="pkg-art"><span class="pkg-tag">Executive Elite</span></div>
+                        <div class="pkg-body">
+                            <div class="pkg-price"><b>₹7,999</b><s>₹13,500</s><em>Save 41%</em></div>
+                            <h3>Executive Elite</h3>
+                            <p>120+ parameters with advanced cardiac, hormonal, and cancer-risk markers — our most thorough screen.</p>
+                            <ul class="pkg-list">
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Comprehensive</li>
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Cardiac + Hormone + Cancer Markers</li>
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Imaging Referral + Wellness Plan</li>
+                                <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Dedicated Concierge + Priority Lab</li>
+                            </ul>
+                            <a href="pages/services.html" class="btn btn-primary">Book This Checkup</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" style="margin-top: var(--spacing-12);">
+                    <a href="pages/services.html" class="btn btn-accent">View All Packages</a>
+                </div>
+            </div>
+        </section>
+
         <!-- Home Collection -->
         <section class="py-24 home-band">
             <div class="container">
@@ -305,6 +462,57 @@
                             <a href="pages/services.html" class="btn btn-accent">Schedule a Home Visit</a>
                             <a href="pages/contact.html" class="btn btn-secondary" style="border-color: var(--pearl); color: var(--pearl);">Talk to Us</a>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-24">
+            <div class="container">
+                <div class="text-center reveal" style="max-width: 620px; margin: 0 auto var(--spacing-14);">
+                    <span class="eyebrow">Patient Stories</span>
+                    <h2 class="section-title">Trusted, One Report at a Time</h2>
+                    <p class="text-secondary">12,000+ patients rate LabLink 4.9/5. Here's what a few of them say.</p>
+                </div>
+                <div class="testi-grid">
+                    <div class="testi-card reveal">
+                        <div class="testi-stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                        <p class="testi-quote">"The phlebotomist arrived exactly on time, was incredibly gentle, and my full report landed in the portal the next morning — with clear flags explaining every out-of-range value. This is how diagnostics should feel."</p>
+                        <div class="testi-who">
+                            <div class="testi-avatar">AR</div>
+                            <div><b>Anitha Ramesh</b><span>Full Body Checkup · Home Collection</span></div>
+                        </div>
+                    </div>
+                    <div class="testi-card reveal" style="transition-delay: 0.1s;">
+                        <div class="testi-stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                        <p class="testi-quote">"I get my father's quarterly panels done here. The family portal makes it effortless — five profiles under one login, PDFs for his doctor, and the concierge even calls before every fasting test. Unmatched service."</p>
+                        <div class="testi-who">
+                            <div class="testi-avatar">KS</div>
+                            <div><b>Karthik Subramanian</b><span>Family Accounts · 5 Profiles</span></div>
+                        </div>
+                    </div>
+                    <div class="testi-card reveal" style="transition-delay: 0.2s;">
+                        <div class="testi-stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                        <p class="testi-quote">"My executive panel caught a cardiac marker my regular checkup missed for years. The cardiologist referral was arranged before I even finished reading the report. Worth every rupee."</p>
+                        <div class="testi-who">
+                            <div class="testi-avatar">PV</div>
+                            <div><b>Priya Venkatesan</b><span>Executive Elite · Cardiac Markers</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Band -->
+        <section class="py-24">
+            <div class="container">
+                <div class="cta-band reveal">
+                    <h2>Your health can't wait. <span style="color: var(--champagne);">Neither should you.</span></h2>
+                    <p>Book a home collection in two minutes, or walk into any LabLink center — physician-reviewed reports land in your portal within 24 hours.</p>
+                    <div class="flex gap-4 justify-center">
+                        <a href="pages/services.html" class="btn btn-accent">Book a Home Visit</a>
+                        <a href="pages/contact.html" class="btn btn-secondary" style="border-color: var(--pearl); color: var(--pearl);">Talk to Our Team</a>
                     </div>
                 </div>
             </div>

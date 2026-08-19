@@ -7,62 +7,102 @@
     <link rel="stylesheet" href="../css/index.css">
     <style>
         body { margin: 0; background: var(--bg-primary); }
-        .auth-wrap { display: grid; grid-template-columns: 1.05fr 1fr; min-height: 100vh; }
+        .auth-wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; min-height: 100vh; background: var(--bg-primary); }
         .auth-visual { position: relative; overflow: hidden; min-height: 100vh; }
         .auth-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-        .auth-overlay { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(7,30,27,0.92) 0%, rgba(15,79,70,0.72) 48%, rgba(7,30,27,0.9) 100%); }
+        .auth-overlay { position: absolute; inset: 0; background: linear-gradient(165deg, rgba(5,24,21,0.95) 0%, rgba(12,64,56,0.72) 45%, rgba(5,24,21,0.96) 100%); }
         .auth-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 52px 52px; -webkit-mask-image: radial-gradient(ellipse at 30% 40%, black 20%, transparent 75%); mask-image: radial-gradient(ellipse at 30% 40%, black 20%, transparent 75%); }
-        .auth-glow { position: absolute; width: 420px; height: 420px; border-radius: 50%; filter: blur(110px); background: var(--champagne); opacity: 0.22; top: -120px; inset-inline-end: -100px; pointer-events: none; }
+        .auth-glow { position: absolute; border-radius: 50%; filter: blur(110px); pointer-events: none; }
+        .glow-emerald { width: 480px; height: 480px; background: var(--medical-emerald); opacity: 0.4; top: -140px; inset-inline-end: -120px; }
+        .glow-gold { width: 380px; height: 380px; background: var(--champagne); opacity: 0.16; bottom: -140px; inset-inline-start: -80px; }
         .auth-visual .container { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding-top: var(--spacing-10); padding-bottom: var(--spacing-10); }
-        .auth-brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; align-self: flex-start; }
-        .auth-brand h2 { color: var(--pearl); font-size: 1.5rem; margin: 0; line-height: 1.1; }
-        .auth-brand span { display: block; font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--soft-aqua); margin-top: 2px; }
-        .auth-visual h1 { color: var(--pearl); font-size: 2.7rem; line-height: 1.25; max-width: 480px; margin: 0 0 var(--spacing-4); }
+        .auth-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); color: var(--champagne); font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 8px 18px; border-radius: 50px; margin-bottom: var(--spacing-6); backdrop-filter: blur(8px); box-shadow: 0 8px 24px -12px rgba(0,0,0,0.5); }
+        .auth-badge svg { color: var(--medical-emerald); }
+        .auth-visual h1 { color: var(--pearl); font-size: clamp(2.3rem, 3.6vw, 3.1rem); line-height: 1.22; max-width: 500px; margin: 0 0 var(--spacing-4); letter-spacing: -0.5px; }
         .auth-visual h1 .grad { background: linear-gradient(92deg, var(--champagne) 0%, #fdf6e3 45%, var(--medical-emerald) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .auth-visual .sub { color: var(--soft-aqua); font-size: 0.98rem; line-height: 1.8; max-width: 420px; margin: 0 0 var(--spacing-8); }
-        .auth-points { display: flex; flex-direction: column; gap: var(--spacing-3); margin: 0 0 var(--spacing-8); padding: 0; list-style: none; }
-        .auth-points li { display: flex; align-items: center; gap: 10px; color: var(--soft-aqua); font-size: 0.88rem; font-weight: 600; }
-        .auth-points li svg { color: var(--medical-emerald); min-width: 16px; }
+        .auth-visual .sub { color: var(--soft-aqua); font-size: 0.98rem; line-height: 1.8; max-width: 430px; margin: 0 0 var(--spacing-7); }
+        .auth-perks { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-4); max-width: 500px; margin-bottom: var(--spacing-8); }
+        .auth-perk { background: linear-gradient(160deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03)); border: 1px solid rgba(255,255,255,0.14); border-radius: 18px; padding: var(--spacing-5) var(--spacing-4); transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .auth-perk::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--medical-emerald), var(--champagne)); opacity: 0; transition: opacity 0.3s ease; }
+        .auth-perk:hover { border-color: rgba(213,183,122,0.45); transform: translateY(-4px); background: rgba(255,255,255,0.1); box-shadow: 0 16px 32px -16px rgba(0,0,0,0.6); }
+        .auth-perk:hover::after { opacity: 1; }
+        .auth-perk .perk-icon { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, rgba(22,134,106,0.35), rgba(213,183,122,0.2)); border: 1px solid rgba(213,183,122,0.3); display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-4); transition: transform 0.3s ease; }
+        .auth-perk:hover .perk-icon { transform: scale(1.1) rotate(-4deg); }
+        .auth-perk svg { color: var(--champagne); }
+        .auth-perk b { display: block; color: var(--pearl); font-size: 0.82rem; margin-bottom: 4px; }
+        .auth-perk span { font-size: 0.68rem; color: var(--soft-aqua); line-height: 1.55; display: block; }
+        .auth-floor { display: flex; flex-direction: column; gap: var(--spacing-5); }
+        .auth-report { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.16); border-radius: 20px; padding: var(--spacing-5) var(--spacing-6); backdrop-filter: blur(10px); box-shadow: 0 24px 60px -30px rgba(0,0,0,0.6); max-width: 480px; }
+        .report-head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-4); margin-bottom: var(--spacing-3); }
+        .report-head b { color: var(--pearl); font-size: 0.92rem; font-family: var(--font-heading); }
+        .live { display: inline-flex; align-items: center; gap: 7px; color: var(--soft-aqua); font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #7fe0c3; position: relative; }
+        .live-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid #7fe0c3; animation: pulse-ring 1.8s ease-out infinite; }
+        @keyframes pulse-ring { 0% { transform: scale(0.5); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
+        .report-row { padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.09); display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 12px; transition: background 0.25s ease; }
+        .report-row:hover { background: rgba(255,255,255,0.04); }
+        .report-row .r-name { display: flex; align-items: center; gap: 10px; color: var(--pearl); font-size: 0.82rem; font-weight: 600; }
+        .r-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--medical-emerald), var(--deep-teal)); color: var(--pearl); font-size: 0.62rem; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2); }
+        .report-row .r-val { color: var(--soft-aqua); font-size: 0.78rem; font-weight: 700; }
+        .r-ok { font-style: normal; font-size: 0.62rem; font-weight: 800; color: #7fe0c3; letter-spacing: 0.5px; margin-inline-start: 8px; background: rgba(127,224,195,0.12); border: 1px solid rgba(127,224,195,0.25); padding: 2px 7px; border-radius: 50px; }
+        .report-row .r-bar { grid-column: 1 / -1; height: 5px; border-radius: 5px; background: rgba(255,255,255,0.12); overflow: hidden; }
+        .report-row .r-bar i { display: block; height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--medical-emerald), #7fe0c3); }
         .auth-chips { display: flex; gap: var(--spacing-4); flex-wrap: wrap; }
-        .auth-chip { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.16); border-radius: 16px; padding: var(--spacing-4) var(--spacing-5); backdrop-filter: blur(8px); }
+        .auth-chip { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 18px; padding: var(--spacing-4) var(--spacing-6); backdrop-filter: blur(8px); box-shadow: 0 12px 28px -16px rgba(0,0,0,0.5); transition: all 0.3s ease; }
+        .auth-chip:hover { transform: translateY(-3px); border-color: rgba(213,183,122,0.4); }
         .auth-chip b { display: block; color: var(--pearl); font-size: 1.25rem; font-family: var(--font-heading); line-height: 1.2; }
         .auth-chip span { font-size: 0.72rem; color: var(--soft-aqua); letter-spacing: 0.5px; }
-        .auth-perks { margin-top: var(--spacing-8); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-4); max-width: 440px; }
-        .auth-perk { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; padding: var(--spacing-4); }
-        .auth-perk svg { color: var(--champagne); margin-bottom: var(--spacing-3); }
-        .auth-perk b { display: block; color: var(--pearl); font-size: 0.8rem; margin-bottom: 3px; }
-        .auth-perk span { font-size: 0.68rem; color: var(--soft-aqua); line-height: 1.5; display: block; }
-        .auth-panel { display: flex; align-items: center; justify-content: center; padding: var(--spacing-10) var(--spacing-8); position: relative; }
-        .auth-panel .back-home { position: absolute; top: var(--spacing-8); inset-inline-start: var(--spacing-8); display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.82rem; font-weight: 700; text-decoration: none; transition: color 0.25s ease; }
-        .auth-panel .back-home:hover { color: var(--medical-emerald); }
-        .auth-card { width: 100%; max-width: 460px; }
-        .auth-card .eyebrow { margin-bottom: var(--spacing-3); }
-        .auth-card h2 { font-size: 2rem; margin: 0 0 var(--spacing-2); }
-        .auth-card .hint { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.7; margin: 0 0 var(--spacing-8); }
+
+        .auth-panel { display: flex; align-items: flex-start; justify-content: center; padding: var(--spacing-14) var(--spacing-8) var(--spacing-10); position: relative; overflow: hidden; }
+        .panel-glow { position: absolute; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle, rgba(22,134,106,0.12), transparent 70%); top: -180px; inset-inline-end: -160px; pointer-events: none; }
+        .auth-panel .back-home { position: absolute; top: var(--spacing-8); inset-inline-start: var(--spacing-8); display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.8rem; font-weight: 700; text-decoration: none; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; padding: 9px 16px; transition: all 0.25s ease; z-index: 2; }
+        .auth-panel .back-home:hover { color: var(--medical-emerald); border-color: rgba(22,134,106,0.45); transform: translateY(-2px); }
+        .auth-card { width: 100%; max-width: 460px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 24px; padding: var(--spacing-8) var(--spacing-8) var(--spacing-7); box-shadow: 0 24px 60px -24px rgba(7,30,27,0.28); position: relative; overflow: hidden; margin-top: var(--spacing-14); }
+        .auth-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--medical-emerald), var(--champagne)); }
+        .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--medical-emerald); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: var(--spacing-4); }
+        .eyebrow-line { width: 24px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--medical-emerald), var(--champagne)); }
+        .auth-card h2 { font-size: 1.85rem; margin: 0 0 var(--spacing-2); letter-spacing: -0.5px; }
+        .auth-card .hint { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin: 0 0 var(--spacing-7); }
         .field { margin-bottom: var(--spacing-5); }
         .field label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-primary); margin-bottom: var(--spacing-2); }
         .input-wrap { position: relative; }
-        .input-wrap > svg { position: absolute; top: 50%; inset-inline-start: 14px; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none; }
-        .input-wrap input { width: 100%; padding: 12px 14px 12px 42px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-family: var(--font-body); font-size: 0.9rem; outline: none; transition: all 0.3s ease; }
-        .input-wrap input:focus { border-color: var(--medical-emerald); box-shadow: 0 0 0 3px rgba(22,134,106,0.12); }
-        .pw-toggle { position: absolute; top: 50%; inset-inline-end: 12px; transform: translateY(-50%); background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 4px; display: flex; }
+        .input-wrap > svg { position: absolute; top: 50%; inset-inline-start: 15px; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none; transition: color 0.3s ease; }
+        .input-wrap:focus-within > svg { color: var(--medical-emerald); }
+        .input-wrap input { width: 100%; padding: 13px 14px 13px 44px; border-radius: 14px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); font-size: 0.9rem; outline: none; transition: all 0.3s ease; }
+        .input-wrap input:hover { border-color: rgba(22,134,106,0.45); }
+        .input-wrap input:focus { border-color: var(--medical-emerald); box-shadow: 0 0 0 4px rgba(22,134,106,0.14); }
+        .pw-toggle { position: absolute; top: 50%; inset-inline-end: 13px; transform: translateY(-50%); background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 4px; display: flex; transition: color 0.25s ease; }
         .pw-toggle:hover { color: var(--medical-emerald); }
-        .pw-meter { display: flex; gap: 6px; margin-top: var(--spacing-2); }
+        .pw-meter { display: flex; gap: 6px; margin-top: var(--spacing-3); }
         .pw-meter span { flex: 1; height: 4px; border-radius: 4px; background: var(--border-color); transition: background 0.3s ease; }
         .pw-meter-text { font-size: 0.7rem; color: var(--text-secondary); margin-top: 6px; font-weight: 600; }
-        .btn-submit { width: 100%; justify-content: center; text-decoration: none; padding: var(--spacing-3) var(--spacing-6); font-size: 0.92rem; }
+        .btn-submit { width: 100%; justify-content: center; align-items: center; gap: 8px; text-decoration: none; padding: var(--spacing-3) var(--spacing-6); font-size: 0.92rem; }
+        .btn-submit svg { transition: transform 0.3s ease; }
+        .btn-submit:hover svg { transform: translateX(4px); }
         .auth-divider { display: flex; align-items: center; gap: var(--spacing-4); margin: var(--spacing-6) 0; color: var(--text-secondary); font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; }
         .auth-divider::before, .auth-divider::after { content: ""; flex: 1; height: 1px; background: var(--border-color); }
         .social-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-4); }
-        .social-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 11px 14px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: all 0.25s ease; }
-        .social-btn:hover { border-color: var(--medical-emerald); color: var(--medical-emerald); }
-        .auth-switch { text-align: center; margin-top: var(--spacing-8); font-size: 0.87rem; color: var(--text-secondary); }
+        .social-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary); font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: all 0.25s ease; }
+        .social-btn:hover { border-color: var(--medical-emerald); color: var(--medical-emerald); transform: translateY(-2px); box-shadow: 0 8px 20px -12px rgba(22,134,106,0.4); }
+        .auth-switch { text-align: center; margin-top: var(--spacing-7); font-size: 0.87rem; color: var(--text-secondary); }
         .auth-switch a { color: var(--medical-emerald); font-weight: 700; text-decoration: none; }
         .auth-switch a:hover { text-decoration: underline; }
         .auth-terms { display: flex; align-items: flex-start; gap: 10px; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--spacing-6); cursor: pointer; }
         .auth-terms input { accent-color: var(--medical-emerald); width: 15px; height: 15px; margin-top: 3px; }
         .auth-terms a { color: var(--medical-emerald); font-weight: 700; text-decoration: none; }
         .auth-terms a:hover { text-decoration: underline; }
+        .auth-trust { display: flex; justify-content: center; gap: var(--spacing-6); flex-wrap: wrap; margin-top: var(--spacing-7); padding-top: var(--spacing-6); border-top: 1px dashed var(--border-color); }
+        .auth-trust span { display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 0.72rem; font-weight: 600; }
+        .auth-trust svg { color: var(--medical-emerald); }
+        .auth-toggles { position: fixed; top: 20px; inset-inline-end: 24px; display: flex; gap: 10px; z-index: 60; }
+        .auth-toggles button { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50%; color: var(--text-primary); cursor: pointer; box-shadow: 0 6px 18px -8px rgba(7,30,27,0.35); backdrop-filter: blur(8px); transition: all 0.25s ease; }
+        .auth-toggles button:hover { color: var(--medical-emerald); border-color: rgba(22,134,106,0.45); transform: translateY(-2px); }
+        .auth-toggles .dir-btn { width: auto; min-width: 56px; padding: 0 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; }
+        .form-logo { display: flex; justify-content: center; align-items: center; gap: 12px; text-decoration: none; margin-bottom: var(--spacing-6); padding-bottom: var(--spacing-6); border-bottom: 1px dashed var(--border-color); width: 100%; text-align: center; transition: opacity 0.25s ease; }
+        .form-logo:hover { opacity: 0.85; }
+        .form-logo > div { text-align: center; }
+        .form-logo h2 { margin: 0; font-weight: 700; line-height: 1.1; font-size: 1.5rem; color: var(--text-primary); white-space: nowrap; }
+        .form-logo > div > span { display: block; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary); margin-top: 2px; }
         @media (max-width: 992px) {
             .auth-wrap { grid-template-columns: 1fr; }
             .auth-visual { display: none; }
@@ -70,7 +110,8 @@
         }
         @media (max-width: 640px) {
             .auth-panel { padding: var(--spacing-10) var(--spacing-5); }
-            .auth-card h2 { font-size: 1.6rem; }
+            .auth-card { padding: var(--spacing-6); }
+            .auth-card h2 { font-size: 1.55rem; }
             .social-row { grid-template-columns: 1fr; }
             .auth-perks { grid-template-columns: 1fr; }
         }
@@ -79,40 +120,73 @@
 </head>
 <body>
     <div class="auth-wrap">
+        <div class="auth-toggles">
+            <button id="theme-toggle" title="Switch theme" aria-label="Toggle theme">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button id="dir-toggle" class="dir-btn" title="Toggle RTL/LTR">RTL</button>
+        </div>
         <div class="auth-visual">
-            <img src="https://i.pinimg.com/736x/a3/0b/74/a30b74991b51a15379ec9b6701553d37.jpg" alt="Modern LabLink laboratory">
+            <img src="https://i.pinimg.com/736x/a3/0b/74/a30b74991b51a15379ec9b6701553d37.jpg" alt="Modern LabLink laboratory" style="margin-top: -25%; height: 125%;">
             <div class="auth-overlay"></div>
             <div class="auth-grid"></div>
-            <div class="auth-glow"></div>
+            <div class="auth-glow glow-emerald"></div>
+            <div class="auth-glow glow-gold"></div>
             <div class="container">
-                <a href="../index.html" class="auth-brand">
-                    <img src="../images/logo.png" alt="LabLink Logo" style="height: 40px;">
-                    <div>
-                        <h2>Lab<span style="color: var(--champagne);">Link</span></h2>
-                        <span>Premium Diagnostics</span>
-                    </div>
-                </a>
                 <div>
+                    <span class="auth-badge">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        Free Patient Portal
+                    </span>
                     <h1>Join the <span class="grad">gold standard</span> in diagnostics</h1>
                     <p class="sub">Create your free patient account and unlock 250+ NABL-accredited tests with physician-reviewed reports.</p>
                     <div class="auth-perks">
                         <div class="auth-perk">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div class="perk-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            </div>
                             <b>Instant Portal</b>
                             <span>Reports the moment they're verified</span>
                         </div>
                         <div class="auth-perk">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <div class="perk-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
                             <b>Family Accounts</b>
                             <span>Manage up to 5 profiles in one login</span>
                         </div>
                         <div class="auth-perk">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <div class="perk-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
                             <b>Bank-Grade Security</b>
                             <span>HIPAA-compliant data protection</span>
                         </div>
                     </div>
-                    <div class="auth-chips" style="margin-top: var(--spacing-8);">
+                </div>
+                <div class="auth-floor">
+                    <div class="auth-report">
+                        <div class="report-head">
+                            <b>Family Portal</b>
+                            <span class="live"><span class="live-dot"></span>5 profiles</span>
+                        </div>
+                        <div class="report-row">
+                            <span class="r-name"><span class="r-avatar">PS</span>Priya • 32</span>
+                            <span class="r-val">Vitamin D<i class="r-ok">OPTIMAL</i></span>
+                            <div class="r-bar"><i style="width: 64%"></i></div>
+                        </div>
+                        <div class="report-row">
+                            <span class="r-name"><span class="r-avatar">AJ</span>Arjun • 6</span>
+                            <span class="r-val">HbA1c<i class="r-ok">NORMAL</i></span>
+                            <div class="r-bar"><i style="width: 45%"></i></div>
+                        </div>
+                        <div class="report-row">
+                            <span class="r-name"><span class="r-avatar">MP</span>Meera • 68</span>
+                            <span class="r-val">Lipid Panel<i class="r-ok">TRACKING</i></span>
+                            <div class="r-bar"><i style="width: 82%"></i></div>
+                        </div>
+                    </div>
+                    <div class="auth-chips">
                         <div class="auth-chip"><b>1M+</b><span>Tests delivered</span></div>
                         <div class="auth-chip"><b>98%</b><span>Patient satisfaction</span></div>
                         <div class="auth-chip"><b>24/7</b><span>Care concierge</span></div>
@@ -122,12 +196,19 @@
         </div>
 
         <div class="auth-panel">
+            <div class="panel-glow"></div>
             <a href="../index.html" class="back-home">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back to Home
             </a>
             <div class="auth-card reveal">
-                <span class="eyebrow">Get Started Free</span>
+                <a href="../index.html" class="form-logo">
+                    <div>
+                        <h2>Lab<span style="color: var(--champagne);">Link</span></h2>
+                        <span>Premium Diagnostics</span>
+                    </div>
+                </a>
+                <span class="eyebrow"><span class="eyebrow-line"></span>Get Started Free</span>
                 <h2>Create your account</h2>
                 <p class="hint">Takes less than a minute. No hidden charges, ever.</p>
 
@@ -183,7 +264,10 @@
                         <input type="checkbox" required>
                         <span>I agree to the <a href="terms.html">Terms & Conditions</a> and <a href="privacy.html">Privacy Policy</a></span>
                     </label>
-                    <button type="submit" class="btn btn-primary btn-submit">Create Account</button>
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        Create Account
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
                 </form>
 
                 <div class="auth-divider">or continue with</div>
@@ -199,6 +283,12 @@
                 </div>
 
                 <p class="auth-switch">Already have an account? <a href="login.html">Sign In</a></p>
+
+                <div class="auth-trust">
+                    <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg> HIPAA Secure</span>
+                    <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> NABL Accredited</span>
+                    <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 24/7 Support</span>
+                </div>
             </div>
         </div>
     </div>

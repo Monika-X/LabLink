@@ -101,6 +101,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 profileMenu.classList.remove('open');
             }
         });
+
+        window.addEventListener('pageshow', () => {
+            profileMenu.classList.remove('open');
+        });
     }
 
     // Scroll Reveal Animation
@@ -165,6 +169,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (menuToggle && mobileMenu) {
+        // Inject close button dynamically
+        const mobileMenuHead = mobileMenu.querySelector('.mobile-menu-head');
+        if (mobileMenuHead && !mobileMenuHead.querySelector('.mobile-close-btn')) {
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'mobile-close-btn';
+            closeBtn.setAttribute('aria-label', 'Close menu');
+            closeBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+            closeBtn.addEventListener('click', closeMenu);
+            mobileMenuHead.appendChild(closeBtn);
+        }
+
         menuToggle.addEventListener('click', () => {
             if (mobileMenu.classList.contains('open')) {
                 closeMenu();

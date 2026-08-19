@@ -6,7 +6,7 @@
     <title>404 Not Found | LabLink</title>
     <link rel="stylesheet" href="../css/index.css">
     <style>
-        .e-hero { position: relative; overflow: hidden; background: radial-gradient(1100px 560px at 50% -10%, #0f4f46 0%, var(--deep-teal) 50%, #071e1b 100%); color: var(--pearl); padding: var(--spacing-28) 0 var(--spacing-20); text-align: center; }
+        .e-hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; background: radial-gradient(1100px 560px at 50% -10%, #0f4f46 0%, var(--deep-teal) 50%, #071e1b 100%); color: var(--pearl); padding: var(--spacing-28) 0 var(--spacing-20); text-align: center; }
         .e-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 72%); mask-image: radial-gradient(ellipse at center, black 25%, transparent 72%); }
         .e-glow { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; }
         .eglow-a { width: 440px; height: 440px; background: var(--medical-emerald); opacity: 0.28; top: -160px; inset-inline-start: -120px; }
@@ -22,6 +22,10 @@
         .e-links a { color: var(--soft-aqua); font-size: 0.875rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: color 0.3s ease; }
         .e-links a:hover { color: var(--champagne); }
         .e-links svg { color: var(--medical-emerald); }
+        .e-toggles { position: fixed; top: 20px; inset-inline-end: 24px; display: flex; gap: 10px; z-index: 60; }
+        .e-toggles button { height: 42px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: var(--pearl); cursor: pointer; box-shadow: 0 6px 18px -8px rgba(0,0,0,0.5); backdrop-filter: blur(8px); transition: all 0.25s ease; }
+        .e-toggles button:hover { color: var(--champagne); border-color: rgba(213,183,122,0.5); transform: translateY(-2px); }
+        .e-toggles .dir-btn { width: auto; min-width: 56px; padding: 0 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; }
         @media (max-width: 768px) {
             .e-code { font-size: 6rem; }
             .e-hero { padding: var(--spacing-20) 0 var(--spacing-16); }
@@ -30,75 +34,12 @@
     <link rel="icon" type="image/png" href="../images/favicon.png">
 </head>
 <body>
-    <header class="header">
-        <div class="container flex justify-between items-center" style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4);">
-<div class="logo">
-                <a href="../index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
-                    <img src="../images/logo.png" alt="LabLink Logo" style="height: 40px;">
-                    <div>
-                        <h2 style="margin:0; font-weight: 700; line-height: 1.1; font-size: 1.5rem; color: var(--text-primary);">Lab<span style="color:var(--champagne)">Link</span></h2>
-                        <span style="display:block; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-secondary); margin-top:2px;">Premium Diagnostics</span>
-                    </div>
-                </a>
-            </div>
-            <nav class="nav-links flex gap-6 items-center">
-                <a href="../index.html">Home</a>
-                <a href="home2.html">Home 2</a>
-                <a href="about.html">About</a>
-                <a href="services.html">Services</a>
-                <a href="blog.html">Blog</a>
-                <a href="contact.html">Contact</a>
-                <div class="profile-dropdown">
-                    <a href="#" class="btn btn-secondary profile-btn" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px; text-decoration: none;" title="Account">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    </a>
-                    <div class="profile-menu">
-                        <a href="dashboard.html" class="profile-menu-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> User Dashboard</a>
-                        <a href="login.html" class="profile-menu-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login / Signup</a>
-                    </div>
-                </div>
-                <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                </button>
-
-                <button id="dir-toggle" class="btn btn-secondary" style="padding: var(--spacing-2) var(--spacing-3); border-radius: 50px; font-size: 0.75rem; min-width: 40px; height: 40px;" title="Toggle RTL/LTR">RTL</button>
-                <a href="services.html" class="btn btn-primary">Book Now</a>
-            </nav>
-                <button id="menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
-                    <span class="menu-bar"></span>
-                    <span class="menu-bar"></span>
-                    <span class="menu-bar"></span>
-                </button>
-        </div>
-    </header>
-
-<div class="menu-backdrop" id="menu-backdrop"></div>
-    <aside class="mobile-menu" id="mobile-menu" aria-hidden="true">
-        <div class="mobile-menu-head">
-            <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="../images/logo.png" alt="LabLink Logo" style="height: 36px;">
-                <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; line-height: 1.1; color: var(--text-primary);">Lab<span style="color: var(--champagne);">Link</span></span>
-            </a>
-            <span style="font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary);">Premium Diagnostics</span>
-        </div>
-<nav class="mobile-nav">
-            <a href="../index.html">Home</a>
-            <a href="home2.html">Home 2</a>
-            <a href="about.html">About</a>
-            <a href="services.html">Services</a>
-            <a href="blog.html">Blog</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-        <div class="mobile-divider"></div>
-        <a href="dashboard.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> User Dashboard</a>
-        <a href="login.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login / Signup</a>
-        <div class="mobile-divider"></div>
-        <div class="mobile-actions">
-            <button id="mobile-theme" class="btn btn-secondary" title="Switch theme"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
-            <button id="mobile-dir" class="btn btn-secondary" title="Toggle RTL/LTR">RTL</button>
-        </div>
-        <a href="services.html" class="btn btn-accent mobile-cta">Book Now</a>
-    </aside>
+    <div class="e-toggles">
+        <button id="theme-toggle" title="Switch theme" aria-label="Toggle theme">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <button id="dir-toggle" class="dir-btn" title="Toggle RTL/LTR">RTL</button>
+    </div>
 
     <main>
         <!-- 404 Hero -->
@@ -123,77 +64,6 @@
             </div>
         </section>
     </main>
-
-<footer class="footer" style="background-color: var(--deep-teal); color: var(--pearl); padding: var(--spacing-16) 0 var(--spacing-6); margin-top: auto;">
-    <div class="container grid grid-cols-4 gap-8" style="margin-bottom: var(--spacing-12);">
-        <div>
-            <a href="../index.html" style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: var(--spacing-4); text-decoration: none;">
-                <img src="../images/logo.png" alt="LabLink Logo" style="height: 40px;">
-                <div>
-                    <h2 style="color: var(--champagne); font-weight: 700; margin: 0; font-family: var(--font-heading);">Lab<span style="color:var(--pearl)">Link</span></h2>
-                    <span style="display:block; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-secondary); margin-top:2px;">Premium Diagnostics</span>
-                </div>
-            </a>
-            <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-6);">
-                Setting the gold standard in diagnostic medicine. A curated sanctuary where precision meets premium healthcare.
-            </p>
-            <div class="footer-certs">
-                <span>CLIA</span>
-                <span>CAP</span>
-                <span>ISO 15189</span>
-                <span>HIPAA</span>
-                <span>NABL</span>
-            </div>
-            <div class="flex gap-4">
-                <a href="https://www.instagram.com/lablink" target="_blank" rel="noopener" aria-label="Instagram" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-                <a href="https://www.facebook.com/lablink" target="_blank" rel="noopener" aria-label="Facebook" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-                <a href="https://x.com/lablink" target="_blank" rel="noopener" aria-label="Twitter" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-            </div>
-        </div>
-        <div>
-            <h4 style="color: var(--champagne); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--spacing-6); font-family: var(--font-body);">Diagnostics</h4>
-            <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-3); margin: 0;">
-                <li><a href="services.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Advanced Pathology</a></li>
-                <li><a href="services.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Molecular Diagnostics</a></li>
-                <li><a href="services.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Corporate Packages</a></li>
-                <li><a href="services.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Home Collection</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4 style="color: var(--champagne); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--spacing-6); font-family: var(--font-body);">Company</h4>
-            <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-3); margin: 0;">
-                <li><a href="../index.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Home</a></li>
-                <li><a href="about.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">About Us</a></li>
-                <li><a href="services.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Services</a></li>
-                <li><a href="blog.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Health Insights</a></li>
-                <li><a href="contact.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Contact</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4 style="color: var(--champagne); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--spacing-6); font-family: var(--font-body);">Newsletter</h4>
-            <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-4);">
-                Receive exclusive health tips, package discounts, and medical insights before anyone else.
-            </p>
-            <form style="display: flex; gap: var(--spacing-2);" data-success="Subscribed successfully!">
-                <input type="email" placeholder="Your email" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--pearl); padding: var(--spacing-2) var(--spacing-4); border-radius: 4px; width: 100%; outline: none; font-family: var(--font-body); font-size: 0.875rem;">
-                <button type="submit" style="background: var(--champagne); color: var(--deep-teal); border: none; padding: var(--spacing-2) var(--spacing-6); border-radius: 4px; font-weight: 600; cursor: pointer; font-family: var(--font-body); font-size: 0.875rem;">JOIN</button>
-            </form>
-        </div>
-    </div>
-    <div style="border-top: 1px solid rgba(255,255,255,0.1); position: relative; margin-top: var(--spacing-8);">
-        <div style="position: absolute; left: 50%; top: -6px; transform: translateX(-50%); width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); background: var(--deep-teal); display: flex; align-items: center; justify-content: center;">
-            <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--champagne);"></div>
-        </div>
-    </div>
-    <div class="container flex justify-between items-center" style="padding-top: var(--spacing-6); font-size: 0.75rem; color: var(--soft-aqua);">
-        <div>&copy; 2026 LabLink. All rights reserved. Established 2026.</div>
-        <div class="flex gap-6">
-            <a href="privacy.html" style="color: var(--soft-aqua); text-decoration: none;">Privacy Policy</a>
-            <a href="terms.html" style="color: var(--soft-aqua); text-decoration: none;">Terms & Conditions</a>
-            <a href="sitemap.html" style="color: var(--soft-aqua); text-decoration: none;">Sitemap</a>
-        </div>
-    </div>
-</footer>
 
     <script src="../js/main.js"></script>
 </body>
