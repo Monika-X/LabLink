@@ -209,54 +209,85 @@
                     <button id="dir-toggle" class="btn btn-secondary" style="padding: var(--spacing-2) var(--spacing-3); border-radius: 50px; font-size: 0.75rem; min-width: 40px; height: 40px;" title="Toggle RTL/LTR">RTL</button>
                 </div>    </header>
 
-            <div class="report-card">
-                <div class="flex justify-between items-center" style="border-bottom: 1px solid var(--border-color); padding-bottom: var(--spacing-4);">
-                    <div>
-                        <h3 style="margin: 0;">Comprehensive Plus Health Check</h3>
-                        <p class="text-secondary" style="margin: 0; font-size: 0.875rem;">Order ID: #LL-89245 â€¢ Date: Aug 18, 2026</p>
-                    </div>
-                    <div>
-                        <span style="background: #fef08a; color: #854d0e; padding: 6px 16px; border-radius: 20px; font-weight: bold;">PROCESSING</span>
-                    </div>
-                </div>
-
-                <div class="timeline">
-                    <div class="timeline-item completed">
-                        <div style="font-weight: 600;">Sample Collected</div>
-                        <div class="text-secondary" style="font-size: 0.875rem;">Aug 18, 08:30 AM</div>
-                    </div>
-                    <div class="timeline-item completed">
-                        <div style="font-weight: 600;">Sample Reached Laboratory</div>
-                        <div class="text-secondary" style="font-size: 0.875rem;">Aug 18, 10:15 AM</div>
-                    </div>
-                    <div class="timeline-item active">
-                        <div style="font-weight: 600; color: var(--medical-emerald);">Processing in Analyzer</div>
-                        <div class="text-secondary" style="font-size: 0.875rem;">In Progress...</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div style="font-weight: 600; color: var(--gray-400);">Quality Verification</div>
-                        <div class="text-secondary" style="font-size: 0.875rem;">Pending</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div style="font-weight: 600; color: var(--gray-400);">Report Generation</div>
-                        <div class="text-secondary" style="font-size: 0.875rem;">Expected by 08:00 PM today</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="report-card">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h3 style="margin: 0;">Vitamin D & B12 Panel</h3>
-                        <p class="text-secondary" style="margin: 0; font-size: 0.875rem;">Order ID: #LL-89201 â€¢ Date: Aug 17, 2026</p>
-                    </div>
-                    <div>
-                        <a href="#" class="btn btn-secondary download-link">Download PDF</a>
-                    </div>
-                </div>
-            </div>
+<div id="tracking-list"></div>
         </main>
     </div>
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('tracking-list');
+            const STEPS = [
+                { key: 'confirmed', label: 'Booking Confirmed' },
+                { key: 'sample-collected', label: 'Sample Collected' },
+                { key: 'processing', label: 'Processing in Analyzer' },
+                { key: 'ready', label: 'Report Ready' }
+            ];
+
+            const render = () => {
+                const bookings = window.LK.getBookings();
+                if (!bookings.length) {
+                    container.innerHTML = '<div class="empty-state">No active orders. <a href="dashboard-booking.html" class="link-action">Book a test</a> to get started.</div>';
+                    return;
+                }
+                container.innerHTML = bookings.map((b) => {
+                    const idx = STEPS.findIndex((s) => s.key === b.status);
+                    const steps = STEPS.map((s, i) => {
+                        let cls = '';
+                        let meta = 'Pending';
+                        if (i < idx) {
+                            cls = 'completed';
+                            const d = new Date(b.createdAt + (i + 1) * 3 * 3600000);
+                            meta = d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+                        } else if (i === idx) {
+                            if (b.status === 'ready') { cls = 'completed'; meta = 'Released'; }
+                            else { cls = 'active'; meta = b.status === 'sample-collected' ? 'In transit to laboratory' : (b.status === 'processing' ? 'In Progress...' : 'Scheduled'); }
+                        }
+                        return '<div class="timeline-item ' + cls + '">'
+                            + '<div style="font-weight:600;' + (cls === 'active' ? 'color:var(--medical-emerald);' : '') + '">' + s.label + '</div>'
+                            + '<div class="text-secondary" style="font-size:0.875rem;">' + meta + '</div>'
+                            + '</div>';
+                    }).join('');
+                    const action = b.status === 'ready'
+                        ? '<button type="button" class="btn btn-primary download-btn" data-id="' + b.id + '">Download Report</button>'
+                        : '<button type="button" class="advance-btn" data-id="' + b.id + '">Advance Status &rarr;</button>';
+                    return '<div class="report-card">'
+                        + '<div class="flex justify-between items-center" style="border-bottom:1px solid var(--border-color); padding-bottom:var(--spacing-4); gap: var(--spacing-4); flex-wrap: wrap;">'
+                        + '<div><h3 style="margin:0;">' + window.LK.esc(b.test) + '</h3>'
+                        + '<p class="text-secondary" style="margin:0; font-size:0.875rem;">Order ID: ' + b.id + ' &bull; ' + window.LK.fmtDate(b.date) + ' &bull; ' + window.LK.esc(b.collection) + '</p></div>'
+                        + '<div>' + window.LK.statusPillHtml(b.status) + '</div></div>'
+                        + '<div class="timeline">' + steps + '</div>'
+                        + '<div class="flex" style="margin-top: var(--spacing-4); gap: var(--spacing-3); flex-wrap: wrap;">' + action
+                        + (b.status === 'ready' ? '' : '<span class="text-secondary" style="font-size:0.8rem; align-self:center;">Expected report within 24 hours of collection</span>')
+                        + '</div></div>';
+                }).join('');
+            };
+
+            container.addEventListener('click', (e) => {
+                const adv = e.target.closest('.advance-btn');
+                if (adv) {
+                    const b = window.LK.advanceBooking(adv.getAttribute('data-id'));
+                    render();
+                    window.LK.updateBadges();
+                    if (b && b.status === 'ready') {
+                        window.LK.toast('Report is ready! You can now download it.', true);
+                    } else if (b) {
+                        window.LK.toast('Status updated to "' + window.LK.statusInfo(b.status).label + '".', true);
+                    }
+                    return;
+                }
+                const dl = e.target.closest('.download-btn');
+                if (dl) {
+                    const booking = window.LK.getBookings().find((x) => x.id === dl.getAttribute('data-id'));
+                    if (booking) {
+                        window.LK.downloadReport(booking);
+                        window.LK.toast('Report downloaded! Check your downloads folder.', true);
+                    }
+                }
+            });
+
+            render();
+        });
+    </script>
     <script src="../js/main.js"></script>
 </body>
 </html>

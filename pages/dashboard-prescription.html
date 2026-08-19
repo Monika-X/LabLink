@@ -207,12 +207,20 @@
                 </div>    </header>
 
             <div style="background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); padding: var(--spacing-8); max-width: 800px;">
-                <div class="upload-area" onclick="document.getElementById('fileUpload').click();">
+<div class="upload-area" id="upload-area">
                     <h3>Drag & Drop your prescription here</h3>
                     <p class="text-secondary mb-4">or click to browse from your device</p>
                     <input type="file" id="fileUpload" style="display: none;" accept=".pdf,.jpg,.jpeg,.png">
-                    <button class="btn btn-primary">Select File</button>
+                    <button class="btn btn-primary" type="button">Select File</button>
                     <p class="text-secondary mt-4" style="font-size: 0.875rem;">Supported formats: PDF, JPG, PNG (Max 5MB)</p>
+                </div>
+
+                <div id="rx-panel" style="margin-bottom: var(--spacing-8);">
+                    <div class="flex justify-between items-center" style="margin-bottom: var(--spacing-4);">
+                        <h3 style="margin: 0; font-size: 1.05rem;">Uploaded Prescriptions</h3>
+                        <span id="rx-count" class="text-secondary" style="font-size: 0.8rem;">0 files</span>
+                    </div>
+                    <div id="rx-list"></div>
                 </div>
 
                 <div style="background: var(--bg-primary); padding: var(--spacing-6); border-radius: 8px; border-left: 4px solid var(--champagne);">
@@ -227,6 +235,102 @@
             </div>
         </main>
     </div>
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const uploadArea = document.getElementById('upload-area');
+            const fileInput = document.getElementById('fileUpload');
+            const listEl = document.getElementById('rx-list');
+            const countEl = document.getElementById('rx-count');
+            const MAX_BYTES = 5 * 1024 * 1024;
+            const ALLOWED = ['application/pdf', 'image/jpeg', 'image/png'];
+
+            const render = () => {
+                const items = window.LK.getPrescriptions();
+                countEl.textContent = items.length + (items.length === 1 ? ' file' : ' files');
+                if (!items.length) {
+                    listEl.innerHTML = '<div class="empty-state">No prescriptions uploaded yet. Drop a file above to get started.</div>';
+                    return;
+                }
+                listEl.innerHTML = items.map((item) => {
+                    const isImg = item.type && item.type.indexOf('image/') === 0;
+                    const thumb = isImg
+                        ? '<img src="' + item.dataUrl + '" alt="prescription">'
+                        : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>';
+                    return '<div class="rx-item">'
+                        + '<div class="rx-thumb">' + thumb + '</div>'
+                        + '<div class="rx-meta"><b>' + window.LK.esc(item.name) + '</b><span>' + window.LK.fmtDate(item.date) + ' &middot; ' + (item.sizeMB || '') + ' &middot; ' + (item.type || '').toUpperCase() + '</span></div>'
+                        + '<button type="button" class="rx-del" data-id="' + item.id + '">Delete</button>'
+                        + '</div>';
+                }).join('');
+            };
+
+            const addFile = (file) => {
+                if (!file) return;
+                if (ALLOWED.indexOf(file.type) === -1) {
+                    window.LK.toast('Please choose a PDF, JPG, or PNG file.', false);
+                    return;
+                }
+                if (file.size > MAX_BYTES) {
+                    window.LK.toast('File is too large. Maximum size is 5MB.', false);
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const items = window.LK.getPrescriptions();
+                    const item = {
+                        id: window.LK.uid('RX'),
+                        name: file.name,
+                        type: file.type,
+                        sizeMB: (file.size / 1048576).toFixed(1) + ' MB',
+                        dataUrl: e.target.result,
+                        date: new Date().toISOString()
+                    };
+                    items.unshift(item);
+                    if (!window.LK.savePrescriptions(items)) {
+                        window.LK.toast('Storage is full. Please delete an older file and try again.', false);
+                        return;
+                    }
+                    render();
+                    window.LK.toast('Prescription uploaded! Our team will review it within 1 hour.', true);
+                };
+                reader.readAsDataURL(file);
+            };
+
+            uploadArea.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', () => {
+                addFile(fileInput.files && fileInput.files[0]);
+                fileInput.value = '';
+            });
+
+            ['dragover', 'dragenter'].forEach((ev) => {
+                uploadArea.addEventListener(ev, (e) => {
+                    e.preventDefault();
+                    uploadArea.style.background = 'rgba(22,134,106,0.14)';
+                });
+            });
+            ['dragleave', 'drop'].forEach((ev) => {
+                uploadArea.addEventListener(ev, (e) => {
+                    e.preventDefault();
+                    uploadArea.style.background = '';
+                });
+            });
+            uploadArea.addEventListener('drop', (e) => {
+                if (e.dataTransfer && e.dataTransfer.files) addFile(e.dataTransfer.files[0]);
+            });
+
+            listEl.addEventListener('click', (e) => {
+                const btn = e.target.closest('.rx-del');
+                if (!btn) return;
+                const items = window.LK.getPrescriptions().filter((it) => it.id !== btn.getAttribute('data-id'));
+                window.LK.savePrescriptions(items);
+                render();
+                window.LK.toast('Prescription removed.', false);
+            });
+
+            render();
+        });
+    </script>
     <script src="../js/main.js"></script>
 </body>
 </html>

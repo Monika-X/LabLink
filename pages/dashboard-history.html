@@ -201,8 +201,8 @@
                     <h1 style="font-size: 2rem; margin: 0;">Test History</h1>
                     <p class="text-secondary" style="margin: 0;">View and download past diagnostic reports.</p>
                 </div>
-                <div>
-                    <input type="text" placeholder="Search tests..." style="padding: var(--spacing-2) var(--spacing-4); border-radius: 8px; border: 1px solid var(--gray-300); background: var(--bg-primary); color: var(--text-primary);">
+<div>
+                    <input type="text" id="history-search" placeholder="Search tests..." style="padding: var(--spacing-2) var(--spacing-4); border-radius: 8px; border: 1px solid var(--gray-300); background: var(--bg-primary); color: var(--text-primary);">
                 </div>
             <div class="topbar-actions">
                     <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;" title="Switch theme">
@@ -221,40 +221,11 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Aug 17, 2026</td>
-                        <td>Vitamin D & B12 Panel</td>
-                        <td>John Doe</td>
-                        <td><span style="color: var(--medical-emerald); font-weight: bold;">Completed</span></td>
-                        <td><a href="#" class="download-link" style="font-weight: 600; color: var(--medical-emerald);">Download</a></td>
-                    </tr>
-                    <tr>
-                        <td>Jul 10, 2026</td>
-                        <td>Complete Blood Count (CBC)</td>
-                        <td>John Doe</td>
-                        <td><span style="color: var(--medical-emerald); font-weight: bold;">Completed</span></td>
-                        <td><a href="#" class="download-link" style="font-weight: 600; color: var(--medical-emerald);">Download</a></td>
-                    </tr>
-                    <tr>
-                        <td>Feb 15, 2026</td>
-                        <td>Thyroid Profile (T3, T4, TSH)</td>
-                        <td>John Doe</td>
-                        <td><span style="color: var(--medical-emerald); font-weight: bold;">Completed</span></td>
-                        <td><a href="#" class="download-link" style="font-weight: 600; color: var(--medical-emerald);">Download</a></td>
-                    </tr>
-                    <tr>
-                        <td>Nov 05, 2025</td>
-                        <td>Advanced Cardiac Package</td>
-                        <td>John Doe</td>
-                        <td><span style="color: var(--medical-emerald); font-weight: bold;">Completed</span></td>
-                        <td><a href="#" class="download-link" style="font-weight: 600; color: var(--medical-emerald);">Download</a></td>
-                    </tr>
-                </tbody>
+<tbody id="history-body"></tbody>
             </table>
             
             <div class="flex justify-between items-center" style="margin-top: var(--spacing-6);">
-                <p class="text-secondary" style="font-size: 0.875rem;">Showing 4 of 15 entries</p>
+                <p class="text-secondary" id="history-count" style="font-size: 0.875rem;"></p>
                 <div class="flex gap-2">
                     <button class="btn btn-secondary" style="padding: 4px 12px; font-size: 0.875rem;" disabled>&laquo; Prev</button>
                     <button class="btn btn-primary" style="padding: 4px 12px; font-size: 0.875rem;">1</button>
@@ -264,6 +235,53 @@
             </div>
         </main>
     </div>
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.getElementById('history-body');
+            const count = document.getElementById('history-count');
+            const search = document.getElementById('history-search');
+
+            const render = () => {
+                const user = window.LK.getUser();
+                const name = ((user.first || '') + ' ' + (user.last || '')).trim() || 'John Doe';
+                let bookings = window.LK.getBookings();
+                const q = (search.value || '').toLowerCase().trim();
+                if (q) bookings = bookings.filter((b) => (b.test || '').toLowerCase().indexOf(q) >= 0);
+                if (!bookings.length) {
+                    body.innerHTML = '<tr><td colspan="5" class="empty-state">No tests found.</td></tr>';
+                    count.textContent = 'No entries';
+                    return;
+                }
+                body.innerHTML = bookings.map((b) => {
+                    const status = b.status === 'ready'
+                        ? '<button type="button" class="btn btn-primary dl-btn" data-id="' + b.id + '" style="padding:6px 14px; font-size:0.8rem;">Download Report</button>'
+                        : '<span class="text-secondary" style="font-size:0.8rem;">Awaiting completion</span>';
+                    return '<tr>'
+                        + '<td>' + window.LK.fmtDate(b.date) + '</td>'
+                        + '<td style="font-weight:700; color: var(--text-primary);">' + window.LK.esc(b.test) + '</td>'
+                        + '<td>' + window.LK.esc(name) + '</td>'
+                        + '<td>' + window.LK.statusPillHtml(b.status) + '</td>'
+                        + '<td>' + status + '</td>'
+                        + '</tr>';
+                }).join('');
+                count.textContent = 'Showing ' + bookings.length + ' of ' + window.LK.getBookings().length + ' entries';
+            };
+
+            body.addEventListener('click', (e) => {
+                const btn = e.target.closest('.dl-btn');
+                if (!btn) return;
+                const booking = window.LK.getBookings().find((x) => x.id === btn.getAttribute('data-id'));
+                if (booking) {
+                    window.LK.downloadReport(booking);
+                    window.LK.toast('Report downloaded! Check your downloads folder.', true);
+                }
+            });
+
+            if (search) search.addEventListener('input', render);
+            render();
+        });
+    </script>
     <script src="../js/main.js"></script>
 </body>
 </html>

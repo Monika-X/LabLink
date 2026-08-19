@@ -217,23 +217,23 @@
                     </div>
                 </div>
 
-                <form data-success="Profile updated successfully!">
+<form id="profile-form" data-success="Profile updated successfully!">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label style="font-weight: 600;">First Name</label>
-                            <input type="text" class="form-control" value="John">
+                            <input type="text" id="pf-first" class="form-control" value="John" required>
                         </div>
                         <div>
                             <label style="font-weight: 600;">Last Name</label>
-                            <input type="text" class="form-control" value="Doe">
+                            <input type="text" id="pf-last" class="form-control" value="Doe" required>
                         </div>
                         <div>
                             <label style="font-weight: 600;">Date of Birth</label>
-                            <input type="date" class="form-control" value="1985-05-15">
+                            <input type="date" id="pf-dob" class="form-control" value="1985-05-15">
                         </div>
                         <div>
                             <label style="font-weight: 600;">Gender</label>
-                            <select class="form-control">
+                            <select id="pf-gender" class="form-control">
                                 <option>Male</option>
                                 <option>Female</option>
                                 <option>Other</option>
@@ -241,11 +241,11 @@
                         </div>
                         <div style="grid-column: span 2;">
                             <label style="font-weight: 600;">Email Address</label>
-                            <input type="email" class="form-control" value="john.doe@example.com">
+                            <input type="email" id="pf-email" class="form-control" value="john.doe@example.com" required>
                         </div>
                         <div style="grid-column: span 2;">
                             <label style="font-weight: 600;">Address</label>
-                            <textarea class="form-control" rows="3">123 Health Ave, Apt 4B, New York, NY 10001</textarea>
+                            <textarea id="pf-address" class="form-control" rows="3">123 Health Ave, Apt 4B, New York, NY 10001</textarea>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary" style="margin-top: var(--spacing-4);">Save Changes</button>
@@ -253,7 +253,7 @@
             </div>
         </main>
     </div>
-    <script src="../js/main.js"></script>
+    <script src="../js/dashboard.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const avatar = document.getElementById('profile-avatar');
@@ -274,6 +274,41 @@
                 setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3500);
             };
 
+            const loadUser = () => {
+                const u = window.LK.getUser();
+                const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+                set('pf-first', u.first);
+                set('pf-last', u.last);
+                set('pf-dob', u.dob);
+                set('pf-email', u.email);
+                set('pf-address', u.address);
+                const gender = document.getElementById('pf-gender');
+                if (gender && u.gender) gender.value = u.gender;
+                if (u.avatar) {
+                    avatar.style.backgroundImage = 'url(' + u.avatar + ')';
+                    avatar.style.color = 'transparent';
+                    avatar.textContent = '';
+                } else {
+                    avatar.textContent = ((u.first || '')[0] || '') + ((u.last || '')[0] || '');
+                }
+            };
+
+            const form = document.getElementById('profile-form');
+            if (form) {
+                form.addEventListener('submit', () => {
+                    const user = window.LK.getUser();
+                    const g = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
+                    user.first = g('pf-first') || user.first;
+                    user.last = g('pf-last') || user.last;
+                    user.dob = g('pf-dob') || user.dob;
+                    user.gender = g('pf-gender') || user.gender;
+                    user.email = g('pf-email') || user.email;
+                    user.address = g('pf-address') || user.address;
+                    window.LK.saveUser(user);
+                    window.LK.applyUserToUI();
+                });
+            }
+
             btn.addEventListener('click', () => input.click());
 
             input.addEventListener('change', () => {
@@ -293,12 +328,20 @@
                 reader.onload = (e) => {
                     avatar.style.backgroundImage = 'url(' + e.target.result + ')';
                     avatar.style.color = 'transparent';
+                    avatar.textContent = '';
+                    const user = window.LK.getUser();
+                    user.avatar = e.target.result;
+                    window.LK.saveUser(user);
+                    window.LK.applyUserToUI();
                     showToast('Profile photo updated successfully!', true);
                 };
                 reader.readAsDataURL(file);
             });
+
+            loadUser();
         });
     </script>
+    <script src="../js/main.js"></script>
 </body>
 </html>
 

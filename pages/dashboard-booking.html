@@ -215,36 +215,37 @@
                     <div class="step">3. Date & Time</div>
                 </div>
 
-                <form data-success="Booking confirmed!">
+<form id="booking-form" data-success="Booking confirmed! We'll call you to verify." data-redirect="dashboard-reports.html">
                     <label style="font-weight: 600;">Search & Select Tests</label>
-                    <input type="text" class="form-control" placeholder="E.g., Complete Blood Count, Lipid Profile...">
+                    <input type="text" id="test-search" class="form-control" placeholder="E.g., Complete Blood Count, Lipid Profile...">
+                    <div id="test-search-hint" style="display:none; font-size:0.78rem; color:var(--medical-emerald); margin:-var(--spacing-2) 0 var(--spacing-4);"></div>
                     
                     <div style="background: var(--bg-primary); padding: var(--spacing-4); border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: var(--spacing-6);">
                         <div style="font-weight: 600; margin-bottom: var(--spacing-2);">Selected Tests:</div>
                         <div class="flex justify-between items-center" style="padding: var(--spacing-2) 0; border-bottom: 1px dashed var(--gray-300);">
-                            <span>Comprehensive Plus Health Check</span>
-                            <span style="color: var(--medical-emerald); font-weight: bold;">$299</span>
+                            <span id="selected-test">Comprehensive Plus Health Check</span>
+                            <span style="color: var(--medical-emerald); font-weight: bold;">₹2,499</span>
                         </div>
                     </div>
 
                     <label style="font-weight: 600;">Collection Type</label>
                     <div class="flex gap-4 mb-4" style="margin-top: var(--spacing-2); margin-bottom: var(--spacing-6);">
                         <label style="flex: 1; padding: var(--spacing-4); border: 2px solid var(--medical-emerald); border-radius: 8px; text-align: center; cursor: pointer; background: rgba(22, 134, 106, 0.05);">
-                            <input type="radio" name="collection" checked style="margin-right: 8px;"> Home Collection
+                            <input type="radio" name="collection" value="Home Collection" checked style="margin-right: 8px;"> Home Collection
                         </label>
                         <label style="flex: 1; padding: var(--spacing-4); border: 1px solid var(--gray-300); border-radius: 8px; text-align: center; cursor: pointer;">
-                            <input type="radio" name="collection" style="margin-right: 8px;"> Walk-in Lab Visit
+                            <input type="radio" name="collection" value="Walk-in Lab Visit" style="margin-right: 8px;"> Walk-in Lab Visit
                         </label>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label style="font-weight: 600;">Select Date</label>
-                            <input type="date" class="form-control" required>
+                            <input type="date" id="book-date" class="form-control" required>
                         </div>
                         <div>
                             <label style="font-weight: 600;">Select Time Slot</label>
-                            <select class="form-control" required>
+                            <select id="book-slot" class="form-control" required>
                                 <option>08:00 AM - 10:00 AM</option>
                                 <option>10:00 AM - 12:00 PM</option>
                                 <option>12:00 PM - 02:00 PM</option>
@@ -259,6 +260,42 @@
             </div>
         </main>
     </div>
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('test-search');
+            const selectedTest = document.getElementById('selected-test');
+            const hint = document.getElementById('test-search-hint');
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    const v = searchInput.value.trim();
+                    if (v) {
+                        selectedTest.textContent = v;
+                        hint.style.display = 'block';
+                        hint.textContent = 'Adding "' + v + '" to your cart...';
+                    } else {
+                        selectedTest.textContent = 'Comprehensive Plus Health Check';
+                        hint.style.display = 'none';
+                    }
+                });
+            }
+            const form = document.getElementById('booking-form');
+            if (form) {
+                form.addEventListener('submit', () => {
+                    const collection = form.querySelector('input[name="collection"]:checked');
+                    const dateEl = document.getElementById('book-date');
+                    const slotEl = document.getElementById('book-slot');
+                    if (dateEl && !dateEl.value) return;
+                    window.LK.addBooking({
+                        test: selectedTest ? selectedTest.textContent : 'Comprehensive Plus Health Check',
+                        collection: collection ? collection.value : 'Home Collection',
+                        date: dateEl ? dateEl.value : '',
+                        slot: slotEl ? slotEl.value : ''
+                    });
+                });
+            }
+        });
+    </script>
     <script src="../js/main.js"></script>
 </body>
 </html>

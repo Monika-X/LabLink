@@ -217,8 +217,8 @@
                         <div style="font-weight: 600;">Dark Mode</div>
                         <div class="text-secondary" style="font-size: 0.875rem;">Enable dark theme for the application</div>
                     </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="settings-theme-toggle">
+<label class="toggle-switch">
+                        <input type="checkbox" id="settings-sms" checked>
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -265,6 +265,7 @@
         </main>
     </div>
     <script src="../js/main.js"></script>
+<script src="../js/dashboard.js"></script>
     <script>
         // Sync settings toggles with main.js toggles
         const settingsTheme = document.getElementById('settings-theme-toggle');
@@ -286,6 +287,30 @@
                 localStorage.setItem('dir', newDir);
             });
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const s = window.LK.getSettings();
+            const email = document.getElementById('settings-email');
+            const sms = document.getElementById('settings-sms');
+            if (email) email.checked = !!s.email;
+            if (sms) sms.checked = !!s.sms;
+            if (email) email.addEventListener('change', (e) => {
+                const st = window.LK.getSettings();
+                st.email = e.target.checked;
+                window.LK.saveSettings(st);
+            });
+            if (sms) sms.addEventListener('change', (e) => {
+                const st = window.LK.getSettings();
+                st.sms = e.target.checked;
+                window.LK.saveSettings(st);
+            });
+            const pwdBtn = document.querySelector('.settings-section .btn-secondary');
+            if (pwdBtn) {
+                pwdBtn.addEventListener('click', () => {
+                    window.LK.toast('Password reset link sent to ' + (window.LK.getUser().email || 'your email') + '.', true);
+                });
+            }
+        });
     </script>
 </body>
 </html>
