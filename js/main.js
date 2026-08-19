@@ -9,12 +9,23 @@ document.addEventListener('DOMContentLoaded', () => {
         root.setAttribute('data-theme', savedTheme);
     }
 
+    const updateThemeIcon = () => {
+        if (themeToggleBtn) {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            themeToggleBtn.textContent = isDark ? '🌙' : '☀️';
+            themeToggleBtn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+        }
+    };
+
+    updateThemeIcon();
+
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = root.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             root.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
+            updateThemeIcon();
         });
     }
 
@@ -26,12 +37,23 @@ document.addEventListener('DOMContentLoaded', () => {
         root.setAttribute('dir', savedDir);
     }
 
+    const updateDirIcon = () => {
+        if (dirToggleBtn) {
+            const isRtl = root.getAttribute('dir') === 'rtl';
+            dirToggleBtn.textContent = isRtl ? 'LTR' : 'RTL';
+            dirToggleBtn.title = isRtl ? 'Switch to LTR' : 'Switch to RTL';
+        }
+    };
+
+    updateDirIcon();
+
     if (dirToggleBtn) {
         dirToggleBtn.addEventListener('click', () => {
             const currentDir = root.getAttribute('dir') || 'ltr';
             const newDir = currentDir === 'rtl' ? 'ltr' : 'rtl';
             root.setAttribute('dir', newDir);
             localStorage.setItem('dir', newDir);
+            updateDirIcon();
         });
     }
 
