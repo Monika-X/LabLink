@@ -159,6 +159,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (menuToggle) {
             menuToggle.classList.remove('open');
             menuToggle.setAttribute('aria-expanded', 'false');
+            if (mobileMenu && mobileMenu.contains(document.activeElement)) {
+                menuToggle.focus();
+            }
         }
         if (mobileMenu) {
             mobileMenu.classList.remove('open');

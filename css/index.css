@@ -602,21 +602,31 @@ a:hover {
 
 .mobile-close-btn {
   position: absolute;
-  top: 0;
-  inset-inline-end: 0;
-  background: none;
-  border: none;
-  color: var(--text-secondary);
+  top: 10px;
+  inset-inline-end: 10px;
+  background: var(--medical-emerald);
+  border: 2px solid #fff;
+  color: #fff;
   cursor: pointer;
-  padding: var(--spacing-2);
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.25s ease;
+  transition: all 0.25s ease;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.mobile-close-btn svg {
+  width: 16px;
+  height: 16px;
 }
 
 .mobile-close-btn:hover {
-  color: var(--medical-emerald);
+  background: var(--deep-teal);
+  transform: scale(1.05);
 }
 
 .mobile-nav {
