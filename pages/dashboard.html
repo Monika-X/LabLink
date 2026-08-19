@@ -8,15 +8,102 @@
     <style>
         body { background: var(--bg-primary); }
         .dashboard-layout { display: flex; min-height: 100vh; }
-        .sidebar { width: 280px; background: var(--bg-secondary); border-right: 1px solid var(--border-color); padding: var(--spacing-6) 0; position: fixed; height: 100vh; overflow-y: auto; }
-        .sidebar-logo { padding: 0 var(--spacing-6); margin-bottom: var(--spacing-8); }
-        .nav-item { display: flex; align-items: center; padding: var(--spacing-3) var(--spacing-6); color: var(--text-secondary); font-weight: 500; transition: all 0.2s; }
-        .nav-item:hover, .nav-item.active { background: rgba(22, 134, 106, 0.1); color: var(--medical-emerald); border-right: 4px solid var(--medical-emerald); }
-        .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-8); }
-        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-8); padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--border-color); }
-        .stat-card { background: var(--bg-secondary); padding: var(--spacing-6); border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
-        .stat-card h4 { color: var(--text-secondary); font-size: 0.875rem; text-transform: uppercase; margin-bottom: var(--spacing-2); }
-        .stat-card .value { font-size: 2rem; font-weight: bold; color: var(--medical-emerald); font-family: var(--font-heading); }
+        .sidebar { width: 280px; background: var(--bg-secondary); border-inline-end: 1px solid var(--border-color); position: fixed; inset-block: 0; inset-inline-start: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; }
+        .sidebar-logo { padding: var(--spacing-6) var(--spacing-6) var(--spacing-4); border-bottom: 1px dashed var(--border-color); margin-bottom: var(--spacing-4); }
+        .sidebar-logo .portal-chip { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 0.62rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--medical-emerald); background: var(--soft-aqua); border-radius: 50px; padding: 3px 10px; }
+        .side-user { margin: 0 var(--spacing-5) var(--spacing-5); padding: var(--spacing-5); border: 1px solid var(--border-color); border-radius: 18px; background: linear-gradient(160deg, rgba(22,134,106,0.08), rgba(22,134,106,0.02)); display: flex; align-items: center; gap: 12px; }
+        .side-avatar { width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(135deg, var(--medical-emerald), var(--deep-teal)); color: var(--pearl); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.95rem; box-shadow: var(--shadow-sm); }
+        .side-user b { display: block; color: var(--text-primary); font-size: 0.92rem; }
+        .side-user span { font-size: 0.72rem; color: var(--text-secondary); }
+        .side-user .gold { display: inline-block; margin-top: 4px; font-size: 0.6rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--champagne); background: rgba(212,183,122,0.15); border: 1px solid rgba(212,183,122,0.35); border-radius: 50px; padding: 2px 8px; }
+        .side-nav { flex: 1; }
+        .side-nav .nav-label { font-size: 0.62rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary); padding: 0 var(--spacing-6) var(--spacing-2); }
+        .nav-item { position: relative; display: flex; align-items: center; gap: 12px; padding: var(--spacing-3) var(--spacing-6); color: var(--text-secondary); font-weight: 600; font-size: 0.88rem; text-decoration: none; transition: all 0.25s ease; }
+        .nav-item svg { min-width: 18px; }
+        .nav-item:hover { color: var(--medical-emerald); background: rgba(22,134,106,0.06); }
+        .nav-item.active { color: var(--medical-emerald); background: rgba(22,134,106,0.1); font-weight: 700; }
+        .nav-item.active::before { content: ""; position: absolute; inset-inline-start: 0; top: 8px; bottom: 8px; width: 4px; border-radius: 0 4px 4px 0; background: linear-gradient(180deg, var(--medical-emerald), var(--champagne)); }
+        .nav-item .nav-badge { margin-inline-start: auto; font-size: 0.62rem; font-weight: 800; background: rgba(212,175,55,0.16); color: var(--champagne); border-radius: 50px; padding: 2px 8px; }
+        .side-support { margin: var(--spacing-5); padding: var(--spacing-5); border: 1px dashed var(--border-color); border-radius: 16px; }
+        .side-support b { display: block; font-size: 0.8rem; color: var(--text-primary); margin-bottom: 4px; }
+        .side-support p { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 var(--spacing-3); }
+        .side-logout { margin: 0 var(--spacing-5) var(--spacing-6); }
+        .main-content { flex: 1; margin-inline-start: 280px; padding: var(--spacing-8); }
+        .topbar { display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-6); margin-bottom: var(--spacing-8); padding-bottom: var(--spacing-5); border-bottom: 1px solid var(--border-color); flex-wrap: wrap; }
+        .topbar h1 { font-size: 1.7rem; margin: 0 0 6px; }
+        .topbar .date-chip { display: inline-flex; align-items: center; gap: 8px; background: var(--soft-aqua); color: var(--medical-emerald); font-size: 0.78rem; font-weight: 700; border-radius: 50px; padding: var(--spacing-2) var(--spacing-4); }
+        .topbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .top-search { position: relative; }
+        .top-search svg { position: absolute; top: 50%; inset-inline-start: 14px; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none; }
+        .top-search input { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); font-family: var(--font-body); font-size: 0.85rem; padding: 10px 14px 10px 40px; border-radius: 50px; width: 220px; outline: none; transition: all 0.3s ease; }
+        .top-search input:focus { border-color: var(--medical-emerald); box-shadow: 0 0 0 3px rgba(22,134,106,0.12); }
+        .topbar .avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--medical-emerald), var(--deep-teal)); color: var(--pearl); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; border: 2px solid rgba(22,134,106,0.2); }
+        .bell-wrap { position: relative; }
+        .bell-wrap .dot { position: absolute; top: 8px; inset-inline-end: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--champagne); border: 2px solid var(--bg-primary); }
+        .stat-card { position: relative; overflow: hidden; background: var(--bg-secondary); padding: var(--spacing-6); border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); transition: all 0.3s ease; }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: rgba(22,134,106,0.4); }
+        .stat-card::after { content: ""; position: absolute; width: 130px; height: 130px; border-radius: 50%; background: radial-gradient(circle, rgba(22,134,106,0.14), transparent 70%); top: -50px; inset-inline-end: -40px; pointer-events: none; }
+        .stat-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-4); }
+        .stat-head h4 { color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; }
+        .stat-ico { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+        .stat-ico.t1 { background: rgba(212,175,55,0.14); color: var(--champagne); }
+        .stat-ico.t2 { background: rgba(22,134,106,0.12); color: var(--medical-emerald); }
+        .stat-ico.t3 { background: rgba(22,101,155,0.12); color: #16659b; }
+        .stat-card .value { font-size: 2.4rem; font-weight: 800; color: var(--text-primary); font-family: var(--font-heading); line-height: 1; }
+        .stat-card .value small { font-size: 1rem; color: var(--text-secondary); font-weight: 600; }
+        .stat-foot { margin-top: var(--spacing-3); font-size: 0.75rem; color: var(--text-secondary); }
+        .stat-foot a { color: var(--medical-emerald); font-weight: 700; text-decoration: none; }
+        .stat-foot a:hover { text-decoration: underline; }
+        .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-5); }
+        .qa-card { display: flex; align-items: center; gap: 14px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; padding: var(--spacing-5); text-decoration: none; transition: all 0.3s ease; }
+        .qa-card:hover { border-color: rgba(22,134,106,0.45); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+        .qa-card .qa-ico { width: 42px; height: 42px; min-width: 42px; border-radius: 12px; background: var(--soft-aqua); color: var(--medical-emerald); display: flex; align-items: center; justify-content: center; }
+        .qa-card b { display: block; color: var(--text-primary); font-size: 0.85rem; }
+        .qa-card span { font-size: 0.7rem; color: var(--text-secondary); }
+        .dash-panel { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 20px; padding: var(--spacing-6); box-shadow: var(--shadow-sm); }
+        .dash-panel .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-5); gap: var(--spacing-4); flex-wrap: wrap; }
+        .dash-panel .panel-head h3 { margin: 0; font-size: 1.05rem; }
+        .dash-panel .panel-head p { margin: 4px 0 0; font-size: 0.78rem; color: var(--text-secondary); }
+        .dash-table { width: 100%; border-collapse: collapse; }
+        .dash-table th { text-align: start; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-secondary); padding: var(--spacing-2) var(--spacing-3); border-bottom: 2px solid var(--border-color); }
+        .dash-table td { padding: var(--spacing-4) var(--spacing-3); border-bottom: 1px solid var(--border-color); font-size: 0.88rem; color: var(--text-secondary); vertical-align: middle; }
+        .dash-table tr:last-child td { border-bottom: none; }
+        .dash-table tr:hover td { background: rgba(22,134,106,0.03); }
+        .dash-table td:first-child { border-start-start-radius: 10px; border-end-start-radius: 10px; }
+        .dash-table td:last-child { border-start-end-radius: 10px; border-end-end-radius: 10px; }
+        .dash-table .test-name { font-weight: 700; color: var(--text-primary); }
+        .status-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 50px; font-size: 0.68rem; font-weight: 800; letter-spacing: 1px; }
+        .status-pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+        .status-pill.processing { background: rgba(212,175,55,0.14); color: #a16207; }
+        .status-pill.completed { background: rgba(22,134,106,0.12); color: var(--medical-emerald); }
+        .link-action { font-weight: 700; font-size: 0.82rem; color: var(--medical-emerald); text-decoration: none; }
+        .link-action:hover { text-decoration: underline; }
+        .appt-card { display: flex; gap: 14px; align-items: flex-start; padding: var(--spacing-4); border: 1px solid var(--border-color); border-radius: 16px; background: linear-gradient(160deg, rgba(22,134,106,0.06), rgba(22,134,106,0.01)); margin-bottom: var(--spacing-4); }
+        .appt-date { min-width: 58px; text-align: center; border-radius: 12px; padding: var(--spacing-3) var(--spacing-2); background: linear-gradient(135deg, var(--medical-emerald), var(--deep-teal)); color: var(--pearl); }
+        .appt-date b { display: block; font-size: 1.3rem; font-family: var(--font-heading); line-height: 1; }
+        .appt-date span { font-size: 0.62rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+        .appt-card b.t { display: block; color: var(--text-primary); font-size: 0.92rem; margin-bottom: 2px; }
+        .appt-card p { margin: 0 0 6px; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
+        .appt-card .tag { display: inline-flex; align-items: center; gap: 5px; font-size: 0.66rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--medical-emerald); background: var(--soft-aqua); border-radius: 50px; padding: 3px 9px; }
+        .bottom-grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--spacing-6); align-items: start; }
+        .mobile-dash-nav { display: none; }
+        @media (max-width: 1200px) {
+            .quick-actions { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 992px) {
+            .sidebar { display: none; }
+            .main-content { margin-inline-start: 0; }
+            .mobile-dash-nav { display: flex; overflow-x: auto; gap: 8px; padding: var(--spacing-3) 0; margin-bottom: var(--spacing-6); }
+            .mobile-dash-nav a { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; padding: 8px 14px; text-decoration: none; white-space: nowrap; }
+            .mobile-dash-nav a.active { color: var(--medical-emerald); border-color: var(--medical-emerald); background: rgba(22,134,106,0.08); }
+            .bottom-grid { grid-template-columns: 1fr; }
+            .top-search input { width: 150px; }
+        }
+        @media (max-width: 640px) {
+            .main-content { padding: var(--spacing-6) var(--spacing-4); }
+            .quick-actions { grid-template-columns: 1fr; }
+            .stat-card .value { font-size: 1.9rem; }
+        }
     </style>
     <link rel="icon" type="image/png" href="../images/favicon.png">
 </head>
@@ -24,85 +111,232 @@
     <div class="dashboard-layout">
         <aside class="sidebar">
             <div class="sidebar-logo">
-                <a href="../index.html" style="display: flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none;">
+                <a href="../index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
                     <img src="../images/logo.png" alt="LabLink Logo" style="height: 40px;">
-                    <h2 style="margin:0; font-weight: 700; color: var(--text-primary);">Lab<span style="color:var(--champagne)">Link</span></h2>
+                    <div>
+                        <h2 style="margin:0; font-weight: 700; color: var(--text-primary); font-size: 1.4rem; line-height: 1.1;">Lab<span style="color:var(--champagne)">Link</span></h2>
+                        <span class="portal-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Patient Portal</span>
+                    </div>
                 </a>
             </div>
-            <nav>
-                <a href="dashboard.html" class="nav-item active">Dashboard Overview</a>
-                <a href="dashboard-booking.html" class="nav-item">Book Lab Test</a>
-                <a href="dashboard-prescription.html" class="nav-item">Upload Prescription</a>
-                <a href="dashboard-reports.html" class="nav-item">Report Tracking</a>
-                <a href="dashboard-history.html" class="nav-item">Test History</a>
-                <a href="dashboard-profile.html" class="nav-item">Profile</a>
-                <a href="dashboard-settings.html" class="nav-item">Settings</a>
+            <div class="side-user">
+                <div class="side-avatar">JD</div>
+                <div>
+                    <b>John Doe</b>
+                    <span>ID: LL-24816</span>
+                    <span class="gold">Gold Member</span>
+                </div>
+            </div>
+            <nav class="side-nav">
+                <div class="nav-label">Menu</div>
+                <a href="dashboard.html" class="nav-item active">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                    Dashboard Overview
+                </a>
+                <a href="dashboard-booking.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
+                    Book Lab Test
+                </a>
+                <a href="dashboard-prescription.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    Upload Prescription
+                </a>
+                <a href="dashboard-reports.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    Report Tracking
+                    <span class="nav-badge">2</span>
+                </a>
+                <a href="dashboard-history.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Test History
+                </a>
+                <a href="dashboard-profile.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Profile
+                </a>
+                <a href="dashboard-settings.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    Settings
+                </a>
             </nav>
-            <div style="padding: var(--spacing-6); margin-top: auto; position: absolute; bottom: 0; width: 100%;">
-                <a href="login.html" class="btn btn-secondary" style="width: 100%;">Logout</a>
+            <div class="side-support">
+                <b>Need help?</b>
+                <p>Our care concierge is available 24/7 for scheduling and report questions.</p>
+                <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: var(--medical-emerald); text-decoration: none;">Contact Support</a>
+            </div>
+            <div class="side-logout">
+                <a href="login.html" class="btn btn-secondary" style="width: 100%; justify-content: center; text-decoration: none;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    Logout
+                </a>
             </div>
         </aside>
 
         <main class="main-content">
+            <nav class="mobile-dash-nav">
+                <a href="dashboard.html" class="active"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg> Overview</a>
+                <a href="dashboard-booking.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg> Book Test</a>
+                <a href="dashboard-prescription.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Prescription</a>
+                <a href="dashboard-reports.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Reports</a>
+                <a href="dashboard-history.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> History</a>
+                <a href="dashboard-profile.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile</a>
+                <a href="dashboard-settings.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Settings</a>
+            </nav>
+
             <header class="topbar">
                 <div>
-                    <h1 style="font-size: 2rem; margin: 0;">Welcome, John Doe</h1>
-                    <p class="text-secondary" style="margin: 0;">Here is your health summary.</p>
+                    <h1>Welcome back, John</h1>
+                    <div class="date-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Wednesday, August 19, 2026</div>
                 </div>
-                <div class="flex items-center gap-4">
-                    <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">
+                <div class="topbar-actions">
+                    <div class="top-search">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" placeholder="Search tests, reports...">
+                    </div>
+                    <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;" title="Switch theme">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                     </button>
 
                     <button id="dir-toggle" class="btn btn-secondary" style="padding: var(--spacing-2) var(--spacing-3); border-radius: 50px; font-size: 0.75rem; min-width: 40px; height: 40px;" title="Toggle RTL/LTR">RTL</button>
-                    <div style="width: 40px; height: 40px; background: var(--medical-emerald); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">JD</div>
+                    <button class="btn btn-secondary bell-wrap" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px; position: relative;" title="Notifications">
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <span class="dot"></span>
+                    </button>
+                    <div class="avatar">JD</div>
                 </div>
             </header>
 
-            <div class="grid grid-cols-3 gap-8 mb-8" style="margin-bottom: var(--spacing-8);">
+            <div class="grid grid-cols-3 gap-8" style="margin-bottom: var(--spacing-6);">
                 <div class="stat-card">
-                    <h4>Pending Reports</h4>
-                    <div class="value">2</div>
+                    <div class="stat-head">
+                        <h4>Pending Reports</h4>
+                        <div class="stat-ico t1"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                    </div>
+                    <div class="value" data-count="2">0</div>
+                    <div class="stat-foot">Awaiting final physician review &nbsp;·&nbsp; <a href="dashboard-reports.html">Track now</a></div>
                 </div>
                 <div class="stat-card">
-                    <h4>Upcoming Appointments</h4>
-                    <div class="value">1</div>
+                    <div class="stat-head">
+                        <h4>Upcoming Appointments</h4>
+                        <div class="stat-ico t2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                    </div>
+                    <div class="value" data-count="1">0</div>
+                    <div class="stat-foot">Next: Lipid Profile &nbsp;·&nbsp; Today, 9:00 AM</div>
                 </div>
                 <div class="stat-card">
-                    <h4>Total Tests Done</h4>
-                    <div class="value">15</div>
+                    <div class="stat-head">
+                        <h4>Total Tests Done</h4>
+                        <div class="stat-ico t3"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                    </div>
+                    <div class="value" data-count="15">0</div>
+                    <div class="stat-foot">3 tests completed this month &nbsp;·&nbsp; <a href="dashboard-history.html">View history</a></div>
                 </div>
             </div>
 
-            <div style="background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); padding: var(--spacing-6);">
-                <h3 style="margin-bottom: var(--spacing-4);">Recent Activity</h3>
-                <table style="width: 100%; text-align: left; border-collapse: collapse;">
-                    <thead>
-                        <tr style="border-bottom: 2px solid var(--border-color); color: var(--text-secondary);">
-                            <th style="padding: var(--spacing-3) 0;">Date</th>
-                            <th style="padding: var(--spacing-3) 0;">Activity</th>
-                            <th style="padding: var(--spacing-3) 0;">Status</th>
-                            <th style="padding: var(--spacing-3) 0;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: var(--spacing-4) 0;">Aug 18, 2026</td>
-                            <td style="padding: var(--spacing-4) 0;">Comprehensive Plus Health Check</td>
-                            <td style="padding: var(--spacing-4) 0;"><span style="background: #fef08a; color: #854d0e; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">PROCESSING</span></td>
-                            <td style="padding: var(--spacing-4) 0;"><a href="dashboard-reports.html" style="font-weight: 600;">Track</a></td>
-                        </tr>
-                        <tr>
-                            <td style="padding: var(--spacing-4) 0;">Jul 10, 2026</td>
-                            <td style="padding: var(--spacing-4) 0;">Complete Blood Count (CBC)</td>
-                            <td style="padding: var(--spacing-4) 0;"><span style="background: #bbf7d0; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">COMPLETED</span></td>
-                            <td style="padding: var(--spacing-4) 0;"><a href="#" style="font-weight: 600;">Download PDF</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="quick-actions" style="margin-bottom: var(--spacing-6);">
+                <a href="dashboard-booking.html" class="qa-card">
+                    <div class="qa-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg></div>
+                    <div><b>Book Lab Test</b><span>250+ NABL-accredited tests</span></div>
+                </a>
+                <a href="dashboard-prescription.html" class="qa-card">
+                    <div class="qa-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+                    <div><b>Upload Prescription</b><span>Attach doctor's orders</span></div>
+                </a>
+                <a href="dashboard-reports.html" class="qa-card">
+                    <div class="qa-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                    <div><b>Track Reports</b><span>2 reports in progress</span></div>
+                </a>
+                <a href="dashboard-profile.html" class="qa-card">
+                    <div class="qa-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                    <div><b>Update Profile</b><span>Keep your details current</span></div>
+                </a>
+            </div>
+
+            <div class="bottom-grid">
+                <div class="dash-panel">
+                    <div class="panel-head">
+                        <div>
+                            <h3>Recent Activity</h3>
+                            <p>Your latest test orders and their current status.</p>
+                        </div>
+                        <a href="dashboard-history.html" class="btn btn-secondary" style="padding: var(--spacing-2) var(--spacing-5); text-decoration: none; font-size: 0.8rem;">View All</a>
+                    </div>
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Activity</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="white-space: nowrap;">Aug 18, 2026</td>
+                                <td><span class="test-name">Comprehensive Plus Health Check</span><br><span style="font-size: 0.72rem; color: var(--text-secondary);">Panel of 80+ markers</span></td>
+                                <td><span class="status-pill processing">PROCESSING</span></td>
+                                <td><a href="dashboard-reports.html" class="link-action">Track Report</a></td>
+                            </tr>
+                            <tr>
+                                <td style="white-space: nowrap;">Jul 10, 2026</td>
+                                <td><span class="test-name">Complete Blood Count (CBC)</span><br><span style="font-size: 0.72rem; color: var(--text-secondary);">Hb, WBC, platelets & indices</span></td>
+                                <td><span class="status-pill completed">COMPLETED</span></td>
+                                <td><a href="#" class="download-link link-action">Download PDF</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="dash-panel">
+                    <div class="panel-head">
+                        <div>
+                            <h3>Next Appointment</h3>
+                            <p>Your soonest scheduled collection.</p>
+                        </div>
+                    </div>
+                    <div class="appt-card">
+                        <div class="appt-date"><b>19</b><span>AUG</span></div>
+                        <div>
+                            <b class="t">Lipid Profile (Fasting)</b>
+                            <p>Home sample collection<br>9:00 AM – 10:00 AM</p>
+                            <span class="tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Home Visit</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.72rem; color: var(--text-secondary); margin: 0 0 var(--spacing-4); line-height: 1.6;">Please fast for 10–12 hours. Our phlebotomist carries certified cold-chain equipment for sample transport.</p>
+                    <div class="flex gap-3" style="gap: var(--spacing-3);">
+                        <a href="dashboard-booking.html" class="btn btn-primary" style="flex: 1; justify-content: center; text-decoration: none;">Reschedule</a>
+                        <a href="contact.html" class="btn btn-secondary" style="flex: 1; justify-content: center; text-decoration: none;">Get Directions</a>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
     <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const counters = document.querySelectorAll('[data-count]');
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (!entry.isIntersecting) return;
+                        const el = entry.target;
+                        const target = parseInt(el.getAttribute('data-count'), 10);
+                        const duration = 700;
+                        const start = performance.now();
+                        const tick = (now) => {
+                            const p = Math.min((now - start) / duration, 1);
+                            el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+                            if (p < 1) requestAnimationFrame(tick);
+                        };
+                        requestAnimationFrame(tick);
+                        observer.unobserve(el);
+                    });
+                }, { threshold: 0.4 });
+                counters.forEach((c) => observer.observe(c));
+            } else {
+                counters.forEach((c) => { c.textContent = c.getAttribute('data-count'); });
+            }
+        });
+    </script>
 </body>
 </html>

@@ -7,13 +7,85 @@
     <meta name="description" content="Experience premium clinical laboratory services with our state-of-the-art diagnostic center.">
     <link rel="stylesheet" href="css/index.css">
     <style>
-        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
-        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
-        .nav-links a { font-weight: 500; color: var(--text-primary); }
-        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
-        .service-card { padding: var(--spacing-8); border-radius: 16px; background: var(--bg-secondary); border: 1px solid var(--border-color); transition: all var(--transition-normal); }
-        .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--medical-emerald); }
-        .icon-box { width: 60px; height: 60px; border-radius: 12px; background: var(--soft-aqua); display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-4); }
+        .hero-1 { position: relative; overflow: hidden; background: radial-gradient(1000px 520px at 80% -10%, #0f4f46 0%, var(--deep-teal) 55%, #071e1b 100%); color: var(--pearl); padding: var(--spacing-24) 0; }
+        .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 52px 52px; -webkit-mask-image: radial-gradient(ellipse at 30% 40%, black 20%, transparent 72%); mask-image: radial-gradient(ellipse at 30% 40%, black 20%, transparent 72%); }
+        .hero-glow { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; }
+        .hglow-a { width: 460px; height: 460px; background: var(--medical-emerald); opacity: 0.28; top: -160px; inset-inline-end: -120px; }
+        .hglow-b { width: 380px; height: 380px; background: var(--champagne); opacity: 0.16; bottom: -180px; inset-inline-start: -100px; }
+        .hero-1 .container { position: relative; z-index: 1; }
+        .hero-1 .grid { align-items: center; gap: var(--spacing-16); }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: var(--champagne); font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: var(--spacing-2) var(--spacing-4); border-radius: 50px; margin-bottom: var(--spacing-6); }
+        .hero-1 h1 { font-size: 3.9rem; line-height: 1.1; margin-bottom: var(--spacing-6); color: var(--pearl); }
+        .hero-1 h1 .grad { background: linear-gradient(92deg, var(--champagne) 0%, #fdf6e3 40%, var(--medical-emerald) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero-sub { color: var(--soft-aqua); font-size: 1.125rem; line-height: 1.8; max-width: 540px; margin-bottom: var(--spacing-8); }
+        .quick-book { display: flex; align-items: center; gap: var(--spacing-2); background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.18); border-radius: 18px; padding: var(--spacing-2); max-width: 560px; transition: all 0.3s ease; }
+        .quick-book:focus-within { border-color: var(--champagne); box-shadow: 0 0 0 4px rgba(213,183,122,0.15); }
+        .quick-book input { flex: 1; background: transparent; border: none; outline: none; color: var(--pearl); font-family: var(--font-body); padding: var(--spacing-2) var(--spacing-3); font-size: 0.95rem; min-width: 0; }
+        .quick-book input::placeholder { color: var(--soft-aqua); }
+        .quick-book button { white-space: nowrap; }
+        .hero-stats { display: flex; gap: var(--spacing-10); margin-top: var(--spacing-10); flex-wrap: wrap; }
+        .hero-stats h3 { font-size: 2.1rem; color: var(--champagne); margin-bottom: 2px; }
+        .hero-stats p { color: var(--soft-aqua); font-size: 0.8rem; font-weight: 600; margin: 0; }
+        .hero-media { position: relative; }
+        .hero-frame { position: relative; border-radius: 28px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.45); }
+        .hero-frame img { display: block; width: 100%; height: 560px; object-fit: cover; }
+        .hero-frame::after { content: ''; position: absolute; inset: 0; background: linear-gradient(200deg, transparent 55%, rgba(7,30,27,0.55) 100%); }
+        .float-chip { position: absolute; z-index: 2; background: rgba(7,30,27,0.72); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.16); border-radius: 16px; padding: var(--spacing-3) var(--spacing-4); display: flex; align-items: center; gap: var(--spacing-3); box-shadow: 0 18px 40px rgba(0,0,0,0.35); animation: floaty 5s ease-in-out infinite; }
+        .chip-a { bottom: 36px; inset-inline-start: -36px; }
+        .chip-b { top: 36px; inset-inline-end: -24px; animation-delay: -2.5s; }
+        .chip-icon { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .float-chip strong { color: var(--pearl); display: block; font-size: 0.85rem; }
+        .float-chip small { color: var(--soft-aqua); font-size: 0.72rem; }
+        @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .cert-strip { display: flex; justify-content: center; flex-wrap: wrap; gap: var(--spacing-4); margin-top: var(--spacing-12); padding-top: var(--spacing-6); border-top: 1px solid rgba(255,255,255,0.1); }
+        .cert-strip span { color: var(--soft-aqua); font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; }
+        .cert-strip i { color: var(--champagne); font-style: normal; }
+        .eyebrow { display: inline-block; color: var(--medical-emerald); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: var(--spacing-3); }
+        .section-title { font-size: 2.75rem; margin-bottom: var(--spacing-4); }
+        .bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-6); }
+        .bento-card { border-radius: 24px; border: 1px solid var(--border-color); background: var(--bg-secondary); padding: var(--spacing-8); transition: all 0.35s ease; }
+        .bento-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+        .bento-photo { position: relative; overflow: hidden; border-radius: 24px; border: 1px solid var(--border-color); min-height: 300px; display: flex; align-items: flex-end; padding: var(--spacing-8); color: var(--pearl); transition: all 0.4s ease; grid-column: span 2; }
+        .bento-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+        .bento-photo:hover img { transform: scale(1.06); }
+        .bento-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,30,27,0.88) 0%, rgba(7,30,27,0.55) 45%, transparent 72%); }
+        .bento-photo > * { position: relative; z-index: 1; }
+        .bento-photo h3 { color: var(--pearl); margin-bottom: var(--spacing-2); }
+        .bento-photo > div { background: rgba(7, 30, 27, 0.68); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); padding: var(--spacing-4) var(--spacing-5); border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.16); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35); }
+        .bento-photo p { color: var(--pearl); font-size: 0.85rem; margin: 0; max-width: 420px; line-height: 1.6; }
+        .bento-icon { width: 56px; height: 56px; border-radius: 14px; background: var(--soft-aqua); display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-4); }
+        .bento-card h3 { font-size: 1.2rem; margin-bottom: var(--spacing-2); }
+        .bento-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin: 0; }
+        .home-band { background: linear-gradient(160deg, var(--deep-teal) 0%, var(--medical-emerald) 100%); }
+        .home-band .grid { align-items: center; gap: var(--spacing-16); }
+        .band-media { position: relative; }
+        .band-media img { width: 100%; height: 520px; object-fit: cover; border-radius: 28px; display: block; box-shadow: 0 30px 70px rgba(0,0,0,0.35); }
+        .band-step { display: flex; gap: var(--spacing-5); align-items: flex-start; margin-bottom: var(--spacing-8); }
+        .step-num { width: 52px; height: 52px; min-width: 52px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22); color: var(--champagne); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; position: relative; }
+        .band-step:not(:last-child) .step-num::after { content: ''; position: absolute; top: 100%; inset-inline-start: 50%; width: 1px; height: var(--spacing-8); background: rgba(255,255,255,0.2); }
+        .band-step strong { color: var(--pearl); display: block; margin-bottom: 4px; }
+        .band-step span { color: var(--soft-aqua); font-size: 0.9rem; line-height: 1.7; }
+        .faq-item { border: 1px solid var(--border-color); border-radius: 18px; background: var(--bg-secondary); overflow: hidden; transition: all 0.3s ease; }
+        .faq-item.open { border-color: rgba(22,134,106,0.45); box-shadow: var(--shadow-lg); }
+        .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-4); padding: var(--spacing-6) var(--spacing-8); background: none; border: none; cursor: pointer; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 600; color: var(--text-primary); text-align: start; }
+        .faq-icon { min-width: 32px; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; color: var(--medical-emerald); transition: all 0.35s ease; }
+        .faq-item.open .faq-icon { background: var(--medical-emerald); color: var(--pearl); transform: rotate(135deg); border-color: var(--medical-emerald); }
+        .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .faq-a-inner { padding: 0 var(--spacing-8) var(--spacing-6); color: var(--text-secondary); font-size: 0.925rem; line-height: 1.8; }
+        @media (max-width: 992px) {
+            .hero-1 h1 { font-size: 3rem; }
+            .bento { grid-template-columns: repeat(2, 1fr); }
+            .bento-photo { min-height: 240px; }
+        }
+        @media (max-width: 768px) {
+            .hero-1 { padding: var(--spacing-16) 0; }
+            .hero-1 .grid, .home-band .grid { grid-template-columns: 1fr; }
+            .chip-a { inset-inline-start: 12px; }
+            .chip-b { inset-inline-end: 12px; }
+            .bento { grid-template-columns: 1fr; }
+            .bento-photo { grid-column: span 1; }
+            .section-title { font-size: 2.25rem; }
+        }
     </style>
     <link rel="icon" type="image/png" href="images/favicon.png">
 </head>
@@ -52,82 +124,228 @@
                 <button id="dir-toggle" class="btn btn-secondary" style="padding: var(--spacing-2) var(--spacing-3); border-radius: 50px; font-size: 0.75rem; min-width: 40px; height: 40px;" title="Toggle RTL/LTR">RTL</button>
                 <a href="pages/services.html" class="btn btn-primary">Book Now</a>
             </nav>
+                <button id="menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                </button>
         </div>
     </header>
 
+<div class="menu-backdrop" id="menu-backdrop"></div>
+    <aside class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu-head">
+            <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                <img src="images/logo.png" alt="LabLink Logo" style="height: 36px;">
+                <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; line-height: 1.1; color: var(--text-primary);">Lab<span style="color: var(--champagne);">Link</span></span>
+            </a>
+            <span style="font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary);">Premium Diagnostics</span>
+        </div>
+<nav class="mobile-nav">
+            <a href="index.html" class="active">Home</a>
+            <a href="pages/home2.html">Home 2</a>
+            <a href="pages/about.html">About</a>
+            <a href="pages/services.html">Services</a>
+            <a href="pages/blog.html">Blog</a>
+            <a href="pages/contact.html">Contact</a>
+        </nav>
+        <div class="mobile-divider"></div>
+        <a href="pages/dashboard.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> User Dashboard</a>
+        <a href="pages/login.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login / Signup</a>
+        <div class="mobile-divider"></div>
+        <div class="mobile-actions">
+            <button id="mobile-theme" class="btn btn-secondary" title="Switch theme"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button id="mobile-dir" class="btn btn-secondary" title="Toggle RTL/LTR">RTL</button>
+        </div>
+        <a href="pages/services.html" class="btn btn-accent mobile-cta">Book Now</a>
+    </aside>
+
     <main>
-        <!-- Hero Section -->
-        <section class="hero" style="position: relative; padding: var(--spacing-24) 0; overflow: hidden; background: linear-gradient(135deg, var(--bg-primary) 0%, #e6f0f2 100%);">
-            <div class="container grid grid-cols-2 gap-8 items-center">
-                <div class="hero-content reveal">
-                    <span style="color: var(--medical-emerald); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.875rem; margin-bottom: var(--spacing-2); display: block;">Premium Diagnostics Center</span>
-                    <h1 style="font-size: 4rem; line-height: 1.1; margin-bottom: var(--spacing-6);">Precision Diagnostics.<br>Premium Care.</h1>
-                    <p class="text-secondary mb-4" style="font-size: 1.125rem; max-width: 90%;">Experience world-class clinical testing with our state-of-the-art laboratory infrastructure and expert medical professionals.</p>
-                    <div class="flex gap-4 mt-4" style="margin-top: var(--spacing-8);">
-                        <a href="pages/services.html" class="btn btn-primary">Book a Test</a>
-                        <a href="pages/about.html" class="btn btn-secondary">Our Technology</a>
+        <!-- Hero -->
+        <section class="hero-1">
+            <div class="hero-grid"></div>
+            <div class="hero-glow hglow-a"></div>
+            <div class="hero-glow hglow-b"></div>
+            <div class="container">
+                <div class="grid grid-cols-2">
+                    <div class="reveal">
+                        <span class="hero-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> Premium Diagnostics Center</span>
+                        <h1>Precision Diagnostics.<br><span class="grad">Premium Care.</span></h1>
+                        <p class="hero-sub">World-class clinical testing powered by six-sigma analyzers and physician-reviewed reporting — trusted by 200+ doctors across the city.</p>
+                        <form class="quick-book" data-success="Booking initiated! Our concierge will call you within 15 minutes.">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--soft-aqua)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input type="text" placeholder="Search a test, e.g. Full Body Checkup" required>
+                            <button type="submit" class="btn btn-accent">Book Now</button>
+                        </form>
+                        <div class="hero-stats">
+                            <div>
+                                <h3>500+</h3>
+                                <p>Tests Available</p>
+                            </div>
+                            <div>
+                                <h3>99.9%</h3>
+                                <p>Accuracy Rate</p>
+                            </div>
+                            <div>
+                                <h3>24 hr</h3>
+                                <p>Report Delivery</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stats flex gap-8" style="margin-top: var(--spacing-12);">
-                        <div>
-                            <h3 style="margin-bottom:0; font-size: 2rem;">500+</h3>
-                            <p class="text-secondary" style="font-size:0.875rem; font-weight: 600;">Tests Available</p>
+                    <div class="hero-media reveal">
+                        <div class="hero-frame">
+                            <img src="images/lab-hero-photo.jpg" alt="Modern LabLink clinical laboratory">
                         </div>
-                        <div>
-                            <h3 style="margin-bottom:0; font-size: 2rem;">99.9%</h3>
-                            <p class="text-secondary" style="font-size:0.875rem; font-weight: 600;">Accuracy Rate</p>
+                        <div class="float-chip chip-a">
+                            <div class="chip-icon" style="background: var(--medical-emerald); color: var(--pearl);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
+                            <div>
+                                <strong>NABL & CAP Accredited</strong>
+                                <small>Audited every year</small>
+                            </div>
                         </div>
-                        <div>
-                            <h3 style="margin-bottom:0; font-size: 2rem;">24hr</h3>
-                            <p class="text-secondary" style="font-size:0.875rem; font-weight: 600;">Report Delivery</p>
+                        <div class="float-chip chip-b">
+                            <div class="chip-icon" style="background: var(--champagne); color: var(--deep-teal);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                            <div>
+                                <strong>4.9 / 5 Rating</strong>
+                                <small>12,000+ patient reviews</small>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="hero-image reveal" style="position: relative;">
-                    <img src="images/lab_hero.png" alt="Modern Clinical Laboratory" style="width: 100%; border-radius: 24px; box-shadow: var(--shadow-xl); object-fit: cover; height: 600px;">
-                    <div class="glass" style="position: absolute; bottom: 40px; left: -40px; padding: var(--spacing-4); border-radius: 16px; display: flex; align-items: center; gap: var(--spacing-4);">
-                        <div style="width: 50px; height: 50px; background: var(--medical-emerald); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="cert-strip reveal">
+                    <span>CLIA <i>·</i></span>
+                    <span>CAP <i>·</i></span>
+                    <span>ISO 15189 <i>·</i></span>
+                    <span>HIPAA <i>·</i></span>
+                    <span>NABL</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why LabLink Bento -->
+        <section class="py-24">
+            <div class="container">
+                <div class="text-center reveal" style="max-width: 620px; margin: 0 auto var(--spacing-14);">
+                    <span class="eyebrow">Why LabLink</span>
+                    <h2 class="section-title">A Laboratory Built Around You</h2>
+                    <p class="text-secondary">Every detail — from sample pickup to digital reports — engineered for one thing: your trust.</p>
+                </div>
+                <div class="bento">
+                    <div class="bento-photo reveal">
+                        <img src="https://i.pinimg.com/736x/47/5e/2c/475e2c79a2a8b66bdea2ae792820aa5f.jpg" alt="LabLink molecular diagnostic technology">
                         <div>
-                            <h4 style="margin:0; font-size: 1rem; color: var(--text-primary);">NABL Accredited</h4>
-                            <p style="margin:0; font-size: 0.875rem; color: var(--text-secondary);">Highest Quality Standards</p>
+                            <h3>500+ Tests, One Standard</h3>
+                            <p>Routine panels to molecular genetics — processed on six-sigma analyzers with dual-stage quality control on every batch.</p>
+                        </div>
+                    </div>
+                    <div class="bento-card reveal" style="transition-delay: 0.1s;">
+                        <div class="bento-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                        <h3>Same-Day Reports</h3>
+                        <p>Most routine tests are processed and delivered digitally within 24 hours of sample collection.</p>
+                    </div>
+                    <div class="bento-card reveal" style="transition-delay: 0.2s;">
+                        <div class="bento-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg></div>
+                        <h3>Certified Phlebotomists</h3>
+                        <p>Gentle, painless collection by experienced professionals — rated 4.9/5 by 12,000+ patients.</p>
+                    </div>
+                    <div class="bento-photo reveal" style="transition-delay: 0.15s;">
+                        <img src="https://i.pinimg.com/1200x/6f/29/44/6f294452176979fae20081776a1fc16f.jpg" alt="LabLink diagnostic equipment">
+                        <div>
+                            <h3>Accreditation You Can See</h3>
+                            <p>CLIA, CAP, ISO 15189, HIPAA and NABL — independently audited, published openly, never just marketing.</p>
+                        </div>
+                    </div>
+                    <div class="bento-card reveal" style="transition-delay: 0.3s;">
+                        <div class="bento-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                        <h3>24/7 Patient Support</h3>
+                        <p>Real people, around the clock — book, reschedule, or ask about results any hour of the day.</p>
+                    </div>
+                    <div class="bento-card reveal" style="transition-delay: 0.4s;">
+                        <div class="bento-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+                        <h3>Physician-Reviewed Reports</h3>
+                        <p>Every report is cross-checked by senior pathologists before it reaches your Patient Portal.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Home Collection -->
+        <section class="py-24 home-band">
+            <div class="container">
+                <div class="grid grid-cols-2">
+                    <div class="band-media reveal">
+                        <img src="images/service-home.jpg" alt="Certified phlebotomist visiting a home">
+                    </div>
+                    <div class="reveal">
+                        <span class="eyebrow" style="color: var(--champagne);">Home Sample Collection</span>
+                        <h2 class="section-title" style="color: var(--pearl);">The Lab Comes to You.</h2>
+                        <p style="color: var(--soft-aqua); font-size: 1.05rem; line-height: 1.8; margin-bottom: var(--spacing-10);">Skip the traffic, the parking, and the waiting room. Our certified phlebotomists arrive at your doorstep in a time slot that suits you.</p>
+                        <div class="band-step">
+                            <div class="step-num">1</div>
+                            <div>
+                                <strong>Book Online in 2 Minutes</strong>
+                                <span>Choose your test, pick a slot, and confirm — no phone calls needed.</span>
+                            </div>
+                        </div>
+                        <div class="band-step">
+                            <div class="step-num">2</div>
+                            <div>
+                                <strong>Certified & Tracked</strong>
+                                <span>Samples travel in tamper-proof cold-chain boxes with live tracking to the lab.</span>
+                            </div>
+                        </div>
+                        <div class="band-step">
+                            <div class="step-num">3</div>
+                            <div>
+                                <strong>Results in 24 Hours</strong>
+                                <span>Get notified instantly and view physician-reviewed reports in your portal.</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-4" style="margin-top: var(--spacing-4);">
+                            <a href="pages/services.html" class="btn btn-accent">Schedule a Home Visit</a>
+                            <a href="pages/contact.html" class="btn btn-secondary" style="border-color: var(--pearl); color: var(--pearl);">Talk to Us</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Services Section -->
-        <section class="py-24" style="background-color: var(--bg-secondary);">
-            <div class="container">
-                <div class="text-center reveal mb-4" style="max-width: 600px; margin: 0 auto var(--spacing-16);">
-                    <h2 style="font-size: 2.5rem;">Comprehensive Diagnostic Services</h2>
-                    <p class="text-secondary">We offer a wide range of specialized tests and full body checkups utilizing cutting-edge medical technology.</p>
+        <!-- FAQ -->
+        <section class="py-24">
+            <div class="container" style="max-width: 860px;">
+                <div class="text-center reveal" style="margin-bottom: var(--spacing-12);">
+                    <span class="eyebrow">Questions</span>
+                    <h2 class="section-title">Frequently Asked</h2>
+                    <p class="text-secondary">Quick answers to what patients ask us most. Need more? Our team is one call away.</p>
                 </div>
-                
-                <div class="grid grid-cols-3 gap-8">
-                    <div class="service-card reveal">
-<div class="icon-box">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></svg>
-                        </div>
-                        <h3>Advanced Pathology</h3>
-                        <p class="text-secondary">Comprehensive blood work, cellular analysis, and precise biochemical testing with rapid turnaround times.</p>
-                        <a href="pages/services.html" style="display: inline-block; margin-top: var(--spacing-4); font-weight: 600;">Learn More &rarr;</a>
+                <div class="flex flex-col gap-4">
+                    <div class="faq-item reveal">
+                        <button class="faq-q">How fast will I receive my reports?<span class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+                        <div class="faq-a"><div class="faq-a-inner">Most routine tests are reported within 24 hours of sample collection. Urgent and cardiac panels are processed the same day, and you are notified instantly when your report is ready in the Patient Portal.</div></div>
                     </div>
-                    <div class="service-card reveal" style="transition-delay: 0.1s;">
-<div class="icon-box" style="background: #fdf2f8;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15c6.667-6 13.333 0 20-6"/><path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/><path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/><path d="m17 6-2.5-2.5"/><path d="m14 8-1-1"/><path d="m7 16 1 1"/><path d="m20 6-1.5-1.5"/><path d="m9 18 1.5 1.5"/><path d="m14 10 2.5 2.5"/><path d="m7 11 1.5 1.5"/></svg>
-                        </div>
-                        <h3>Molecular Diagnostics</h3>
-                        <p class="text-secondary">State-of-the-art genetic testing, PCR, and infectious disease screening with unmatched accuracy.</p>
-                        <a href="pages/services.html" style="display: inline-block; margin-top: var(--spacing-4); font-weight: 600;">Learn More &rarr;</a>
+                    <div class="faq-item reveal">
+                        <button class="faq-q">Which areas does home collection cover?<span class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+                        <div class="faq-a"><div class="faq-a-inner">Our certified phlebotomists cover all major zones across the city, seven days a week, with morning and evening slots. Enter your pincode during booking to confirm instant availability.</div></div>
                     </div>
-                    <div class="service-card reveal" style="transition-delay: 0.2s;">
-<div class="icon-box" style="background: #fef3c7;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                        </div>
-                        <h3>Home Sample Collection</h3>
-                        <p class="text-secondary">Experience our premium services from the comfort of your home with our certified phlebotomists.</p>
-                        <a href="pages/services.html" style="display: inline-block; margin-top: var(--spacing-4); font-weight: 600;">Learn More &rarr;</a>
+                    <div class="faq-item reveal">
+                        <button class="faq-q">Is LabLink NABL accredited?<span class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+                        <div class="faq-a"><div class="faq-a-inner">Yes. LabLink is accredited under NABL and holds CLIA, CAP, and ISO 15189 certifications, audited annually across every processing center. Our quality data is published openly — no lab in the city does more.</div></div>
                     </div>
+                    <div class="faq-item reveal">
+                        <button class="faq-q">Do I need to fast before my tests?<span class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+                        <div class="faq-a"><div class="faq-a-inner">Only for specific panels such as fasting blood sugar and lipid profiles. The exact instructions appear on your booking confirmation, and our concierge will remind you the evening before collection.</div></div>
+                    </div>
+                    <div class="faq-item reveal">
+                        <button class="faq-q">How do I access my reports?<span class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+                        <div class="faq-a"><div class="faq-a-inner">Reports are delivered to your Patient Portal as soon as they are physician-reviewed — downloadable as PDF, shareable with any doctor, and archived securely for life under HIPAA-grade encryption.</div></div>
+                    </div>
+                    <div class="faq-item reveal">
+                        <button class="faq-q">Can I reschedule or cancel my home visit?<span class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+                        <div class="faq-a"><div class="faq-a-inner">Absolutely — free of charge up to 2 hours before your slot, right from the portal or by calling our 24/7 support line. No questions asked, no fees.</div></div>
+                    </div>
+                </div>
+                <div class="text-center" style="margin-top: var(--spacing-12);">
+                    <a href="pages/contact.html" class="btn btn-primary">Still Have Questions? Contact Us</a>
                 </div>
             </div>
         </section>
@@ -136,17 +354,27 @@
 <footer class="footer" style="background-color: var(--deep-teal); color: var(--pearl); padding: var(--spacing-16) 0 var(--spacing-6); margin-top: auto;">
     <div class="container grid grid-cols-4 gap-8" style="margin-bottom: var(--spacing-12);">
         <div>
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: var(--spacing-4);">
+<a href="index.html" style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: var(--spacing-4); text-decoration: none;">
                 <img src="images/logo.png" alt="LabLink Logo" style="height: 40px;">
-                <h2 style="color: var(--champagne); font-weight: 700; margin: 0; font-family: var(--font-heading);">Lab<span style="color:var(--pearl)">Link</span></h2>
-            </div>
+                <div>
+                    <h2 style="color: var(--champagne); font-weight: 700; margin: 0; font-family: var(--font-heading);">Lab<span style="color:var(--pearl)">Link</span></h2>
+                    <span style="display:block; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-secondary); margin-top:2px;">Premium Diagnostics</span>
+                </div>
+            </a>
             <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-6);">
                 Setting the gold standard in diagnostic medicine. A curated sanctuary where precision meets premium healthcare.
             </p>
-            <div class="flex gap-4">
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Ig</a>
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Fb</a>
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Tw</a>
+            <div class="footer-certs">
+                <span>CLIA</span>
+                <span>CAP</span>
+                <span>ISO 15189</span>
+                <span>HIPAA</span>
+                <span>NABL</span>
+            </div>
+<div class="flex gap-4">
+                <a href="https://www.instagram.com/lablink" target="_blank" rel="noopener" aria-label="Instagram" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a href="https://www.facebook.com/lablink" target="_blank" rel="noopener" aria-label="Facebook" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                <a href="https://x.com/lablink" target="_blank" rel="noopener" aria-label="Twitter" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
             </div>
         </div>
         <div>
@@ -173,9 +401,9 @@
             <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-4);">
                 Receive exclusive health tips, package discounts, and medical insights before anyone else.
             </p>
-            <form style="display: flex; gap: var(--spacing-2);">
+            <form style="display: flex; gap: var(--spacing-2);" data-success="Subscribed successfully!">
                 <input type="email" placeholder="Your email" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--pearl); padding: var(--spacing-2) var(--spacing-4); border-radius: 4px; width: 100%; outline: none; font-family: var(--font-body); font-size: 0.875rem;">
-                <button type="button" style="background: var(--champagne); color: var(--deep-teal); border: none; padding: var(--spacing-2) var(--spacing-6); border-radius: 4px; font-weight: 600; cursor: pointer; font-family: var(--font-body); font-size: 0.875rem;">JOIN</button>
+                <button type="submit" style="background: var(--champagne); color: var(--deep-teal); border: none; padding: var(--spacing-2) var(--spacing-6); border-radius: 4px; font-weight: 600; cursor: pointer; font-family: var(--font-body); font-size: 0.875rem;">JOIN</button>
             </form>
         </div>
     </div>
@@ -196,5 +424,24 @@
 
 
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.faq-item').forEach((item) => {
+                const btn = item.querySelector('.faq-q');
+                const answer = item.querySelector('.faq-a');
+                btn.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('open');
+                    document.querySelectorAll('.faq-item.open').forEach((openItem) => {
+                        openItem.classList.remove('open');
+                        openItem.querySelector('.faq-a').style.maxHeight = null;
+                    });
+                    if (!isOpen) {
+                        item.classList.add('open');
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

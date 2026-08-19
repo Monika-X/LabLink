@@ -6,12 +6,51 @@
     <title>Terms & Conditions | LabLink</title>
     <link rel="stylesheet" href="../css/index.css">
     <style>
-        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
-        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
-        .nav-links a { font-weight: 500; color: var(--text-primary); }
-        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
-        .legal-content { max-width: 800px; margin: 0 auto; line-height: 1.8; color: var(--text-secondary); }
-        .legal-content h2 { color: var(--text-primary); margin-top: var(--spacing-8); margin-bottom: var(--spacing-4); }
+        .lg-hero { position: relative; overflow: hidden; background: radial-gradient(1000px 520px at 50% -10%, #0f4f46 0%, var(--deep-teal) 55%, #071e1b 100%); color: var(--pearl); padding: var(--spacing-20) 0; text-align: center; }
+        .lg-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 72%); mask-image: radial-gradient(ellipse at center, black 25%, transparent 72%); }
+        .lg-glow { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; }
+        .lglow-a { width: 420px; height: 420px; background: var(--medical-emerald); opacity: 0.28; top: -150px; inset-inline-start: -120px; }
+        .lglow-b { width: 380px; height: 380px; background: var(--champagne); opacity: 0.15; bottom: -170px; inset-inline-end: -90px; }
+        .lg-hero .container { position: relative; z-index: 1; }
+        .lg-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: var(--champagne); font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: var(--spacing-2) var(--spacing-4); border-radius: 50px; margin-bottom: var(--spacing-6); }
+        .lg-hero h1 { font-size: 3.2rem; margin-bottom: var(--spacing-4); color: var(--pearl); }
+        .lg-hero h1 .grad { background: linear-gradient(92deg, var(--champagne) 0%, #fdf6e3 40%, var(--medical-emerald) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .lg-sub { color: var(--soft-aqua); font-size: 1.02rem; line-height: 1.8; max-width: 560px; margin: 0 auto; }
+        .lg-meta { display: inline-flex; align-items: center; gap: 8px; margin-top: var(--spacing-6); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 50px; padding: var(--spacing-2) var(--spacing-4); color: var(--soft-aqua); font-size: 0.8rem; font-weight: 600; }
+        .lg-meta svg { color: var(--medical-emerald); }
+        .lg-layout { display: grid; grid-template-columns: 260px 1fr; gap: var(--spacing-12); align-items: start; }
+        .lg-toc { position: sticky; top: 104px; border: 1px solid var(--border-color); border-radius: 20px; background: var(--bg-secondary); padding: var(--spacing-6); }
+        .lg-toc h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-secondary); margin-bottom: var(--spacing-5); }
+        .lg-toc a { display: flex; align-items: center; gap: 10px; padding: var(--spacing-2) var(--spacing-3); border-radius: 10px; color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: all 0.25s ease; margin-bottom: 2px; }
+        .lg-toc a:hover { color: var(--medical-emerald); background: var(--soft-aqua); }
+        .lg-toc a.active { color: var(--medical-emerald); background: var(--soft-aqua); }
+        .lg-toc a .toc-num { min-width: 20px; height: 20px; border-radius: 6px; background: var(--soft-aqua); color: var(--medical-emerald); font-size: 0.68rem; display: flex; align-items: center; justify-content: center; font-weight: 800; }
+        .lg-toc .toc-back { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: var(--spacing-4); padding-top: var(--spacing-4); border-top: 1px dashed var(--border-color); font-size: 0.8rem; color: var(--text-secondary); text-decoration: none; transition: color 0.3s ease; }
+        .lg-toc .toc-back:hover { color: var(--medical-emerald); }
+        .lg-doc { display: flex; flex-direction: column; gap: var(--spacing-5); }
+        .lg-block { border: 1px solid var(--border-color); border-radius: 20px; background: var(--bg-secondary); padding: var(--spacing-8); transition: all 0.3s ease; scroll-margin-top: 104px; }
+        .lg-block:hover { border-color: rgba(22,134,106,0.45); box-shadow: var(--shadow-md); }
+        .lg-block-head { display: flex; align-items: center; gap: var(--spacing-4); margin-bottom: var(--spacing-5); }
+        .lg-num { width: 44px; height: 44px; min-width: 44px; border-radius: 12px; background: var(--soft-aqua); color: var(--medical-emerald); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.95rem; }
+        .lg-block-head h2 { font-size: 1.3rem; margin: 0; }
+        .lg-block p { color: var(--text-secondary); line-height: 1.85; font-size: 0.95rem; margin: 0 0 var(--spacing-3); }
+        .lg-block p:last-child { margin-bottom: 0; }
+        .lg-block ul { margin: 0 0 var(--spacing-3) 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--spacing-2); }
+        .lg-block ul:last-child { margin-bottom: 0; }
+        .lg-block ul li { display: flex; align-items: flex-start; gap: 10px; color: var(--text-secondary); font-size: 0.925rem; line-height: 1.7; }
+        .lg-block ul li svg { color: var(--medical-emerald); min-width: 16px; margin-top: 5px; }
+        .lg-contact { margin-top: var(--spacing-4); background: linear-gradient(160deg, var(--deep-teal) 0%, var(--medical-emerald) 100%); border-radius: 20px; padding: var(--spacing-8); display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8); flex-wrap: wrap; }
+        .lg-contact h3 { color: var(--pearl); font-size: 1.3rem; margin-bottom: 4px; }
+        .lg-contact p { color: var(--soft-aqua); margin: 0; font-size: 0.9rem; }
+        .lg-contact a { white-space: nowrap; }
+        @media (max-width: 992px) {
+            .lg-hero h1 { font-size: 2.6rem; }
+            .lg-layout { grid-template-columns: 1fr; }
+            .lg-toc { position: static; display: none; }
+        }
+        @media (max-width: 768px) {
+            .lg-hero { padding: var(--spacing-16) 0; }
+        }
     </style>
     <link rel="icon" type="image/png" href="../images/favicon.png">
 </head>
@@ -50,42 +89,159 @@
                 <button id="dir-toggle" class="btn btn-secondary" style="padding: var(--spacing-2) var(--spacing-3); border-radius: 50px; font-size: 0.75rem; min-width: 40px; height: 40px;" title="Toggle RTL/LTR">RTL</button>
                 <a href="services.html" class="btn btn-primary">Book Now</a>
             </nav>
+                <button id="menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                </button>
         </div>
     </header>
 
-    <main class="py-24">
-        <div class="container reveal">
-            <h1 style="text-align: center; margin-bottom: var(--spacing-8);">Terms & Conditions</h1>
-            <div class="legal-content">
-                <p>Last updated: August 18, 2026</p>
-                <p>Please read these Terms and Conditions carefully before using the LabLink website or our Patient Portal.</p>
-                
-                <h2>1. Acceptance of Terms</h2>
-                <p>By accessing or using our services, you agree to be bound by these Terms. If you disagree with any part of the terms, you may not access the service.</p>
-                
-                <h2>2. Diagnostic Services</h2>
-                <p>Our reports are meant for clinical correlation by your consulting physician. LabLink is not liable for any medical decisions made solely based on these reports without professional medical consultation.</p>
-                
-                <h2>3. Payment & Cancellation</h2>
-                <p>Payments for tests must be made in advance. Cancellations for Home Sample Collection must be made at least 4 hours prior to the scheduled slot for a full refund.</p>
-            </div>
+<div class="menu-backdrop" id="menu-backdrop"></div>
+    <aside class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu-head">
+            <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                <img src="../images/logo.png" alt="LabLink Logo" style="height: 36px;">
+                <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; line-height: 1.1; color: var(--text-primary);">Lab<span style="color: var(--champagne);">Link</span></span>
+            </a>
+            <span style="font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary);">Premium Diagnostics</span>
         </div>
+<nav class="mobile-nav">
+            <a href="../index.html">Home</a>
+            <a href="home2.html">Home 2</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="mobile-divider"></div>
+        <a href="dashboard.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> User Dashboard</a>
+        <a href="login.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login / Signup</a>
+        <div class="mobile-divider"></div>
+        <div class="mobile-actions">
+            <button id="mobile-theme" class="btn btn-secondary" title="Switch theme"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button id="mobile-dir" class="btn btn-secondary" title="Toggle RTL/LTR">RTL</button>
+        </div>
+        <a href="services.html" class="btn btn-accent mobile-cta">Book Now</a>
+    </aside>
+
+    <main>
+        <!-- Hero -->
+        <section class="lg-hero">
+            <div class="lg-grid"></div>
+            <div class="lg-glow lglow-a"></div>
+            <div class="lg-glow lglow-b"></div>
+            <div class="container reveal">
+                <span class="lg-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Transparent & Fair</span>
+                <h1>Terms & <span class="grad">Conditions</span></h1>
+                <p class="lg-sub">Clear, honest rules of engagement. Please read these Terms carefully before using the LabLink website or our Patient Portal.</p>
+                <div class="lg-meta"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Last updated: August 18, 2026</div>
+            </div>
+        </section>
+
+        <!-- Content -->
+        <section class="py-24">
+            <div class="container">
+                <div class="lg-layout">
+                    <aside class="lg-toc reveal">
+                        <h3>On This Page</h3>
+                        <a href="#sec-1"><span class="toc-num">1</span> Acceptance of Terms</a>
+                        <a href="#sec-2"><span class="toc-num">2</span> Diagnostic Services</a>
+                        <a href="#sec-3"><span class="toc-num">3</span> Payment & Cancellation</a>
+                        <a href="#sec-4"><span class="toc-num">4</span> Reports & Guidance</a>
+                        <a href="#sec-5"><span class="toc-num">5</span> Account Responsibilities</a>
+                        <a href="#sec-6"><span class="toc-num">6</span> Limitation of Liability</a>
+                        <a href="#sec-7"><span class="toc-num">7</span> Governing Law</a>
+                        <a href="#" class="toc-back"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg> Back to top</a>
+                    </aside>
+                    <div class="lg-doc">
+                        <div class="lg-block reveal" id="sec-1">
+                            <div class="lg-block-head"><div class="lg-num">1</div><h2>Acceptance of Terms</h2></div>
+                            <p>By accessing or using LabLink services, you agree to be bound by these Terms. If you disagree with any part of them, you may not access the service.</p>
+                            <ul>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Continued use of the site constitutes acceptance of any updated Terms</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> You must be at least 18 years old to book tests on your own behalf</li>
+                            </ul>
+                        </div>
+                        <div class="lg-block reveal" id="sec-2">
+                            <div class="lg-block-head"><div class="lg-num">2</div><h2>Diagnostic Services</h2></div>
+                            <p>LabLink provides diagnostic testing and laboratory services in accordance with NABL standards. Tests are performed with our signature dual-stage quality control.</p>
+                            <ul>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Certain tests may require physician authorization and fasting preparation</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> In rare cases, samples may need recollection at no additional charge</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Turnaround times are estimates and may vary for complex panels</li>
+                            </ul>
+                        </div>
+                        <div class="lg-block reveal" id="sec-3">
+                            <div class="lg-block-head"><div class="lg-num">3</div><h2>Payment & Cancellation</h2></div>
+                            <p>Payments for tests must be made in advance at the time of booking.</p>
+                            <ul>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Cancellations for Home Sample Collection must be made at least 4 hours prior to the scheduled slot for a full refund</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Refunds are processed within 5–7 business days to the original payment method</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Missed appointments without prior notice are not eligible for refunds</li>
+                            </ul>
+                        </div>
+                        <div class="lg-block reveal" id="sec-4">
+                            <div class="lg-block-head"><div class="lg-num">4</div><h2>Reports & Medical Guidance</h2></div>
+                            <p>Our reports are meant for clinical correlation by your consulting physician. LabLink is not liable for any medical decisions made solely based on these reports without professional medical consultation.</p>
+                            <ul>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Reference ranges may vary by age, gender, and laboratory methodology</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Digital reports in the Patient Portal are official copies of your results</li>
+                            </ul>
+                        </div>
+                        <div class="lg-block reveal" id="sec-5">
+                            <div class="lg-block-head"><div class="lg-num">5</div><h2>Account Responsibilities</h2></div>
+                            <p>You are responsible for maintaining the confidentiality of your Patient Portal credentials and for all activity under your account.</p>
+                            <ul>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Report suspected unauthorized access immediately via our support line</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Keep your contact details up to date so we can reach you about results</li>
+                            </ul>
+                        </div>
+                        <div class="lg-block reveal" id="sec-6">
+                            <div class="lg-block-head"><div class="lg-num">6</div><h2>Limitation of Liability</h2></div>
+                            <p>To the fullest extent permitted by law, LabLink's total liability for any claim arising from the use of our services is limited to the amount paid by you for the specific service giving rise to the claim. We are not liable for indirect, incidental, or consequential damages.</p>
+                        </div>
+                        <div class="lg-block reveal" id="sec-7">
+                            <div class="lg-block-head"><div class="lg-num">7</div><h2>Governing Law</h2></div>
+                            <p>These Terms are governed by the laws of the State of New York, United States. Any disputes shall be resolved in the courts of New York, and you agree to submit to the exclusive jurisdiction of such courts.</p>
+                            <div class="lg-contact">
+                                <div>
+                                    <h3>Legal Team</h3>
+                                    <p>legal@lablink.com &nbsp;·&nbsp; +1 (800) 555-0199</p>
+                                </div>
+                                <a href="contact.html" class="btn btn-accent">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
 <footer class="footer" style="background-color: var(--deep-teal); color: var(--pearl); padding: var(--spacing-16) 0 var(--spacing-6); margin-top: auto;">
     <div class="container grid grid-cols-4 gap-8" style="margin-bottom: var(--spacing-12);">
         <div>
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: var(--spacing-4);">
+<a href="../index.html" style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: var(--spacing-4); text-decoration: none;">
                 <img src="../images/logo.png" alt="LabLink Logo" style="height: 40px;">
-                <h2 style="color: var(--champagne); font-weight: 700; margin: 0; font-family: var(--font-heading);">Lab<span style="color:var(--pearl)">Link</span></h2>
-            </div>
+                <div>
+                    <h2 style="color: var(--champagne); font-weight: 700; margin: 0; font-family: var(--font-heading);">Lab<span style="color:var(--pearl)">Link</span></h2>
+                    <span style="display:block; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-secondary); margin-top:2px;">Premium Diagnostics</span>
+                </div>
+            </a>
             <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-6);">
                 Setting the gold standard in diagnostic medicine. A curated sanctuary where precision meets premium healthcare.
             </p>
-            <div class="flex gap-4">
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Ig</a>
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Fb</a>
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Tw</a>
+            <div class="footer-certs">
+                <span>CLIA</span>
+                <span>CAP</span>
+                <span>ISO 15189</span>
+                <span>HIPAA</span>
+                <span>NABL</span>
+            </div>
+<div class="flex gap-4">
+                <a href="https://www.instagram.com/lablink" target="_blank" rel="noopener" aria-label="Instagram" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a href="https://www.facebook.com/lablink" target="_blank" rel="noopener" aria-label="Facebook" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                <a href="https://x.com/lablink" target="_blank" rel="noopener" aria-label="Twitter" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
             </div>
         </div>
         <div>
@@ -112,9 +268,9 @@
             <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-4);">
                 Receive exclusive health tips, package discounts, and medical insights before anyone else.
             </p>
-            <form style="display: flex; gap: var(--spacing-2);">
+            <form style="display: flex; gap: var(--spacing-2);" data-success="Subscribed successfully!">
                 <input type="email" placeholder="Your email" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--pearl); padding: var(--spacing-2) var(--spacing-4); border-radius: 4px; width: 100%; outline: none; font-family: var(--font-body); font-size: 0.875rem;">
-                <button type="button" style="background: var(--champagne); color: var(--deep-teal); border: none; padding: var(--spacing-2) var(--spacing-6); border-radius: 4px; font-weight: 600; cursor: pointer; font-family: var(--font-body); font-size: 0.875rem;">JOIN</button>
+                <button type="submit" style="background: var(--champagne); color: var(--deep-teal); border: none; padding: var(--spacing-2) var(--spacing-6); border-radius: 4px; font-weight: 600; cursor: pointer; font-family: var(--font-body); font-size: 0.875rem;">JOIN</button>
             </form>
         </div>
     </div>
@@ -134,5 +290,21 @@
 </footer>
 
     <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tocLinks = document.querySelectorAll('.lg-toc a[href^="#"]');
+            const sections = document.querySelectorAll('.lg-block');
+            if ('IntersectionObserver' in window && sections.length) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach((link) => link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id));
+                        }
+                    });
+                }, { rootMargin: '-30% 0px -60% 0px' });
+                sections.forEach((section) => observer.observe(section));
+            }
+        });
+    </script>
 </body>
 </html>

@@ -6,22 +6,152 @@
     <title>Home Alternative | LabLink Premium Diagnostics</title>
     <link rel="stylesheet" href="../css/index.css">
     <style>
-        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
-        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
-        .nav-links a { font-weight: 500; color: var(--text-primary); }
-        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
-        
-        /* Specific Home 2 styles */
-        .hero-2 { background: var(--deep-teal); color: var(--white); padding: var(--spacing-20) 0; text-align: center; }
-        .hero-2 h1 { color: var(--champagne); font-size: 3.5rem; }
-        .quick-book { background: var(--bg-secondary); padding: var(--spacing-8); border-radius: 16px; margin-top: -60px; position: relative; z-index: 10; box-shadow: var(--shadow-xl); border: 1px solid var(--border-color); }
-        .package-card { border: 1px solid var(--border-color); border-radius: 16px; padding: var(--spacing-8); text-align: center; transition: transform 0.3s ease; background: var(--bg-primary); }
-        .package-card:hover { transform: scale(1.02); border-color: var(--medical-emerald); }
-        .price { font-size: 2.5rem; color: var(--medical-emerald); font-family: var(--font-heading); margin: var(--spacing-4) 0; }
+
+        /* Scroll progress bar */
+        .scroll-progress { position: fixed; top: 0; inset-inline-start: 0; height: 3px; width: 0%; background: linear-gradient(90deg, var(--medical-emerald), var(--champagne)); z-index: 1001; }
+
+        /* Premium Home 2 styles */
+        .hero-2 { position: relative; overflow: hidden; background: radial-gradient(1200px 600px at 15% -10%, #0f4f46 0%, var(--deep-teal) 45%, #071e1b 100%); color: var(--pearl); padding: var(--spacing-24) 0; }
+        .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse at center, black 35%, transparent 75%); mask-image: radial-gradient(ellipse at center, black 35%, transparent 75%); }
+        .hero-glow { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; transition: transform 0.35s ease-out; }
+        .glow-one { width: 420px; height: 420px; background: var(--medical-emerald); opacity: 0.35; top: -120px; inset-inline-start: -80px; }
+        .glow-two { width: 380px; height: 380px; background: var(--champagne); opacity: 0.22; bottom: -140px; inset-inline-end: -60px; }
+        .hero-grid-layout { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: var(--spacing-16); align-items: center; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: var(--champagne); font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: var(--spacing-2) var(--spacing-4); border-radius: 50px; margin-bottom: var(--spacing-6); }
+        .hero-2 h1 { font-size: 4rem; line-height: 1.08; margin-bottom: var(--spacing-6); color: var(--pearl); }
+        .text-gradient { background: linear-gradient(92deg, var(--champagne) 0%, #fdf6e3 25%, var(--medical-emerald) 50%, #fdf6e3 75%, var(--champagne) 100%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 7s linear infinite; }
+        @keyframes shimmer { 0% { background-position: 0% 0; } 100% { background-position: -200% 0; } }
+        .hero-sub { font-size: 1.125rem; line-height: 1.8; color: var(--soft-aqua); max-width: 90%; margin-bottom: var(--spacing-8); }
+        .btn-ghost { background: transparent; border: 1px solid rgba(255,255,255,0.35); color: var(--pearl); }
+        .btn-ghost:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+        .hero-trust { margin-top: var(--spacing-8); }
+        .avatar-stack { display: flex; }
+        .avatar-stack span { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: var(--deep-teal); border: 2px solid var(--deep-teal); margin-inline-end: -10px; }
+        .avatar-stack span:nth-child(1) { background: var(--champagne); }
+        .avatar-stack span:nth-child(2) { background: var(--soft-aqua); }
+        .avatar-stack span:nth-child(3) { background: #c7d2fe; }
+        .avatar-stack span:nth-child(4) { background: var(--medical-emerald); color: var(--pearl); font-size: 0.65rem; }
+        .stars { display: flex; gap: 2px; color: var(--champagne); }
+        .hero-trust p { margin: var(--spacing-1) 0 0; font-size: 0.8rem; color: var(--soft-aqua); }
+        .hero-stats { display: flex; align-items: center; gap: var(--spacing-8); margin-top: var(--spacing-10); flex-wrap: wrap; }
+        .hero-stats h3 { margin: 0; font-size: 1.75rem; color: var(--pearl); font-family: var(--font-heading); }
+        .hero-stats h3 .count-up { font-variant-numeric: tabular-nums; }
+        .hero-stats p { margin: var(--spacing-1) 0 0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--soft-aqua); font-weight: 600; }
+        .stat-divider { width: 1px; height: 44px; background: rgba(255,255,255,0.15); }
+        .glass-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.35); }
+        .booking-card { position: relative; padding: var(--spacing-8); overflow: hidden; }
+        .booking-card::before { content: ''; position: absolute; inset: -1px; border-radius: 24px; padding: 1px; background: conic-gradient(from 0deg, transparent 0%, var(--champagne) 12%, transparent 28%, transparent 55%, var(--medical-emerald) 72%, transparent 88%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite: exclude; animation: border-spin 7s linear infinite; pointer-events: none; }
+        @keyframes border-spin { to { transform: rotate(360deg); } }
+        .card-live { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #7fe0c3; margin-bottom: var(--spacing-4); }
+        .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; position: relative; flex-shrink: 0; }
+        .live-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid #4ade80; animation: pulse-ring 1.8s ease-out infinite; }
+        @keyframes pulse-ring { 0% { transform: scale(0.6); opacity: 1; } 100% { transform: scale(1.7); opacity: 0; } }
+        .booking-card h3 { color: var(--pearl); margin-bottom: var(--spacing-6); }
+        .booking-card .form-control { margin-bottom: var(--spacing-4); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); color: var(--pearl); border-radius: 12px; padding: var(--spacing-3) var(--spacing-4); transition: border-color 0.3s, box-shadow 0.3s; }
+        .booking-card .form-control:focus { outline: none; border-color: var(--champagne); box-shadow: 0 0 0 4px rgba(213,183,122,0.15); }
+        .booking-card .form-control::placeholder { color: var(--soft-aqua); }
+        .booking-card select option { color: var(--charcoal); }
+        .report-card { display: flex; align-items: center; gap: var(--spacing-4); padding: var(--spacing-5) var(--spacing-6); margin-top: var(--spacing-6); animation: floaty 5s ease-in-out infinite; }
+        .report-card p { margin: 0; font-size: 0.8rem; color: var(--soft-aqua); }
+        .report-card strong { color: var(--pearl); display: block; margin-bottom: 2px; }
+        .report-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--medical-emerald); display: flex; align-items: center; justify-content: center; color: var(--pearl); flex-shrink: 0; box-shadow: 0 10px 24px -8px rgba(22,134,106,0.6); }
+        @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .hero-media { position: relative; margin-top: var(--spacing-16); }
+        .hero-media-img { width: 100%; height: 340px; object-fit: cover; object-position: center 80%; border-radius: 28px; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 40px 80px rgba(0,0,0,0.45); display: block; }
+        .hero-media .report-card { position: absolute; bottom: var(--spacing-6); inset-inline-end: var(--spacing-6); margin-top: 0; background: rgba(10,35,38,0.88); }
+        .marquee { direction: ltr; position: relative; margin-top: var(--spacing-16); overflow: hidden; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); padding: var(--spacing-4) 0; -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); }
+        .marquee-track { display: flex; gap: var(--spacing-16); width: max-content; animation: marquee 28s linear infinite; }
+        .marquee-track span { display: inline-flex; align-items: center; gap: 10px; color: var(--soft-aqua); font-weight: 700; letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem; white-space: nowrap; }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .eyebrow { display: inline-block; color: var(--medical-emerald); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: var(--spacing-3); }
+        .section-head h2 { font-size: 2.75rem; margin-bottom: var(--spacing-4); }
+        .section-head p { color: var(--text-secondary); max-width: 560px; }
+        .feature-card { position: relative; overflow: hidden; padding: var(--spacing-8); border-radius: 20px; border: 1px solid var(--border-color); background: var(--bg-primary); transition: all 0.3s ease; }
+        .feature-card::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.22), transparent); transform: skewX(-20deg); transition: left 0.7s ease; pointer-events: none; }
+        .feature-card:hover::after { left: 150%; }
+        .feature-card:hover { transform: translateY(-6px); border-color: var(--medical-emerald); box-shadow: var(--shadow-lg); }
+        .feature-num { position: absolute; top: var(--spacing-6); inset-inline-end: var(--spacing-6); font-family: var(--font-heading); font-size: 2.5rem; color: var(--border-color); transition: color 0.3s; line-height: 1; }
+        .feature-card:hover .feature-num { color: var(--champagne); }
+        .feature-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-5); color: var(--pearl); box-shadow: 0 10px 24px -10px rgba(22,134,106,0.55); transition: transform 0.3s ease; }
+        .feature-card:hover .feature-icon { transform: scale(1.1) rotate(-4deg); }
+        .feature-card h3 { margin-bottom: var(--spacing-2); font-size: 1.25rem; }
+        .feature-card p { margin: 0; }
+        .lab-banner { position: relative; border-radius: 28px; overflow: hidden; box-shadow: var(--shadow-xl); }
+        .lab-banner::before { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(7,30,27,0.8) 0%, rgba(7,30,27,0.4) 55%, rgba(7,30,27,0.08) 100%); z-index: 1; }
+        .lab-banner-img { width: 100%; height: 340px; object-fit: cover; display: block; }
+        .lab-banner-copy { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: var(--spacing-12); max-width: 520px; }
+        .lab-banner-copy h3 { color: var(--pearl); font-size: 2.25rem; margin-bottom: var(--spacing-3); }
+        .lab-banner-copy p { color: var(--soft-aqua); margin-bottom: var(--spacing-6); }
+        .plan-card { border: 1px solid var(--border-color); border-radius: 24px; padding: var(--spacing-8); background: var(--bg-primary); text-align: center; position: relative; transition: all 0.3s ease; }
+        .plan-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .plan-card .plan-name { font-size: 0.8rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary); }
+        .plan-card .plan-price { font-size: 3rem; font-family: var(--font-heading); margin: var(--spacing-4) 0 var(--spacing-2); }
+        .plan-card .plan-price span { font-size: 1rem; font-family: var(--font-body); color: var(--text-secondary); font-weight: 600; }
+        .plan-card .plan-price .price-num { font-size: inherit; font-family: inherit; color: inherit; font-weight: inherit; display: inline-block; transition: opacity 0.2s, transform 0.2s; }
+        .plan-card .plan-price .price-flip { opacity: 0; transform: translateY(10px); }
+        .plan-card ul { list-style: none; padding: 0; margin: var(--spacing-6) 0; display: flex; flex-direction: column; gap: var(--spacing-3); text-align: left; }
+        .plan-popular { background: linear-gradient(160deg, var(--deep-teal) 0%, var(--medical-emerald) 100%); border-color: transparent; color: var(--pearl); transform: scale(1.05); overflow: hidden; }
+        .plan-popular::before { content: ''; position: absolute; inset: -1px; border-radius: 24px; padding: 1px; background: conic-gradient(from 0deg, transparent 0%, var(--champagne) 15%, transparent 35%, transparent 60%, #7fe0c3 80%, transparent 95%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite: exclude; animation: border-spin 6s linear infinite; pointer-events: none; }
+        .plan-popular:hover { transform: scale(1.05) translateY(-8px); }
+        .plan-popular .plan-name, .plan-popular .plan-price span, .plan-popular ul { color: var(--soft-aqua); }
+        .plan-popular ul svg { stroke: var(--champagne); }
+        .plan-popular .plan-price { color: var(--champagne); }
+        .plan-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--champagne); color: var(--deep-teal); font-size: 0.7rem; font-weight: 800; letter-spacing: 1.5px; padding: 6px 16px; border-radius: 50px; white-space: nowrap; z-index: 1; }
+        .concierge-strip { display: grid; grid-template-columns: 400px 1fr; gap: var(--spacing-12); align-items: center; }
+        .concierge-img { width: 100%; height: auto; display: block; }
+        .concierge-strip h3 { font-size: 1.75rem; margin-bottom: var(--spacing-3); }
+        .concierge-perks { display: flex; flex-wrap: wrap; gap: var(--spacing-4); margin-top: var(--spacing-4); }
+        .concierge-perks span { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); }
+        .billing-toggle { display: flex; align-items: center; justify-content: center; gap: var(--spacing-4); margin-top: var(--spacing-8); }
+        .bt-label { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); }
+        .billing-toggle.annual .bt-label.bt-on { color: var(--medical-emerald); }
+        .bt-switch { position: relative; width: 56px; height: 30px; border-radius: 50px; background: var(--border-color); border: none; cursor: pointer; padding: 0; transition: background 0.3s; }
+        .bt-switch .bt-knob { position: absolute; top: 3px; inset-inline-start: 3px; width: 24px; height: 24px; border-radius: 50%; background: var(--bg-primary); box-shadow: var(--shadow-md); transition: transform 0.3s; }
+        .billing-toggle.annual .bt-switch { background: var(--medical-emerald); }
+        .billing-toggle.annual .bt-knob { transform: translateX(26px); }
+        [dir="rtl"] .billing-toggle.annual .bt-knob { transform: translateX(-26px); }
+        .bt-save { font-size: 0.7rem; font-weight: 800; background: rgba(22,134,106,0.12); color: var(--medical-emerald); padding: 4px 10px; border-radius: 50px; letter-spacing: 1px; }
+        .t-slider { max-width: 780px; margin: var(--spacing-12) auto 0; text-align: center; }
+        .t-slide { display: none; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 24px; padding: var(--spacing-10) var(--spacing-12); animation: fadeIn 0.4s ease; }
+        .t-slide.active { display: block; }
+        .t-slide .stars { justify-content: center; margin-bottom: var(--spacing-4); }
+        .t-slide blockquote { margin: var(--spacing-4) 0 var(--spacing-6); font-size: 1.25rem; line-height: 1.7; color: var(--pearl); font-style: italic; }
+        .t-author { display: flex; align-items: center; justify-content: center; gap: var(--spacing-4); }
+        .t-author .avatar-stack span { border-color: var(--medical-emerald); margin-inline-end: 0; }
+        .t-author strong { color: var(--pearl); display: block; }
+        .t-author small { color: var(--soft-aqua); }
+        .t-controls { display: flex; justify-content: center; gap: var(--spacing-4); margin-top: var(--spacing-8); }
+        .t-controls button { width: 48px; height: 48px; border-radius: 50%; padding: 0; display: flex; align-items: center; justify-content: center; }
+        .t-dots { display: flex; justify-content: center; gap: 8px; margin-top: var(--spacing-6); }
+        .t-dots button { width: 8px; height: 8px; border-radius: 50%; border: none; background: rgba(255,255,255,0.3); cursor: pointer; padding: 0; transition: all 0.3s; }
+        .t-dots button.active { width: 28px; border-radius: 50px; background: var(--champagne); }
+        .cta-band { margin-top: var(--spacing-16); text-align: center; }
+        .cta-band h3 { color: var(--pearl); font-size: 2.25rem; margin-bottom: var(--spacing-3); }
+        .cta-band p { color: var(--soft-aqua); margin-bottom: var(--spacing-8); }
+        #membership { scroll-margin-top: 90px; }
+        @media (max-width: 992px) {
+            .hero-grid-layout { grid-template-columns: 1fr; gap: var(--spacing-12); }
+            .hero-2 h1 { font-size: 3rem; }
+            .plan-popular { transform: none; }
+            .plan-popular:hover { transform: translateY(-8px); }
+            .concierge-strip { grid-template-columns: 1fr; text-align: center; }
+            .concierge-perks { justify-content: center; }
+        }
+        @media (max-width: 768px) {
+            .hero-media-img, .lab-banner-img { height: 240px; }
+            .hero-media .report-card { inset-inline-end: var(--spacing-4); bottom: var(--spacing-4); }
+            .lab-banner-copy { padding: var(--spacing-8); }
+            .lab-banner-copy h3 { font-size: 1.6rem; }
+            .hero-stats { gap: var(--spacing-6); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .text-gradient, .booking-card::before, .plan-popular::before, .marquee-track, .report-card, .live-dot::after { animation: none; }
+        }
     </style>
     <link rel="icon" type="image/png" href="../images/favicon.png">
 </head>
 <body>
+    <div id="scroll-progress" class="scroll-progress"></div>
     <header class="header">
         <div class="container flex justify-between items-center" style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4);">
 <div class="logo">
@@ -56,74 +186,332 @@
                 <button id="dir-toggle" class="btn btn-secondary" style="padding: var(--spacing-2) var(--spacing-3); border-radius: 50px; font-size: 0.75rem; min-width: 40px; height: 40px;" title="Toggle RTL/LTR">RTL</button>
                 <a href="services.html" class="btn btn-primary">Book Now</a>
             </nav>
+                <button id="menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                </button>
         </div>
     </header>
 
+<div class="menu-backdrop" id="menu-backdrop"></div>
+    <aside class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu-head">
+            <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                <img src="../images/logo.png" alt="LabLink Logo" style="height: 36px;">
+                <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; line-height: 1.1; color: var(--text-primary);">Lab<span style="color: var(--champagne);">Link</span></span>
+            </a>
+            <span style="font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary);">Premium Diagnostics</span>
+        </div>
+<nav class="mobile-nav">
+            <a href="../index.html">Home</a>
+            <a href="home2.html" class="active">Home 2</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="mobile-divider"></div>
+        <a href="dashboard.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> User Dashboard</a>
+        <a href="login.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login / Signup</a>
+        <div class="mobile-divider"></div>
+        <div class="mobile-actions">
+            <button id="mobile-theme" class="btn btn-secondary" title="Switch theme"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button id="mobile-dir" class="btn btn-secondary" title="Toggle RTL/LTR">RTL</button>
+        </div>
+        <a href="services.html" class="btn btn-accent mobile-cta">Book Now</a>
+    </aside>
+
     <main>
-        <section class="hero-2 reveal">
-            <div class="container">
-                <h1>Your Health, Our Priority.</h1>
-                <p style="font-size: 1.25rem; max-width: 700px; margin: 0 auto; color: var(--gray-300);">Book advanced diagnostic tests and comprehensive health packages instantly.</p>
+        <!-- Premium Hero -->
+        <section class="hero-2">
+            <div class="hero-glow glow-one"></div>
+            <div class="hero-glow glow-two"></div>
+            <div class="hero-grid"></div>
+            <div class="container hero-grid-layout reveal">
+                <div class="hero-copy">
+                    <span class="hero-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> The Premium Diagnostics Experience</span>
+                    <h1>Diagnostics,<br>Elevated to <span class="text-gradient">an Art Form</span></h1>
+                    <p class="hero-sub">Skip the queues. Skip the jargon. LabLink Concierge brings white-glove testing, physician-reviewed digital reports, and 24-hour turnarounds — straight to your door.</p>
+                    <div class="flex gap-4">
+                        <a href="services.html" class="btn btn-accent">Book a Home Visit</a>
+                        <a href="#membership" class="btn btn-ghost">Explore Memberships</a>
+                    </div>
+                    <div class="hero-trust flex items-center gap-4">
+                        <div class="avatar-stack">
+                            <span>PS</span><span>MC</span><span>ST</span><span>+120K</span>
+                        </div>
+                        <div>
+                            <div class="stars">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </div>
+                            <p>Trusted by 120,000+ patients & 2,400+ referring physicians</p>
+                        </div>
+                    </div>
+                    <div class="hero-stats">
+                        <div><h3><span class="count-up" data-count="500">0</span>+</h3><p>Tests & Panels</p></div>
+                        <div class="stat-divider"></div>
+                        <div><h3><span class="count-up" data-count="99.9" data-decimals="1">0</span>%</h3><p>Lab Accuracy</p></div>
+                        <div class="stat-divider"></div>
+                        <div><h3><span class="count-up" data-count="24">0</span>h</h3><p>Digital Reports</p></div>
+                        <div class="stat-divider"></div>
+                        <div><h3><span class="count-up" data-count="4.9" data-decimals="1">0</span></h3><p>Patient Rating</p></div>
+                    </div>
+                </div>
+                <div class="hero-right">
+                    <div class="glass-card booking-card">
+                        <div class="card-live"><span class="live-dot"></span> Live · 12 phlebotomists on duty now</div>
+                        <h3>Book in 60 seconds</h3>
+                        <form data-success="Booking initiated! Our concierge will call you within 15 minutes.">
+                            <select class="form-control" required>
+                                <option value="">Choose a test or package</option>
+                                <option>Essential Well-being</option>
+                                <option>Comprehensive Plus</option>
+                                <option>Advanced Cardiac</option>
+                                <option>Vitamin D & B12 Panel</option>
+                            </select>
+                            <select class="form-control" required>
+                                <option value="">Collection location</option>
+                                <option>Home Collection</option>
+                                <option>Manhattan Flagship Lab</option>
+                                <option>Brooklyn Center</option>
+                            </select>
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="date" class="form-control" required>
+                                <input type="tel" class="form-control" placeholder="Mobile number" required>
+                            </div>
+                            <button type="submit" class="btn btn-accent" style="width: 100%; margin-top: var(--spacing-2);">Request Slot</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-media">
+                <img src="https://i.pinimg.com/1200x/23/b2/5e/23b25ef37ee66a80c1074a26439af199.jpg" alt="LabLink laboratory technician reviewing samples" class="hero-media-img">
+                <div class="glass-card report-card">
+                    <div class="report-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                    <div>
+                        <strong>Report ready in 24 hours</strong>
+                        <p>CBC · Lipid · Thyroid — delivered digitally at 12:40 PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="marquee">
+                <div class="marquee-track">
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> CLIA Certified</span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> CAP Accredited</span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> ISO 15189</span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> HIPAA Compliant</span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> NABL Accredited</span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> AABB Certified</span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> CLIA Certified</span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> CAP Accredited</span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> ISO 15189</span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> HIPAA Compliant</span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> NABL Accredited</span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="var(--champagne)"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> AABB Certified</span>
+                </div>
             </div>
         </section>
 
-        <!-- Quick Booking Widget -->
-        <section class="container reveal">
-            <div class="quick-book flex gap-4 items-center justify-center">
-                <input type="text" placeholder="Search for a test (e.g. CBC, Lipid Profile)" style="padding: var(--spacing-3) var(--spacing-4); width: 400px; border-radius: 8px; border: 1px solid var(--gray-300);">
-                <select style="padding: var(--spacing-3) var(--spacing-4); border-radius: 8px; border: 1px solid var(--gray-300);">
-                    <option>Select Location</option>
-                    <option>New York City</option>
-                    <option>Los Angeles</option>
-                </select>
-                <button class="btn btn-primary">Search & Book</button>
-            </div>
-        </section>
-
-        <!-- Featured Packages -->
+        <!-- The LabLink Difference -->
         <section class="py-24">
             <div class="container">
-                <div class="text-center mb-4 reveal">
-                    <h2 style="font-size: 2.5rem;">Popular Health Packages</h2>
-                    <p class="text-secondary">Comprehensive screenings designed by leading medical experts.</p>
+                <div class="section-head reveal">
+                    <span class="eyebrow">The LabLink Difference</span>
+                    <h2>Medicine, with a<br>White-Glove Finish</h2>
+                    <p>Every detail is engineered around one idea: you should never feel like a patient. You feel like a guest.</p>
                 </div>
-                <div class="grid grid-cols-3 gap-8 mt-4">
-                    <div class="package-card reveal">
-                        <h3>Essential Well-being</h3>
-                        <p class="text-secondary">64 Parameters included</p>
-                        <div class="price">$149</div>
-                        <ul style="list-style: none; padding: 0; text-align: left; margin-bottom: var(--spacing-6);" class="text-secondary">
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> Complete Blood Count</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> Thyroid Profile</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> Lipid Panel</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> Liver Function</li>
-                        </ul>
-                        <button class="btn btn-secondary" style="width: 100%;">Add to Cart</button>
+                <div class="grid grid-cols-2 gap-8 mt-4">
+                    <div class="feature-card reveal">
+                        <div class="feature-num">01</div>
+                        <div class="feature-icon" style="background: linear-gradient(135deg, var(--medical-emerald), #0d9488);"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                        <h3>Concierge Phlebotomists</h3>
+                        <p class="text-secondary">Hand-picked, consistently rated 4.9 stars, and at your doorstep within 90 minutes of booking.</p>
                     </div>
-                    <div class="package-card reveal" style="background: var(--medical-emerald); color: white; border-color: var(--medical-emerald); transform: scale(1.05);">
-                        <div style="background: var(--champagne); color: var(--deep-teal); font-size: 0.75rem; font-weight: bold; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: var(--spacing-2);">RECOMMENDED</div>
-                        <h3 style="color: white;">Comprehensive Plus</h3>
-                        <p style="color: var(--soft-aqua);">89 Parameters included</p>
-                        <div class="price" style="color: var(--champagne);">$299</div>
-                        <ul style="list-style: none; padding: 0; text-align: left; margin-bottom: var(--spacing-6);">
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> All Essential Tests</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> Vitamin D & B12</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> HbA1c (Diabetes)</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> Kidney Function</li>
-                        </ul>
-                        <button class="btn btn-accent" style="width: 100%;">Add to Cart</button>
+                    <div class="feature-card reveal" style="transition-delay: 0.1s;">
+                        <div class="feature-num">02</div>
+                        <div class="feature-icon" style="background: linear-gradient(135deg, #d4af6a, var(--champagne));"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                        <h3>24-Hour Digital Reports</h3>
+                        <p class="text-secondary">Physician-reviewed results land in your portal before your morning coffee gets cold.</p>
                     </div>
-                    <div class="package-card reveal">
-                        <h3>Advanced Cardiac</h3>
-                        <p class="text-secondary">42 Parameters included</p>
-                        <div class="price">$199</div>
-                        <ul style="list-style: none; padding: 0; text-align: left; margin-bottom: var(--spacing-6);" class="text-secondary">
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> Advanced Lipid Profile</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> High-Sensitivity CRP</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> Homocysteine</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> ECG Report</li>
+                    <div class="feature-card reveal" style="transition-delay: 0.2s;">
+                        <div class="feature-num">03</div>
+                        <div class="feature-icon" style="background: linear-gradient(135deg, #0e7490, var(--deep-teal));"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+                        <h3>CLIA & CAP-Certified Labs</h3>
+                        <p class="text-secondary">Every sample is processed in ISO-15189 accredited facilities with full chain of custody.</p>
+                    </div>
+                    <div class="feature-card reveal" style="transition-delay: 0.3s;">
+                        <div class="feature-num">04</div>
+                        <div class="feature-icon" style="background: linear-gradient(135deg, #7c3aed, #c084fc);"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                        <h3>Quiet-Time Scheduling</h3>
+                        <p class="text-secondary">Book the first slot of the morning or a 9 PM visit — our phlebotomists adapt to your clock.</p>
+                    </div>
+                </div>
+                <div class="lab-banner reveal" style="margin-top: var(--spacing-16);">
+                    <img src="../images/lab-banner-photo.jpg" alt="Inside the LabLink flagship laboratory" class="lab-banner-img">
+                    <div class="lab-banner-copy">
+                        <span class="eyebrow" style="color: var(--champagne);">Flagship Laboratory</span>
+                        <h3>Step Inside the Lab,<br>Without Leaving Your Sofa</h3>
+                        <p>Automated analysers, physician oversight, and a single glass wall between samples and science — take the virtual tour.</p>
+                        <a href="about.html" class="btn btn-accent">Take the Virtual Tour</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Membership Plans -->
+        <section class="py-24" id="membership" style="background-color: var(--bg-secondary);">
+            <div class="container">
+                <div class="text-center reveal" style="margin-bottom: var(--spacing-4);">
+                    <span class="eyebrow">Memberships</span>
+                    <h2 style="font-size: 2.75rem; margin-bottom: var(--spacing-4);">Your Health, on Retainer</h2>
+                    <p class="text-secondary">Annual diagnostic care plans with priority slots, dedicated concierge, and member-only pricing.</p>
+                </div>
+                <div class="billing-toggle reveal" id="billing-toggle" role="switch" aria-checked="false" tabindex="0">
+                    <span class="bt-label bt-on">Monthly</span>
+                    <button class="bt-switch" aria-label="Toggle billing period"><span class="bt-knob"></span></button>
+                    <span class="bt-label">Annual</span>
+                    <span class="bt-save">SAVE 20%</span>
+                </div>
+                <div class="grid grid-cols-3 gap-8" style="margin-top: var(--spacing-10);">
+                    <div class="plan-card reveal" data-monthly="29" data-annual="23">
+                        <div class="plan-name">Essential</div>
+                        <div class="plan-price"><span class="price-num">$29</span><span>/mo</span></div>
+                        <p class="text-secondary" style="font-size: 0.875rem;">For the proactive individual</p>
+                        <ul class="text-secondary">
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> 2 home collections / year</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> 15% off all tests</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> Standard report delivery</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> Quarterly wellness summary</li>
                         </ul>
-                        <button class="btn btn-secondary" style="width: 100%;">Add to Cart</button>
+                        <a href="services.html" class="btn btn-secondary" style="width: 100%;">Choose Essential</a>
+                    </div>
+                    <div class="plan-card plan-popular reveal" style="transition-delay: 0.1s;" data-monthly="79" data-annual="63">
+                        <div class="plan-badge">MOST LOVED</div>
+                        <div class="plan-name">Concierge</div>
+                        <div class="plan-price"><span class="price-num">$79</span><span>/mo</span></div>
+                        <p style="font-size: 0.875rem; color: var(--soft-aqua);">For the wellness-obsessed</p>
+                        <ul>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> Unlimited home collections</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> 30% off all tests</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> Same-day priority reports</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> Dedicated concierge line</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> Annual physician review call</li>
+                        </ul>
+                        <a href="services.html" class="btn btn-accent" style="width: 100%;">Choose Concierge</a>
+                    </div>
+                    <div class="plan-card reveal" style="transition-delay: 0.2s;" data-monthly="149" data-annual="119">
+                        <div class="plan-name">Executive</div>
+                        <div class="plan-price"><span class="price-num">$149</span><span>/mo</span></div>
+                        <p class="text-secondary" style="font-size: 0.875rem;">For families & executives</p>
+                        <ul class="text-secondary">
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> Covers up to 5 family members</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> 40% off all tests</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> VIP 2-hour report express</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-inline-end: 8px;"><polyline points="20 6 9 17 4 12"/></svg> Annual executive screening</li>
+                        </ul>
+                        <a href="services.html" class="btn btn-secondary" style="width: 100%;">Choose Executive</a>
+                    </div>
+                </div>
+                <div class="concierge-strip reveal" style="margin-top: var(--spacing-12);">
+                    <img src="../images/concierge-card.svg" alt="LabLink Concierge membership card" class="concierge-img">
+                    <div>
+                        <span class="eyebrow">Concierge, Delivered</span>
+                        <h3>Your Membership Card Arrives in 48 Hours</h3>
+                        <p class="text-secondary">A keepsake-grade card, your dedicated concierge line, and member pricing everywhere — all included. No lock-ins. Pause or cancel anytime, with a 30-day money-back promise on every plan.</p>
+                        <div class="concierge-perks">
+                            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Priority slots</span>
+                            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Member pricing</span>
+                            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Dedicated concierge</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials & CTA -->
+        <section class="py-24" style="background: linear-gradient(160deg, var(--deep-teal) 0%, var(--medical-emerald) 100%);">
+            <div class="container">
+                <div class="text-center reveal">
+                    <span class="eyebrow" style="color: var(--champagne);">Patient Stories</span>
+                    <h2 style="font-size: 2.75rem; color: var(--pearl); margin-bottom: var(--spacing-4);">Loved by the People We Serve</h2>
+                    <p style="color: var(--soft-aqua);">Over 120,000 patients trust LabLink every year — here is why.</p>
+                </div>
+                <div class="t-slider reveal">
+                    <div class="t-slide active">
+                        <svg width="44" height="44" viewBox="0 0 24 24" fill="var(--champagne)" style="margin: 0 auto var(--spacing-4);"><path d="M9.6 4C5.6 6.5 3 10 3 14.7 3 17.6 5 20 7.6 20c2.2 0 4-1.7 4-3.9 0-2.2-1.6-3.7-3.7-3.7-.4 0-.8 0-1 .1.4-2.2 2.3-4.9 4.3-6.2L9.6 4zm10 0c-4 2.5-6.6 6-6.6 10.7 0 2.9 2 5.3 4.6 5.3 2.2 0 4-1.7 4-3.9 0-2.2-1.6-3.7-3.7-3.7-.4 0-.8 0-1 .1.4-2.2 2.3-4.9 4.3-6.2L19.6 4z"/></svg>
+                        <div class="stars">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        </div>
+                        <blockquote>"The home collection service is a lifesaver. The phlebotomist arrived on time, was incredibly gentle, and my full report was in my portal before I woke up the next morning."</blockquote>
+                        <div class="t-author">
+                            <div class="avatar-stack"><span style="background: var(--champagne); border: 2px solid var(--deep-teal);">PS</span></div>
+                            <div style="text-align: left;">
+                                <strong>Priya Sharma</strong>
+                                <small>Concierge Member since 2025</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="t-slide">
+                        <svg width="44" height="44" viewBox="0 0 24 24" fill="var(--champagne)" style="margin: 0 auto var(--spacing-4);"><path d="M9.6 4C5.6 6.5 3 10 3 14.7 3 17.6 5 20 7.6 20c2.2 0 4-1.7 4-3.9 0-2.2-1.6-3.7-3.7-3.7-.4 0-.8 0-1 .1.4-2.2 2.3-4.9 4.3-6.2L9.6 4zm10 0c-4 2.5-6.6 6-6.6 10.7 0 2.9 2 5.3 4.6 5.3 2.2 0 4-1.7 4-3.9 0-2.2-1.6-3.7-3.7-3.7-.4 0-.8 0-1 .1.4-2.2 2.3-4.9 4.3-6.2L19.6 4z"/></svg>
+                        <div class="stars">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        </div>
+                        <blockquote>"As a physician, I recommend LabLink to my patients without hesitation. The turnaround times and the clarity of the reports are unmatched in the region."</blockquote>
+                        <div class="t-author">
+                            <div class="avatar-stack"><span style="background: var(--soft-aqua); border: 2px solid var(--deep-teal);">MC</span></div>
+                            <div style="text-align: left;">
+                                <strong>Dr. Michael Chen</strong>
+                                <small>Referring Cardiologist</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="t-slide">
+                        <svg width="44" height="44" viewBox="0 0 24 24" fill="var(--champagne)" style="margin: 0 auto var(--spacing-4);"><path d="M9.6 4C5.6 6.5 3 10 3 14.7 3 17.6 5 20 7.6 20c2.2 0 4-1.7 4-3.9 0-2.2-1.6-3.7-3.7-3.7-.4 0-.8 0-1 .1.4-2.2 2.3-4.9 4.3-6.2L9.6 4zm10 0c-4 2.5-6.6 6-6.6 10.7 0 2.9 2 5.3 4.6 5.3 2.2 0 4-1.7 4-3.9 0-2.2-1.6-3.7-3.7-3.7-.4 0-.8 0-1 .1.4-2.2 2.3-4.9 4.3-6.2L19.6 4z"/></svg>
+                        <div class="stars">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        </div>
+                        <blockquote>"Booked a corporate health camp for my entire team of 40 employees. The coordination was seamless, and each employee received a detailed wellness report."</blockquote>
+                        <div class="t-author">
+                            <div class="avatar-stack"><span style="background: #c7d2fe; border: 2px solid var(--deep-teal);">ST</span></div>
+                            <div style="text-align: left;">
+                                <strong>Sarah Thompson</strong>
+                                <small>HR Director, NovaTech</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="t-controls">
+                        <button id="t-prev" class="btn btn-secondary" style="width: 48px; height: 48px; border-radius: 50%; padding: 0;" title="Previous"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+                        <button id="t-next" class="btn btn-secondary" style="width: 48px; height: 48px; border-radius: 50%; padding: 0;" title="Next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                    </div>
+                    <div class="t-dots">
+                        <button class="t-dot active" aria-label="Testimonial 1"></button>
+                        <button class="t-dot" aria-label="Testimonial 2"></button>
+                        <button class="t-dot" aria-label="Testimonial 3"></button>
+                    </div>
+                </div>
+                <div class="cta-band reveal">
+                    <h3>Ready for a check-up that feels like a treat?</h3>
+                    <p>Join 120,000+ members who made LabLink their second home.</p>
+                    <div class="flex gap-4 justify-center">
+                        <a href="services.html" class="btn btn-accent">Book Now</a>
+                        <a href="contact.html" class="btn btn-ghost">Talk to Concierge</a>
                     </div>
                 </div>
             </div>
@@ -133,17 +521,27 @@
 <footer class="footer" style="background-color: var(--deep-teal); color: var(--pearl); padding: var(--spacing-16) 0 var(--spacing-6); margin-top: auto;">
     <div class="container grid grid-cols-4 gap-8" style="margin-bottom: var(--spacing-12);">
         <div>
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: var(--spacing-4);">
+<a href="../index.html" style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: var(--spacing-4); text-decoration: none;">
                 <img src="../images/logo.png" alt="LabLink Logo" style="height: 40px;">
-                <h2 style="color: var(--champagne); font-weight: 700; margin: 0; font-family: var(--font-heading);">Lab<span style="color:var(--pearl)">Link</span></h2>
-            </div>
+                <div>
+                    <h2 style="color: var(--champagne); font-weight: 700; margin: 0; font-family: var(--font-heading);">Lab<span style="color:var(--pearl)">Link</span></h2>
+                    <span style="display:block; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-secondary); margin-top:2px;">Premium Diagnostics</span>
+                </div>
+            </a>
             <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-6);">
                 Setting the gold standard in diagnostic medicine. A curated sanctuary where precision meets premium healthcare.
             </p>
-            <div class="flex gap-4">
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Ig</a>
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Fb</a>
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Tw</a>
+            <div class="footer-certs">
+                <span>CLIA</span>
+                <span>CAP</span>
+                <span>ISO 15189</span>
+                <span>HIPAA</span>
+                <span>NABL</span>
+            </div>
+<div class="flex gap-4">
+                <a href="https://www.instagram.com/lablink" target="_blank" rel="noopener" aria-label="Instagram" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a href="https://www.facebook.com/lablink" target="_blank" rel="noopener" aria-label="Facebook" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                <a href="https://x.com/lablink" target="_blank" rel="noopener" aria-label="Twitter" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
             </div>
         </div>
         <div>
@@ -170,9 +568,9 @@
             <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-4);">
                 Receive exclusive health tips, package discounts, and medical insights before anyone else.
             </p>
-            <form style="display: flex; gap: var(--spacing-2);">
+            <form style="display: flex; gap: var(--spacing-2);" data-success="Subscribed successfully!">
                 <input type="email" placeholder="Your email" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--pearl); padding: var(--spacing-2) var(--spacing-4); border-radius: 4px; width: 100%; outline: none; font-family: var(--font-body); font-size: 0.875rem;">
-                <button type="button" style="background: var(--champagne); color: var(--deep-teal); border: none; padding: var(--spacing-2) var(--spacing-6); border-radius: 4px; font-weight: 600; cursor: pointer; font-family: var(--font-body); font-size: 0.875rem;">JOIN</button>
+                <button type="submit" style="background: var(--champagne); color: var(--deep-teal); border: none; padding: var(--spacing-2) var(--spacing-6); border-radius: 4px; font-weight: 600; cursor: pointer; font-family: var(--font-body); font-size: 0.875rem;">JOIN</button>
             </form>
         </div>
     </div>
@@ -193,5 +591,120 @@
 
 
     <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll progress bar
+            const progressBar = document.getElementById('scroll-progress');
+            const updateProgress = () => {
+                const h = document.documentElement;
+                const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+                if (progressBar) progressBar.style.width = pct + '%';
+            };
+            window.addEventListener('scroll', updateProgress, { passive: true });
+            updateProgress();
+
+            // Hero glow parallax
+            const hero = document.querySelector('.hero-2');
+            if (hero) {
+                const g1 = hero.querySelector('.glow-one');
+                const g2 = hero.querySelector('.glow-two');
+                hero.addEventListener('mousemove', (e) => {
+                    const r = hero.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+                    if (g1) g1.style.transform = 'translate(' + (x * 44) + 'px, ' + (y * 44) + 'px)';
+                    if (g2) g2.style.transform = 'translate(' + (x * -32) + 'px, ' + (y * -32) + 'px)';
+                });
+            }
+
+            // Animated counters
+            const counters = document.querySelectorAll('.count-up');
+            const runCounter = (el) => {
+                const target = parseFloat(el.dataset.count);
+                const decimals = parseInt(el.dataset.decimals || '0', 10);
+                const dur = 1700;
+                const start = performance.now();
+                const step = (now) => {
+                    const p = Math.min((now - start) / dur, 1);
+                    const eased = 1 - Math.pow(1 - p, 3);
+                    el.textContent = (target * eased).toFixed(decimals);
+                    if (p < 1) requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+            };
+            if ('IntersectionObserver' in window) {
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((en) => {
+                        if (en.isIntersecting) {
+                            runCounter(en.target);
+                            counterObserver.unobserve(en.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                counters.forEach((c) => counterObserver.observe(c));
+            } else {
+                counters.forEach((c) => { c.textContent = c.dataset.count; });
+            }
+
+            // Testimonials slider with auto-advance + dots
+            const slides = document.querySelectorAll('.t-slide');
+            const prev = document.getElementById('t-prev');
+            const next = document.getElementById('t-next');
+            const dots = document.querySelectorAll('.t-dot');
+            const slider = document.querySelector('.t-slider');
+            if (slides.length) {
+                let cur = 0;
+                let tTimer = null;
+                const show = (i) => {
+                    cur = (i + slides.length) % slides.length;
+                    slides.forEach((s, idx) => s.classList.toggle('active', idx === cur));
+                    dots.forEach((d, idx) => d.classList.toggle('active', idx === cur));
+                };
+                const startAuto = () => {
+                    if (tTimer) clearInterval(tTimer);
+                    tTimer = setInterval(() => show(cur + 1), 6000);
+                };
+                if (prev) prev.addEventListener('click', () => { show(cur - 1); startAuto(); });
+                if (next) next.addEventListener('click', () => { show(cur + 1); startAuto(); });
+                dots.forEach((d, idx) => d.addEventListener('click', () => { show(idx); startAuto(); }));
+                if (slider) {
+                    slider.addEventListener('mouseenter', () => { if (tTimer) clearInterval(tTimer); });
+                    slider.addEventListener('mouseleave', startAuto);
+                }
+                show(0);
+                startAuto();
+            }
+
+            // Billing toggle (Monthly / Annual)
+            const billingToggle = document.getElementById('billing-toggle');
+            if (billingToggle) {
+                const swapPrices = () => {
+                    const annual = billingToggle.classList.contains('annual');
+                    billingToggle.setAttribute('aria-checked', annual ? 'true' : 'false');
+                    document.querySelectorAll('.plan-price').forEach((el) => {
+                        const card = el.closest('.plan-card');
+                        const num = el.querySelector('.price-num');
+                        const target = annual ? card.dataset.annual : card.dataset.monthly;
+                        num.classList.add('price-flip');
+                        setTimeout(() => {
+                            num.textContent = '$' + target;
+                            num.classList.remove('price-flip');
+                        }, 200);
+                    });
+                };
+                billingToggle.addEventListener('click', () => {
+                    billingToggle.classList.toggle('annual');
+                    swapPrices();
+                });
+                billingToggle.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        billingToggle.classList.toggle('annual');
+                        swapPrices();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

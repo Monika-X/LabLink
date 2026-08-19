@@ -6,16 +6,103 @@
     <title>Blog | LabLink Premium Diagnostics</title>
     <link rel="stylesheet" href="../css/index.css">
     <style>
-        .header { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); z-index: 100; position: relative; }
-        .header.sticky { position: fixed; top: 0; width: 100%; box-shadow: var(--shadow-sm); animation: fadeIn 0.3s; }
-        .nav-links a { font-weight: 500; color: var(--text-primary); }
-        .nav-links a:hover, .nav-links a.active { color: var(--medical-emerald); }
-        .page-header { padding: var(--spacing-20) 0; background: var(--bg-secondary); text-align: center; border-bottom: 1px solid var(--border-color); }
-        .blog-card { background: var(--bg-secondary); border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); transition: all var(--transition-normal); }
-        .blog-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-        .blog-card img { width: 100%; height: 240px; object-fit: cover; }
-        .blog-content { padding: var(--spacing-6); }
-        .blog-meta { display: flex; gap: var(--spacing-4); color: var(--text-secondary); font-size: 0.875rem; margin-bottom: var(--spacing-2); }
+        .blog-hero { position: relative; overflow: hidden; background: radial-gradient(1100px 560px at 50% -10%, #0f4f46 0%, var(--deep-teal) 50%, #071e1b 100%); color: var(--pearl); padding: var(--spacing-24) 0; text-align: center; }
+        .blog-hero .hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%); mask-image: linear-gradient(to bottom, black 40%, transparent 100%); }
+        .blog-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%); mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%); }
+        .blog-glow { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+        .glow-a { width: 420px; height: 420px; background: var(--medical-emerald); opacity: 0.3; top: -140px; inset-inline-start: -100px; }
+        .glow-b { width: 380px; height: 380px; background: var(--champagne); opacity: 0.18; bottom: -160px; inset-inline-end: -80px; }
+        .blog-hero .container { position: relative; z-index: 1; }
+        .blog-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: var(--champagne); font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: var(--spacing-2) var(--spacing-4); border-radius: 50px; margin-bottom: var(--spacing-6); }
+        .blog-title { font-size: 4rem; line-height: 1.08; margin-bottom: var(--spacing-6); color: var(--pearl); }
+        .text-gradient { background: linear-gradient(92deg, var(--champagne) 0%, #fdf6e3 25%, var(--medical-emerald) 50%, #fdf6e3 75%, var(--champagne) 100%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 7s linear infinite; }
+        @keyframes shimmer { 0% { background-position: 0% 0; } 100% { background-position: -200% 0; } }
+        .blog-sub { font-size: 1.125rem; line-height: 1.8; color: var(--soft-aqua); max-width: 620px; margin: 0 auto var(--spacing-8); }
+        .blog-search { display: flex; align-items: center; gap: var(--spacing-3); max-width: 520px; margin: 0 auto; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 50px; padding: var(--spacing-2) var(--spacing-4); color: var(--soft-aqua); transition: all 0.3s ease; }
+        .blog-search:focus-within { border-color: var(--champagne); box-shadow: 0 0 0 4px rgba(213,183,122,0.15); background: rgba(255,255,255,0.12); }
+        .blog-search input { flex: 1; background: transparent; border: none; outline: none; color: var(--pearl); font-family: var(--font-body); font-size: 0.95rem; padding: var(--spacing-2) 0; }
+        .blog-search input::placeholder { color: var(--soft-aqua); }
+        .blog-hero-stats { display: flex; justify-content: center; gap: var(--spacing-8); margin-top: var(--spacing-8); flex-wrap: wrap; }
+        .blog-hero-stats span { display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--soft-aqua); font-weight: 600; letter-spacing: 0.5px; }
+        .eyebrow { display: inline-block; color: var(--medical-emerald); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: var(--spacing-3); }
+        .section-head { margin-bottom: var(--spacing-10); }
+        .section-head h2 { font-size: 2.75rem; margin-bottom: var(--spacing-4); }
+        .section-head p { color: var(--text-secondary); max-width: 560px; }
+        .featured-card { display: grid; grid-template-columns: 1.05fr 1fr; border-radius: 28px; overflow: hidden; border: 1px solid var(--border-color); background: var(--bg-secondary); box-shadow: var(--shadow-lg); transition: all 0.35s ease; }
+        .featured-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); border-color: rgba(22,134,106,0.4); }
+        .featured-media { position: relative; min-height: 360px; }
+        .featured-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .article-chip { position: absolute; top: var(--spacing-5); inset-inline-start: var(--spacing-5); background: var(--champagne); color: var(--deep-teal); font-size: 0.7rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 14px; border-radius: 50px; box-shadow: 0 6px 16px rgba(0,0,0,0.25); }
+        .featured-content { padding: var(--spacing-10) var(--spacing-12); display: flex; flex-direction: column; justify-content: center; }
+        .featured-content .blog-meta { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: var(--spacing-4); display: flex; gap: var(--spacing-3); flex-wrap: wrap; }
+        .featured-content .blog-meta strong { color: var(--medical-emerald); }
+        .featured-content h2 { font-size: 2.25rem; margin-bottom: var(--spacing-4); }
+        .featured-content p { color: var(--text-secondary); line-height: 1.8; margin-bottom: var(--spacing-8); }
+        .author-row { display: flex; align-items: center; gap: var(--spacing-3); margin-bottom: var(--spacing-8); }
+        .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--medical-emerald), var(--deep-teal)); color: var(--pearl); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; }
+        .author-row strong { display: block; font-size: 0.9rem; }
+        .author-row small { color: var(--text-secondary); font-size: 0.78rem; }
+        .article-card { border-radius: 22px; overflow: hidden; border: 1px solid var(--border-color); background: var(--bg-secondary); transition: all 0.35s ease; display: flex; flex-direction: column; }
+        .article-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: rgba(22,134,106,0.45); }
+        .article-media { position: relative; overflow: hidden; height: 220px; }
+        .article-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .article-card:hover .article-media img { transform: scale(1.08); }
+        .article-tag { position: absolute; top: var(--spacing-4); inset-inline-start: var(--spacing-4); background: rgba(7,30,27,0.75); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); color: var(--champagne); font-size: 0.68rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 12px; border-radius: 50px; }
+        .article-body { padding: var(--spacing-6); display: flex; flex-direction: column; flex: 1; }
+        .article-meta { display: flex; gap: var(--spacing-3); color: var(--text-secondary); font-size: 0.78rem; margin-bottom: var(--spacing-3); }
+        .article-body h3 { font-size: 1.3rem; line-height: 1.35; margin-bottom: var(--spacing-3); }
+        .article-body h3 a { color: inherit; }
+        .article-body h3 a:hover { color: var(--medical-emerald); }
+        .article-body p { color: var(--text-secondary); font-size: 0.925rem; line-height: 1.75; margin-bottom: var(--spacing-5); flex: 1; }
+        .read-link { font-weight: 700; color: var(--medical-emerald); display: inline-flex; align-items: center; gap: 6px; transition: all 0.3s ease; }
+        .read-link svg { transition: transform 0.3s ease; }
+        .read-link:hover { color: var(--deep-teal); }
+        .read-link:hover svg { transform: translateX(4px); }
+        .topic-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-3); }
+        .topic-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 50px; padding: var(--spacing-3) var(--spacing-6); font-weight: 600; color: var(--text-primary); text-decoration: none; transition: all 0.3s ease; }
+        .topic-pill svg { color: var(--medical-emerald); }
+        .topic-pill:hover { background: linear-gradient(135deg, var(--deep-teal), var(--medical-emerald)); color: var(--pearl); border-color: transparent; transform: translateY(-3px); box-shadow: 0 10px 24px rgba(22,134,106,0.3); }
+        .topic-pill:hover svg { color: var(--champagne); }
+        .blog-newsletter { background: linear-gradient(160deg, var(--deep-teal) 0%, var(--medical-emerald) 100%); }
+        .filter-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-6); flex-wrap: wrap; margin-top: var(--spacing-12); padding: var(--spacing-5); background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 18px; box-shadow: var(--shadow-sm); }
+        .filter-pills { display: flex; gap: var(--spacing-3); flex-wrap: wrap; }
+        .filter-pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 50px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-secondary); font-size: 0.82rem; font-weight: 700; font-family: var(--font-body); cursor: pointer; transition: all 0.25s ease; }
+        .filter-pill svg { color: var(--medical-emerald); }
+        .filter-pill:hover { border-color: var(--medical-emerald); color: var(--medical-emerald); }
+        .filter-pill.active { background: linear-gradient(135deg, var(--deep-teal), var(--medical-emerald)); color: var(--pearl); border-color: transparent; box-shadow: 0 8px 20px rgba(22,134,106,0.3); }
+        .filter-pill.active svg { color: var(--champagne); }
+        .filter-count { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; }
+        .filter-count b { color: var(--medical-emerald); }
+        @media (max-width: 640px) {
+            .filter-bar { flex-direction: column; align-items: flex-start; }
+        }
+        .newsletter-card { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--spacing-12); align-items: center; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-radius: 28px; padding: var(--spacing-12); box-shadow: 0 30px 60px rgba(0,0,0,0.3); }
+        .newsletter-card h2 { color: var(--pearl); font-size: 2.25rem; margin-bottom: var(--spacing-3); }
+        .newsletter-card p { color: var(--soft-aqua); line-height: 1.8; margin-bottom: var(--spacing-6); }
+        .nl-perks { display: flex; flex-wrap: wrap; gap: var(--spacing-4); }
+        .nl-perks span { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: var(--soft-aqua); }
+        .newsletter-card form { display: flex; gap: var(--spacing-2); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; padding: 6px; transition: all 0.3s ease; }
+        .newsletter-card form:focus-within { border-color: var(--champagne); box-shadow: 0 0 0 4px rgba(213,183,122,0.15); }
+        .newsletter-card form input { flex: 1; background: transparent; border: none; outline: none; color: var(--pearl); font-family: var(--font-body); padding: var(--spacing-2) var(--spacing-4); min-width: 0; }
+        .newsletter-card form input::placeholder { color: var(--soft-aqua); }
+        .newsletter-card form button { white-space: nowrap; }
+        @media (max-width: 992px) {
+            .blog-title { font-size: 3rem; }
+            .featured-card { grid-template-columns: 1fr; }
+            .featured-media { min-height: 280px; }
+            .newsletter-card { grid-template-columns: 1fr; gap: var(--spacing-8); }
+        }
+        @media (max-width: 1200px) {
+            #article-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 640px) {
+            #article-grid { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        }
+        @media (max-width: 768px) {
+            .blog-hero { padding: var(--spacing-16) 0; }
+            .featured-content { padding: var(--spacing-8); }
+            .featured-content h2 { font-size: 1.75rem; }
+        }
     </style>
     <link rel="icon" type="image/png" href="../images/favicon.png">
 </head>
@@ -54,62 +141,331 @@
                 <button id="dir-toggle" class="btn btn-secondary" style="padding: var(--spacing-2) var(--spacing-3); border-radius: 50px; font-size: 0.75rem; min-width: 40px; height: 40px;" title="Toggle RTL/LTR">RTL</button>
                 <a href="services.html" class="btn btn-primary">Book Now</a>
             </nav>
+                <button id="menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                </button>
         </div>
     </header>
 
+<div class="menu-backdrop" id="menu-backdrop"></div>
+    <aside class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu-head">
+            <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                <img src="../images/logo.png" alt="LabLink Logo" style="height: 36px;">
+                <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; line-height: 1.1; color: var(--text-primary);">Lab<span style="color: var(--champagne);">Link</span></span>
+            </a>
+            <span style="font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary);">Premium Diagnostics</span>
+        </div>
+<nav class="mobile-nav">
+            <a href="../index.html">Home</a>
+            <a href="home2.html">Home 2</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="mobile-divider"></div>
+        <a href="dashboard.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> User Dashboard</a>
+        <a href="login.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login / Signup</a>
+        <div class="mobile-divider"></div>
+        <div class="mobile-actions">
+            <button id="mobile-theme" class="btn btn-secondary" title="Switch theme"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button id="mobile-dir" class="btn btn-secondary" title="Toggle RTL/LTR">RTL</button>
+        </div>
+        <a href="services.html" class="btn btn-accent mobile-cta">Book Now</a>
+    </aside>
+
     <main>
-        <section class="page-header">
+        <!-- Blog Hero -->
+        <section class="blog-hero">
+            <img class="hero-photo" src="https://i.pinimg.com/1200x/8b/46/a3/8b46a3c2917bc148ad493b5a8d70a82a.jpg" alt="">
+            <div class="blog-glow glow-a"></div>
+            <div class="blog-glow glow-b"></div>
+            <div class="blog-grid"></div>
             <div class="container reveal">
-                <h1 style="font-size: 3.5rem;">Health Insights</h1>
-                <p style="font-size: 1.25rem; max-width: 800px; margin: 0 auto; color: var(--text-secondary);">Expert articles, medical research, and wellness tips from our specialists.</p>
+                <span class="blog-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> The LabLink Journal</span>
+                <h1 class="blog-title">Health, Decoded<br><span class="text-gradient">Beautifully</span></h1>
+                <p class="blog-sub">Evidence-based guides, physician insights, and lab science — written to be understood, designed to be enjoyed.</p>
+                <div class="blog-search">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input id="blog-search" type="text" placeholder="Search articles - try 'vitamin d' or 'cholesterol'">
+                </div>
+                <div class="blog-hero-stats">
+                    <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 120+ articles</span>
+                    <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> 6 categories</span>
+                    <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 25,000+ readers</span>
+                </div>
             </div>
         </section>
 
+        <!-- Featured & Articles -->
         <section class="py-24">
-            <div class="container grid grid-cols-3 gap-8">
-                <!-- Blog Post 1 -->
-                <div class="blog-card reveal">
-                    <img src="../images/lab_hero.png" alt="Understanding Lipid Profiles">
-                    <div class="blog-content">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow">Latest & Featured</span>
+                    <h2>Fresh from the Journal</h2>
+                    <p>Curated by our physicians. Written by people, not algorithms.</p>
+                </div>
+                <div class="featured-card reveal">
+                    <div class="featured-media">
+                        <img src="../images/lab-team-photo.jpg" alt="LabLink laboratory team at work">
+                        <span class="article-chip">Featured</span>
+                    </div>
+                    <div class="featured-content">
                         <div class="blog-meta">
-                            <span>August 15, 2026</span>
-                            <span>•</span>
-                            <span style="color: var(--medical-emerald); font-weight: 600;">Cardiology</span>
+                            <strong>Cardiology</strong>
+                            <span>August 18, 2026</span>
+                            <span>· 8 min read</span>
                         </div>
-                        <h3 style="margin-bottom: var(--spacing-2);"><a href="blog-details.html" style="color: inherit;">Decoding Your Lipid Profile Results</a></h3>
-                        <p class="text-secondary mb-4">A comprehensive guide to understanding HDL, LDL, and what those cholesterol numbers actually mean for your heart health.</p>
-                        <a href="blog-details.html" style="font-weight: 600; color: var(--medical-emerald);">Read Article &rarr;</a>
+                        <h2>Inside the Lab: How Your Blood Sample Becomes a Diagnosis</h2>
+                        <p>Follow a single blood tube through our flagship laboratory — from barcode registration and robotic sorting to six-sigma analyzers and physician-reviewed reports, all in under 24 hours.</p>
+                        <div class="author-row">
+                            <div class="author-avatar">DR</div>
+                            <div>
+                                <strong>Dr. Rebecca Okafor</strong>
+                                <small>Chief Medical Officer</small>
+                            </div>
+                        </div>
+                        <a href="blog-lipid-profile.html" class="btn btn-primary" style="align-self: flex-start;">Read Full Article</a>
                     </div>
                 </div>
-
-                <!-- Blog Post 2 -->
-                <div class="blog-card reveal" style="transition-delay: 0.1s;">
-                    <img src="../images/lab_hero.png" alt="Importance of Vitamin D">
-                    <div class="blog-content">
-                        <div class="blog-meta">
-                            <span>August 10, 2026</span>
-                            <span>•</span>
-                            <span style="color: var(--medical-emerald); font-weight: 600;">Nutrition</span>
+                <div class="filter-bar reveal">
+                    <div class="filter-pills" id="filter-pills" role="group" aria-label="Filter articles by category">
+                        <button type="button" class="filter-pill active" data-cat="all"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></svg> All Articles</button>
+                        <button type="button" class="filter-pill" data-cat="Cardiology"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Cardiology</button>
+                        <button type="button" class="filter-pill" data-cat="Nutrition"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Nutrition</button>
+                        <button type="button" class="filter-pill" data-cat="Technology"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg> Technology</button>
+                    </div>
+                    <div class="filter-count" id="filter-count">Showing <b>4</b> of 12 articles</div>
+                </div>
+                <div class="grid grid-cols-4 gap-8" id="article-grid" style="margin-top: var(--spacing-8);">
+                    <div class="article-card reveal" data-title="decoding your lipid profile cholesterol heart" data-category="Cardiology">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/736x/6d/8d/32/6d8d329bed10a24f3c41c2056df17534.jpg" alt="Understanding Lipid Profiles">
+                            <span class="article-tag">Cardiology</span>
                         </div>
-                        <h3 style="margin-bottom: var(--spacing-2);"><a href="blog-details.html" style="color: inherit;">The Silent Epidemic: Vitamin D Deficiency</a></h3>
-                        <p class="text-secondary mb-4">Why regular screening for Vitamin D is crucial, especially in urban environments, and how it impacts immunity.</p>
-                        <a href="blog-details.html" style="font-weight: 600; color: var(--medical-emerald);">Read Article &rarr;</a>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>Aug 15, 2026</span>
+                                <span>· 6 min read</span>
+                            </div>
+                            <h3><a href="blog-lipid-profile.html">Decoding Your Lipid Profile Results</a></h3>
+                            <p>A comprehensive guide to understanding HDL, LDL, and what those cholesterol numbers actually mean for your heart health.</p>
+                            <a href="blog-lipid-profile.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="article-card reveal" style="transition-delay: 0.1s;" data-title="vitamin d deficiency immunity nutrition" data-category="Nutrition">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/1200x/92/07/3f/92073fbcaae8f50a0f38adfe1a082ec8.jpg" alt="Importance of Vitamin D">
+                            <span class="article-tag">Nutrition</span>
+                        </div>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>Aug 10, 2026</span>
+                                <span>· 5 min read</span>
+                            </div>
+                            <h3><a href="blog-vitamin-d.html">The Silent Epidemic: Vitamin D Deficiency</a></h3>
+                            <p>Why regular screening for Vitamin D is crucial, especially in urban environments, and how it impacts immunity and mood.</p>
+                            <a href="blog-vitamin-d.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="article-card reveal" style="transition-delay: 0.2s;" data-title="ai pathology machine learning technology" data-category="Technology">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/1200x/8e/b0/ce/8eb0cee3bf8941b40d6e43c022a54e5c.jpg" alt="Advanced Pathology">
+                            <span class="article-tag">Technology</span>
+                        </div>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>Aug 05, 2026</span>
+                                <span>· 7 min read</span>
+                            </div>
+                            <h3><a href="blog-ai-pathology.html">How AI is Revolutionizing Pathology</a></h3>
+                            <p>Explore how machine learning algorithms assist pathologists in achieving unprecedented accuracy in diagnostics.</p>
+                            <a href="blog-ai-pathology.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
+                    </div>
+                <div class="article-card reveal" style="transition-delay: 0.05s;" data-title="blood pressure hypertension heart cardiology" data-category="Cardiology">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/1200x/eb/a7/b3/eba7b3fc05d49ff5e2c558ed8de57835.jpg" alt="Blood Pressure Monitoring">
+                            <span class="article-tag">Cardiology</span>
+                        </div>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>Jul 28, 2026</span>
+                                <span>· 6 min read</span>
+                            </div>
+                            <h3><a href="blog-hypertension.html">Blood Pressure Under Control: Hypertension Basics</a></h3>
+                            <p>Understanding what your blood pressure numbers mean and the lifestyle changes that keep your heart in the safe zone.</p>
+                            <a href="blog-hypertension.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="article-card reveal" style="transition-delay: 0.15s;" data-title="gut health microbiome digestion wellness nutrition" data-category="Nutrition">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/1200x/de/46/2d/de462dc6cf0a807d1512c67d445c9901.jpg" alt="Gut Health and Microbiome">
+                            <span class="article-tag">Nutrition</span>
+                        </div>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>Jul 20, 2026</span>
+                                <span>· 8 min read</span>
+                            </div>
+                            <h3><a href="blog-gut-health.html">Gut Health 101: Inside Your Microbiome</a></h3>
+                            <p>How the trillions of bacteria in your digestive tract influence immunity, mood, and overall metabolic health.</p>
+                            <a href="blog-gut-health.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="article-card reveal" style="transition-delay: 0.25s;" data-title="pcr molecular diagnostics genetics laboratory technology" data-category="Technology">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/1200x/fd/e2/1a/fde21a76ceef18af6c9b2d75f637049b.jpg" alt="Molecular Diagnostics Laboratory">
+                            <span class="article-tag">Technology</span>
+                        </div>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>Jul 14, 2026</span>
+                                <span>· 6 min read</span>
+                            </div>
+                            <h3><a href="blog-molecular-diagnostics.html">PCR and Beyond: The Molecular Diagnostics Boom</a></h3>
+                            <p>A look at polymerase chain reaction and the next generation of genetic tests shaping precision medicine.</p>
+                            <a href="blog-molecular-diagnostics.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="article-card reveal" style="transition-delay: 0.3s;" data-title="ecg stress test heart screening cardiology" data-category="Cardiology">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/1200x/4f/ee/e7/4feee734fc36b2944c7758258388a99f.jpg" alt="ECG and Cardiac Screening">
+                            <span class="article-tag">Cardiology</span>
+                        </div>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>Jul 06, 2026</span>
+                                <span>· 5 min read</span>
+                            </div>
+                            <h3><a href="blog-ecg-stress.html">ECG vs. Stress Test: Choosing Your Heart Screening</a></h3>
+                            <p>Two powerful tools for assessing heart health — learn how they differ and which one your doctor may recommend.</p>
+                            <a href="blog-ecg-stress.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="article-card reveal" style="transition-delay: 0.35s;" data-title="iron deficiency anemia fatigue blood nutrition" data-category="Nutrition">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/1200x/3b/94/0b/3b940bf50da9246f850faa82edfec006.jpg" alt="Iron Deficiency Anemia">
+                            <span class="article-tag">Nutrition</span>
+                        </div>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>Jun 29, 2026</span>
+                                <span>· 6 min read</span>
+                            </div>
+                            <h3><a href="blog-iron-deficiency.html">Iron Deficiency Anemia: The Hidden Fatigue</a></h3>
+                            <p>Persistent tiredness may signal more than a busy schedule. Spot the lab signs of low iron before it affects your day.</p>
+                            <a href="blog-iron-deficiency.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="article-card reveal" style="transition-delay: 0.4s;" data-title="wearable health technology fitness tracking wearables" data-category="Technology">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/1200x/4e/18/6d/4e186d021b6ed79eb40b90a37aa311a8.jpg" alt="Wearable Health Technology">
+                            <span class="article-tag">Technology</span>
+                        </div>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>Jun 21, 2026</span>
+                                <span>· 7 min read</span>
+                            </div>
+                            <h3><a href="blog-wearable-health.html">Wearable Health Tech: From Wrists to Lab Data</a></h3>
+                            <p>How smartwatches and continuous monitors are feeding real-world data into modern diagnostics.</p>
+                            <a href="blog-wearable-health.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="article-card reveal" style="transition-delay: 0.45s;" data-title="omega 3 heart health fats cardiology" data-category="Cardiology">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/1200x/2f/c4/b2/2fc4b2a71df1caec3370af50e39887d8.jpg" alt="Omega-3 and Heart Health">
+                            <span class="article-tag">Cardiology</span>
+                        </div>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>Jun 13, 2026</span>
+                                <span>· 5 min read</span>
+                            </div>
+                            <h3><a href="blog-omega3.html">Omega-3 and Heart Health: Facts Beyond the Hype</a></h3>
+                            <p>Separating evidence from marketing around fish oils, triglycerides, and cardiovascular risk reduction.</p>
+                            <a href="blog-omega3.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="article-card reveal" style="transition-delay: 0.5s;" data-title="immunity micronutrients vitamins minerals nutrition" data-category="Nutrition">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/736x/e2/40/cd/e240cd2685fe9b1fe4fb031be5010827.jpg" alt="Micronutrients and Immunity">
+                            <span class="article-tag">Nutrition</span>
+                        </div>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>Jun 04, 2026</span>
+                                <span>· 6 min read</span>
+                            </div>
+                            <h3><a href="blog-immunity.html">Fueling Immunity: Micronutrients That Matter</a></h3>
+                            <p>Which vitamins and minerals actually support your immune system — and how to check your levels with lab tests.</p>
+                            <a href="blog-immunity.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="article-card reveal" style="transition-delay: 0.55s;" data-title="robotics automation laboratory precision technology" data-category="Technology">
+                        <div class="article-media">
+                            <img src="https://i.pinimg.com/1200x/08/79/31/0879311c490c2c26a84dc8900a2d29d9.jpg" alt="Laboratory Robotics and Automation">
+                            <span class="article-tag">Technology</span>
+                        </div>
+                        <div class="article-body">
+                            <div class="article-meta">
+                                <span>May 28, 2026</span>
+                                <span>· 7 min read</span>
+                            </div>
+                            <h3><a href="blog-lab-robotics.html">Robotics in the Laboratory: Precision at Scale</a></h3>
+                            <p>How automated systems handle millions of samples with accuracy, speed, and full traceability behind the scenes.</p>
+                            <a href="blog-lab-robotics.html" class="read-link">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                        </div>
                     </div>
                 </div>
+                <p id="no-results" class="text-center text-secondary" style="display: none; margin-top: var(--spacing-12); font-weight: 600;">No articles match your search or category. Try another combination.</p>
+                <div class="text-center" style="margin-top: var(--spacing-12);">
+                    <button type="button" id="view-more" class="btn btn-accent">View More Articles</button>
+                </div>
+            </div>
+        </section>
 
-                <!-- Blog Post 3 -->
-                <div class="blog-card reveal" style="transition-delay: 0.2s;">
-                    <img src="../images/lab_hero.png" alt="Advanced Pathology">
-                    <div class="blog-content">
-                        <div class="blog-meta">
-                            <span>August 05, 2026</span>
-                            <span>•</span>
-                            <span style="color: var(--medical-emerald); font-weight: 600;">Technology</span>
+        <!-- Browse by Topic -->
+        <section class="py-24" style="background-color: var(--bg-secondary);">
+            <div class="container">
+                <div class="text-center reveal" style="margin-bottom: var(--spacing-12);">
+                    <span class="eyebrow">Browse by Topic</span>
+                    <h2 style="font-size: 2.75rem; margin-bottom: var(--spacing-4);">Find Your Health Topic</h2>
+                    <p class="text-secondary" style="max-width: 600px; margin: 0 auto;">Dive deeper into the health topics that matter to you, written by our in-house clinicians.</p>
+                </div>
+                <div class="topic-pills reveal">
+                    <a href="blog.html" class="topic-pill"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Cardiology</a>
+                    <a href="blog.html" class="topic-pill"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Nutrition</a>
+                    <a href="blog.html" class="topic-pill"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Diabetes Care</a>
+                    <a href="blog.html" class="topic-pill"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Women's Health</a>
+                    <a href="blog.html" class="topic-pill"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Lab Technology</a>
+                    <a href="blog.html" class="topic-pill"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Wellness</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter CTA -->
+        <section class="py-24 blog-newsletter">
+            <div class="container">
+                <div class="newsletter-card reveal">
+                    <div>
+                        <span class="eyebrow" style="color: var(--champagne);">The Weekly Pulse</span>
+                        <h2>Stay Ahead of Your Health</h2>
+                        <p>Join 25,000+ subscribers receiving weekly health tips, package discounts, and expert medical insights — straight to your inbox.</p>
+                        <div class="nl-perks">
+                            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--champagne)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Physician-reviewed</span>
+                            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--champagne)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Weekly, every Friday</span>
+                            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--champagne)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Unsubscribe anytime</span>
                         </div>
-                        <h3 style="margin-bottom: var(--spacing-2);"><a href="blog-details.html" style="color: inherit;">How AI is Revolutionizing Pathology</a></h3>
-                        <p class="text-secondary mb-4">Explore how machine learning algorithms are assisting pathologists in achieving unprecedented accuracy in diagnostics.</p>
-                        <a href="blog-details.html" style="font-weight: 600; color: var(--medical-emerald);">Read Article &rarr;</a>
                     </div>
+                    <form data-success="Subscribed successfully!">
+                        <input type="email" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn btn-accent">Subscribe</button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -118,17 +474,27 @@
 <footer class="footer" style="background-color: var(--deep-teal); color: var(--pearl); padding: var(--spacing-16) 0 var(--spacing-6); margin-top: auto;">
     <div class="container grid grid-cols-4 gap-8" style="margin-bottom: var(--spacing-12);">
         <div>
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: var(--spacing-4);">
+<a href="../index.html" style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: var(--spacing-4); text-decoration: none;">
                 <img src="../images/logo.png" alt="LabLink Logo" style="height: 40px;">
-                <h2 style="color: var(--champagne); font-weight: 700; margin: 0; font-family: var(--font-heading);">Lab<span style="color:var(--pearl)">Link</span></h2>
-            </div>
+                <div>
+                    <h2 style="color: var(--champagne); font-weight: 700; margin: 0; font-family: var(--font-heading);">Lab<span style="color:var(--pearl)">Link</span></h2>
+                    <span style="display:block; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-secondary); margin-top:2px;">Premium Diagnostics</span>
+                </div>
+            </a>
             <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-6);">
                 Setting the gold standard in diagnostic medicine. A curated sanctuary where precision meets premium healthcare.
             </p>
-            <div class="flex gap-4">
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Ig</a>
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Fb</a>
-                <a href="#" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s; font-size: 0.875rem;">Tw</a>
+            <div class="footer-certs">
+                <span>CLIA</span>
+                <span>CAP</span>
+                <span>ISO 15189</span>
+                <span>HIPAA</span>
+                <span>NABL</span>
+            </div>
+<div class="flex gap-4">
+                <a href="https://www.instagram.com/lablink" target="_blank" rel="noopener" aria-label="Instagram" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a href="https://www.facebook.com/lablink" target="_blank" rel="noopener" aria-label="Facebook" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                <a href="https://x.com/lablink" target="_blank" rel="noopener" aria-label="Twitter" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
             </div>
         </div>
         <div>
@@ -155,9 +521,9 @@
             <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-4);">
                 Receive exclusive health tips, package discounts, and medical insights before anyone else.
             </p>
-            <form style="display: flex; gap: var(--spacing-2);">
+            <form style="display: flex; gap: var(--spacing-2);" data-success="Subscribed successfully!">
                 <input type="email" placeholder="Your email" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--pearl); padding: var(--spacing-2) var(--spacing-4); border-radius: 4px; width: 100%; outline: none; font-family: var(--font-body); font-size: 0.875rem;">
-                <button type="button" style="background: var(--champagne); color: var(--deep-teal); border: none; padding: var(--spacing-2) var(--spacing-6); border-radius: 4px; font-weight: 600; cursor: pointer; font-family: var(--font-body); font-size: 0.875rem;">JOIN</button>
+                <button type="submit" style="background: var(--champagne); color: var(--deep-teal); border: none; padding: var(--spacing-2) var(--spacing-6); border-radius: 4px; font-weight: 600; cursor: pointer; font-family: var(--font-body); font-size: 0.875rem;">JOIN</button>
             </form>
         </div>
     </div>
@@ -178,5 +544,63 @@
 
 
     <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('blog-search');
+            const cards = document.querySelectorAll('#article-grid .article-card');
+            const noResults = document.getElementById('no-results');
+            const countLabel = document.getElementById('filter-count');
+            const pills = document.querySelectorAll('#filter-pills .filter-pill');
+            const viewMore = document.getElementById('view-more');
+            let currentCat = 'all';
+            let revealCount = 4;
+            const applyFilters = () => {
+                const q = searchInput ? searchInput.value.trim().toLowerCase() : '';
+                let totalMatches = 0;
+                let revealed = 0;
+                cards.forEach((card) => {
+                    const matchesCat = currentCat === 'all' || card.dataset.category === currentCat;
+                    const matchesSearch = card.dataset.title.toLowerCase().indexOf(q) !== -1;
+                    const match = matchesCat && matchesSearch;
+                    if (match) {
+                        totalMatches++;
+                        if (revealed < revealCount) {
+                            card.style.display = '';
+                            revealed++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                if (noResults) noResults.style.display = revealed === 0 ? 'block' : 'none';
+                if (countLabel) countLabel.innerHTML = 'Showing <b>' + revealed + '</b> of ' + cards.length + ' articles';
+                if (viewMore) viewMore.style.display = totalMatches > revealed ? 'inline-flex' : 'none';
+            };
+            if (viewMore) {
+                viewMore.addEventListener('click', () => {
+                    revealCount += 4;
+                    applyFilters();
+                });
+            }
+            pills.forEach((pill) => {
+                pill.addEventListener('click', () => {
+                    pills.forEach((p) => p.classList.remove('active'));
+                    pill.classList.add('active');
+                    currentCat = pill.dataset.cat;
+                    revealCount = 4;
+                    applyFilters();
+                });
+            });
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    revealCount = 4;
+                    applyFilters();
+                });
+            }
+            if (cards.length) applyFilters();
+        });
+    </script>
 </body>
 </html>

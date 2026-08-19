@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECG vs. Stress Test: Choosing Your Heart Screening | LabLink</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        .bd-progress { position: fixed; top: 0; inset-inline: 0; height: 3px; z-index: 1200; background: transparent; }
+        .bd-progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--medical-emerald), var(--champagne)); box-shadow: 0 0 12px rgba(22,134,106,0.6); }
+        .bd-hero { position: relative; overflow: hidden; background: radial-gradient(1000px 520px at 50% -10%, #0f4f46 0%, var(--deep-teal) 55%, #071e1b 100%); color: var(--pearl); padding: var(--spacing-20) 0; text-align: center; }
+        .bd-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 72%); mask-image: radial-gradient(ellipse at center, black 25%, transparent 72%); }
+        .bd-glow { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; }
+        .bdglow-a { width: 420px; height: 420px; background: var(--medical-emerald); opacity: 0.28; top: -150px; inset-inline-start: -120px; }
+        .bdglow-b { width: 380px; height: 380px; background: var(--champagne); opacity: 0.15; bottom: -170px; inset-inline-end: -90px; }
+        .bd-hero .container { position: relative; z-index: 1; }
+        .bd-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: var(--champagne); font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: var(--spacing-2) var(--spacing-4); border-radius: 50px; margin-bottom: var(--spacing-6); }
+        .bd-hero h1 { font-size: 3.2rem; max-width: 760px; margin: 0 auto var(--spacing-4); color: var(--pearl); }
+        .bd-hero h1 .grad { background: linear-gradient(92deg, var(--champagne) 0%, #fdf6e3 40%, var(--medical-emerald) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .bd-sub { color: var(--soft-aqua); font-size: 1.02rem; line-height: 1.8; max-width: 560px; margin: 0 auto var(--spacing-8); }
+        .bd-meta { display: flex; align-items: center; justify-content: center; gap: var(--spacing-4); flex-wrap: wrap; }
+        .bd-author { display: flex; align-items: center; gap: 12px; text-align: start; }
+        .bd-avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--medical-emerald), var(--deep-teal)); border: 2px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; color: var(--pearl); font-weight: 800; font-size: 0.9rem; }
+        .bd-author b { display: block; font-size: 0.88rem; color: var(--pearl); }
+        .bd-author span { font-size: 0.72rem; color: var(--soft-aqua); }
+        .bd-chip { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 50px; padding: var(--spacing-2) var(--spacing-4); color: var(--soft-aqua); font-size: 0.78rem; font-weight: 600; }
+        .bd-chip svg { color: var(--medical-emerald); }
+        .bd-layout { display: grid; grid-template-columns: 1fr 300px; gap: var(--spacing-12); align-items: start; }
+        .bd-article { min-width: 0; }
+        .bd-hero-img { border-radius: 24px; overflow: hidden; position: relative; margin-bottom: var(--spacing-8); box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); }
+        .bd-hero-img img { width: 100%; height: 420px; object-fit: cover; display: block; }
+        .bd-hero-img .bd-cap { position: absolute; bottom: var(--spacing-4); inset-inline-start: var(--spacing-4); background: rgba(7,30,27,0.82); border: 1px solid rgba(255,255,255,0.18); color: var(--pearl); font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: var(--spacing-2) var(--spacing-4); border-radius: 50px; backdrop-filter: blur(8px); }
+        .bd-body { font-size: 1.05rem; line-height: 1.9; color: var(--text-secondary); }
+        .bd-body > p { margin: 0 0 var(--spacing-5); }
+        .bd-body > p:first-of-type::first-letter { font-size: 3.4rem; font-weight: 800; color: var(--medical-emerald); float: inline-start; line-height: 1; padding-inline-end: 10px; font-family: var(--font-heading); }
+        .bd-body h2 { font-size: 1.6rem; color: var(--text-primary); margin: var(--spacing-10) 0 var(--spacing-4); display: flex; align-items: center; gap: 12px; }
+        .bd-body h2::before { content: ""; width: 6px; height: 26px; border-radius: 4px; background: linear-gradient(180deg, var(--medical-emerald), var(--champagne)); }
+        .bd-chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-4); margin: var(--spacing-6) 0; }
+        .bd-chip-card { border: 1px solid var(--border-color); border-radius: 16px; background: var(--bg-secondary); padding: var(--spacing-5); transition: all 0.3s ease; }
+        .bd-chip-card:hover { border-color: rgba(22,134,106,0.45); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+        .bd-chip-card svg { color: var(--medical-emerald); margin-bottom: var(--spacing-3); }
+        .bd-chip-card b { display: block; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 4px; }
+        .bd-chip-card span { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; display: block; }
+        .bd-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; margin: var(--spacing-6) 0; font-size: 0.9rem; }
+        .bd-table th { background: var(--soft-aqua); color: var(--medical-emerald); text-transform: uppercase; letter-spacing: 1px; font-size: 0.72rem; padding: var(--spacing-3) var(--spacing-5); text-align: start; }
+        .bd-table td { padding: var(--spacing-3) var(--spacing-5); border-top: 1px solid var(--border-color); color: var(--text-secondary); }
+        .bd-table tr:hover td { background: var(--bg-secondary); }
+        .bd-tag-badge { display: inline-block; font-size: 0.66rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 50px; }
+        .bd-tag-good { background: rgba(22,134,106,0.12); color: var(--medical-emerald); }
+        .bd-tag-warn { background: rgba(212,175,55,0.14); color: var(--champagne); }
+        .bd-tip { position: relative; background: linear-gradient(135deg, rgba(22,134,106,0.08), rgba(22,134,106,0.02)); border: 1px solid rgba(22,134,106,0.3); border-radius: 18px; padding: var(--spacing-6); margin: var(--spacing-8) 0; }
+        .bd-tip .bd-tip-ico { position: absolute; top: -18px; inset-inline-start: var(--spacing-6); width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, var(--medical-emerald), var(--deep-teal)); color: var(--pearl); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); }
+        .bd-tip h4 { margin: var(--spacing-2) 0 var(--spacing-2); color: var(--medical-emerald); font-size: 0.95rem; letter-spacing: 1px; text-transform: uppercase; }
+        .bd-tip p { margin: 0; font-size: 0.95rem; }
+        .bd-quote { position: relative; margin: var(--spacing-8) 0; padding: var(--spacing-8) var(--spacing-8) var(--spacing-8) var(--spacing-12); border-inline-start: 4px solid var(--champagne); border-radius: 0 18px 18px 0; background: var(--bg-secondary); }
+        .bd-quote svg { position: absolute; top: var(--spacing-5); inset-inline-start: var(--spacing-4); color: var(--champagne); opacity: 0.6; }
+        .bd-quote p { font-family: var(--font-heading); font-size: 1.35rem; line-height: 1.6; color: var(--text-primary); margin: 0 0 var(--spacing-3); font-style: italic; }
+        .bd-quote cite { font-style: normal; font-size: 0.8rem; color: var(--text-secondary); }
+        .bd-inline-cta { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-6); flex-wrap: wrap; background: linear-gradient(160deg, var(--deep-teal), var(--medical-emerald)); border-radius: 18px; padding: var(--spacing-6) var(--spacing-8); margin: var(--spacing-8) 0; }
+        .bd-inline-cta b { color: var(--pearl); font-size: 1.05rem; font-family: var(--font-heading); }
+        .bd-inline-cta span { display: block; color: var(--soft-aqua); font-size: 0.85rem; font-family: var(--font-body); font-weight: 400; margin-top: 4px; }
+        .bd-foot-row { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-6); flex-wrap: wrap; margin-top: var(--spacing-8); padding-top: var(--spacing-6); border-top: 1px dashed var(--border-color); }
+        .bd-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .bd-tags a { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 50px; padding: 6px 14px; text-decoration: none; transition: all 0.25s ease; }
+        .bd-tags a:hover { color: var(--medical-emerald); border-color: var(--medical-emerald); }
+        .bd-share { display: flex; align-items: center; gap: 8px; }
+        .bd-share button { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.25s ease; }
+        .bd-share button:hover { color: var(--medical-emerald); border-color: var(--medical-emerald); }
+        .bd-sidebar { position: sticky; top: 104px; display: flex; flex-direction: column; gap: var(--spacing-5); }
+        .bd-card { border: 1px solid var(--border-color); border-radius: 18px; background: var(--bg-secondary); padding: var(--spacing-6); }
+        .bd-card h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-secondary); margin: 0 0 var(--spacing-4); }
+        .bd-toc a { display: block; padding: var(--spacing-2) var(--spacing-3); border-radius: 10px; color: var(--text-secondary); font-size: 0.83rem; font-weight: 600; text-decoration: none; transition: all 0.25s ease; }
+        .bd-toc a:hover { color: var(--medical-emerald); background: var(--soft-aqua); }
+        .bd-toc a.active { color: var(--medical-emerald); background: var(--soft-aqua); }
+        .bd-author-card { display: flex; align-items: center; gap: 12px; margin-bottom: var(--spacing-4); }
+        .bd-author-card .bd-avatar { width: 52px; height: 52px; }
+        .bd-author-card b { display: block; color: var(--text-primary); font-size: 0.92rem; }
+        .bd-author-card span { font-size: 0.75rem; color: var(--text-secondary); }
+        .bd-card p.note { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; margin: 0 0 var(--spacing-4); }
+        .bd-rel { display: flex; gap: 12px; align-items: center; padding: var(--spacing-3); border-radius: 14px; text-decoration: none; transition: all 0.25s ease; }
+        .bd-rel:hover { background: var(--soft-aqua); }
+        .bd-rel img { width: 64px; height: 56px; border-radius: 10px; object-fit: cover; }
+        .bd-rel b { display: block; font-size: 0.82rem; color: var(--text-primary); line-height: 1.45; }
+        .bd-rel span { font-size: 0.7rem; color: var(--medical-emerald); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .bd-book { background: linear-gradient(160deg, var(--deep-teal), var(--medical-emerald)); border: none; text-align: center; }
+        .bd-book h4 { color: var(--soft-aqua); }
+        .bd-book b { color: var(--pearl); font-size: 1.05rem; font-family: var(--font-heading); display: block; margin-bottom: 6px; }
+        .bd-book p { color: var(--soft-aqua); font-size: 0.82rem; line-height: 1.7; margin: 0 0 var(--spacing-5); }
+        .bd-nav { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-5); margin-top: var(--spacing-12); }
+        .bd-nav a { display: flex; flex-direction: column; gap: 6px; border: 1px solid var(--border-color); border-radius: 16px; padding: var(--spacing-5); text-decoration: none; transition: all 0.3s ease; background: var(--bg-secondary); }
+        .bd-nav a:hover { border-color: rgba(22,134,106,0.45); box-shadow: var(--shadow-md); }
+        .bd-nav .dir { font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--medical-emerald); }
+        .bd-nav a.next { text-align: end; }
+        .bd-nav b { color: var(--text-primary); font-size: 0.9rem; line-height: 1.5; }
+        .bd-related { background: var(--bg-secondary); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        @media (max-width: 992px) {
+            .bd-hero h1 { font-size: 2.5rem; }
+            .bd-layout { grid-template-columns: 1fr; }
+            .bd-sidebar { position: static; }
+            .bd-chips { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .bd-hero { padding: var(--spacing-14) 0; }
+            .bd-chips { grid-template-columns: 1fr; }
+            .bd-hero-img img { height: 260px; }
+        }
+.article-card { border-radius: 22px; overflow: hidden; border: 1px solid var(--border-color); background: var(--bg-secondary); transition: all 0.35s ease; display: flex; flex-direction: column; }
+        .article-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: rgba(22,134,106,0.45); }
+        .article-card-img { position: relative; overflow: hidden; height: 220px; background: var(--bg-primary); }
+        .article-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .article-card:hover .article-card-img img { transform: scale(1.08); }
+        .article-card-body { padding: var(--spacing-6); display: flex; flex-direction: column; flex: 1; }
+        .article-tags { display: flex; gap: var(--spacing-3); margin-bottom: var(--spacing-3); }
+        .article-tags span { background: rgba(22,134,106,0.12); color: var(--medical-emerald); font-size: 0.68rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 12px; border-radius: 50px; }
+        .article-card-body h3 { font-size: 1.3rem; line-height: 1.35; margin-bottom: var(--spacing-3); }
+        .article-card-body p { color: var(--text-secondary); font-size: 0.925rem; line-height: 1.75; margin-bottom: var(--spacing-5); flex: 1; }
+        .article-card-meta { display: flex; gap: var(--spacing-3); color: var(--text-secondary); font-size: 0.78rem; margin-top: auto; }
+        .article-card-meta span { display: inline-flex; align-items: center; gap: 6px; }
+        .article-card-meta svg { color: var(--medical-emerald); }
+        @media (max-width: 1200px) { .bd-related .grid-cols-3 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 760px) { .bd-related .grid-cols-3 { grid-template-columns: 1fr; } .article-card-img { height: 200px; } }
+        .article-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: rgba(22,134,106,0.45); }
+        .article-media { position: relative; overflow: hidden; height: 220px; }
+        .article-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .article-card:hover .article-media img { transform: scale(1.08); }
+        .article-tag { position: absolute; top: var(--spacing-4); inset-inline-start: var(--spacing-4); background: rgba(7,30,27,0.75); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); color: var(--champagne); font-size: 0.68rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 12px; border-radius: 50px; }
+        .article-body { padding: var(--spacing-6); display: flex; flex-direction: column; flex: 1; }
+        .article-meta { display: flex; gap: var(--spacing-3); color: var(--text-secondary); font-size: 0.78rem; margin-bottom: var(--spacing-3); }
+        .article-body h3 { font-size: 1.3rem; line-height: 1.35; margin-bottom: var(--spacing-3); }
+        .article-body h3 a { color: inherit; }
+        .article-body h3 a:hover { color: var(--medical-emerald); }
+        .article-body p { color: var(--text-secondary); font-size: 0.925rem; line-height: 1.75; margin-bottom: var(--spacing-5); flex: 1; }
+        .read-link { font-weight: 700; color: var(--medical-emerald); display: inline-flex; align-items: center; gap: 6px; transition: all 0.3s ease; }
+        .read-link svg { transition: transform 0.3s ease; }
+        .read-link:hover { color: var(--deep-teal); }
+        .read-link:hover svg { transform: translateX(4px); }
+        .topic-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-3); }
+        .topic-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 50px; padding: var(--spacing-3) var(--spacing-6); font-weight: 600; color: var(--text-primary); text-decoration: none; transition: all 0.3s ease; }
+        .topic-pill svg { color: var(--medical-emerald); }
+        .topic-pill:hover { background: linear-gradient(135deg, var(--deep-teal), var(--medical-emerald)); color: var(--pearl); border-color: transparent; transform: translateY(-3px); box-shadow: 0 10px 24px rgba(22,134,106,0.3); }
+        .topic-pill:hover svg { color: var(--champagne); }
+        .blog-newsletter { background: linear-gradient(160deg, var(--deep-teal) 0%, var(--medical-emerald) 100%); }
+        .filter-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-6); flex-wrap: wrap; margin-top: var(--spacing-12); padding: var(--spacing-5); background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 18px; box-shadow: var(--shadow-sm); }
+        .filter-pills { display: flex; gap: var(--spacing-3); flex-wrap: wrap; }
+        .filter-pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 50px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-secondary); font-size: 0.82rem; font-weight: 700; font-family: var(--font-body); cursor: pointer; transition: all 0.25s ease; }
+        .filter-pill svg { color: var(--medical-emerald); }
+        .filter-pill:hover { border-color: var(--medical-emerald); color: var(--medical-emerald); }
+        .filter-pill.active { background: linear-gradient(135deg, var(--deep-teal), var(--medical-emerald)); color: var(--pearl); border-color: transparent; box-shadow: 0 8px 20px rgba(22,134,106,0.3); }
+        .filter-pill.active svg { color: var(--champagne); }
+        .filter-count { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; }
+        .filter-count b { color: var(--medical-emerald); }
+        @media (max-width: 640px) {
+            .filter-bar { flex-direction: column; align-items: flex-start; }
+        }
+        .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--medical-emerald); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: var(--spacing-3); }
+        .eyebrow-line { width: 28px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--medical-emerald), var(--champagne)); }
+        .text-gradient { background: linear-gradient(92deg, var(--champagne) 0%, #fdf6e3 25%, var(--medical-emerald) 50%, #fdf6e3 75%, var(--champagne) 100%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 7s linear infinite; }
+        @keyframes shimmer { to { background-position: -200% 0; } }
+        .bd-related h2 { font-size: clamp(2rem, 3.5vw, 2.75rem); line-height: 1.2; }    </style>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+    <div class="bd-progress" id="bd-progress"><span></span></div>
+    <header class="header">
+        <div class="container flex justify-between items-center" style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4);">
+<div class="logo">
+                <a href="../index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                    <img src="../images/logo.png" alt="LabLink Logo" style="height: 40px;">
+                    <div>
+                        <h2 style="margin:0; font-weight: 700; line-height: 1.1; font-size: 1.5rem; color: var(--text-primary);">Lab<span style="color:var(--champagne)">Link</span></h2>
+                        <span style="display:block; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-secondary); margin-top:2px;">Premium Diagnostics</span>
+                    </div>
+                </a>
+            </div>
+            <nav class="nav-links flex gap-6 items-center">
+                <a href="../index.html">Home</a>
+                <a href="home2.html">Home 2</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="blog.html" class="active">Blog</a>
+                <a href="contact.html">Contact</a>
+                <div class="profile-dropdown">
+                    <a href="#" class="btn btn-secondary profile-btn" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px; text-decoration: none;" title="Account">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </a>
+                    <div class="profile-menu">
+                        <a href="dashboard.html" class="profile-menu-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> User Dashboard</a>
+                        <a href="login.html" class="profile-menu-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login / Signup</a>
+                    </div>
+                </div>
+                <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                </button>
+
+                <button id="dir-toggle" class="btn btn-secondary" style="padding: var(--spacing-2) var(--spacing-3); border-radius: 50px; font-size: 0.75rem; min-width: 40px; height: 40px;" title="Toggle RTL/LTR">RTL</button>
+                <a href="services.html" class="btn btn-primary">Book Now</a>
+            </nav>
+                <button id="menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                </button>
+        </div>
+    </header>
+
+<div class="menu-backdrop" id="menu-backdrop"></div>
+    <aside class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu-head">
+            <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                <img src="../images/logo.png" alt="LabLink Logo" style="height: 36px;">
+                <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; line-height: 1.1; color: var(--text-primary);">Lab<span style="color: var(--champagne);">Link</span></span>
+            </a>
+            <span style="font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary);">Premium Diagnostics</span>
+        </div>
+<nav class="mobile-nav">
+            <a href="../index.html">Home</a>
+            <a href="home2.html">Home 2</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="mobile-divider"></div>
+        <a href="dashboard.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> User Dashboard</a>
+        <a href="login.html" class="mobile-profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login / Signup</a>
+        <div class="mobile-divider"></div>
+        <div class="mobile-actions">
+            <button id="mobile-theme" class="btn btn-secondary" title="Switch theme"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button id="mobile-dir" class="btn btn-secondary" title="Toggle RTL/LTR">RTL</button>
+        </div>
+        <a href="services.html" class="btn btn-accent mobile-cta">Book Now</a>
+    </aside>
+
+    <main>
+        <!-- Hero -->
+        <section class="bd-hero">
+            <div class="bd-grid"></div>
+            <div class="bd-glow bdglow-a"></div>
+            <div class="bd-glow bdglow-b"></div>
+            <div class="container reveal">
+                <a href="blog.html" style="text-decoration: none;"><span class="bd-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Cardiology</span></a>
+                <h1>ECG vs. Stress Test: Choosing Your <span class="grad">Heart Screening</span></h1>
+                <p class="bd-sub">Two powerful tools for assessing heart health â€” learn how they differ and which one your doctor may recommend.</p>
+                <div class="bd-meta">
+                    <div class="bd-author">
+                        <div class="bd-avatar">SJ</div>
+                        <div>
+                            <b>Dr. Sarah Jenkins</b>
+                            <span>Chief Cardiologist, LabLink</span>
+                        </div>
+                    </div>
+                    <span class="bd-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> July 06, 2026</span>
+                    <span class="bd-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 5 min read</span>
+                    <span class="bd-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 720 reads</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article -->
+        <section class="py-24">
+            <div class="container">
+                <div class="bd-layout">
+                    <article class="bd-article">
+                        <div class="bd-hero-img reveal">
+                            <img src="https://i.pinimg.com/1200x/4f/ee/e7/4feee734fc36b2944c7758258388a99f.jpg" alt="ECG heart screening equipment">
+                            <span class="bd-cap">Cardiac stress lab</span>
+                        </div>
+                        <div class="bd-body reveal">
+                            <p>A resting ECG is a photograph of your heart's electrical rhythm â€” ten electrodes, sixty seconds, a story about rate, rhythm, and conduction. It is quick, painless, and the standard first look at cardiac health.</p><p>But some heart problems only appear when the heart works hard. That is where the exercise stress test steps in: walking or cycling while your ECG, blood pressure, and symptoms are watched in real time.</p><h2 id="two-tests-one-goal">Two Tests, One Goal</h2><p>Both tests ask the same question â€” can your heart deliver blood reliably? â€” but from different angles:</p><div class="bd-chips"><div class="bd-chip-card"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><b>Resting ECG</b><span>A snapshot of your heart's rhythm.</span></div><div class="bd-chip-card"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 4 18 3-9h6"/></svg><b>Stress ECG</b><span>How the heart behaves under effort.</span></div><div class="bd-chip-card"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><b>Holter</b><span>24â€“48 hours of continuous rhythm.</span></div><div class="bd-chip-card"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg><b>ECHO</b><span>Imaging the heart's structure.</span></div></div><h2 id="when-to-test">When Should You Test?</h2><p>Your doctor chooses based on symptoms and risk. These are the reference values we look for:</p><table class="bd-table"><thead><tr><th>Indicator</th><th>Optimal</th><th>Borderline</th><th>Act Now</th></tr></thead><tbody><tr><td>Resting Heart Rate</td><td><span class="bd-tag-badge bd-tag-good">60â€“100</span></td><td>40â€“59 or 101â€“110</td><td><span class="bd-tag-badge bd-tag-warn">Under 40</span></td></tr><tr><td>QTc Interval</td><td><span class="bd-tag-badge bd-tag-good">350â€“450 ms</span></td><td>451â€“470</td><td><span class="bd-tag-badge bd-tag-warn">Over 470</span></td></tr><tr><td>ST Segment</td><td><span class="bd-tag-badge bd-tag-good">Normal</span></td><td>Borderline</td><td><span class="bd-tag-badge bd-tag-warn">Depressed</span></td></tr><tr><td>BP During Stress</td><td><span class="bd-tag-badge bd-tag-good">Rises gradually</span></td><td>Blunted rise</td><td><span class="bd-tag-badge bd-tag-warn">Falls</span></td></tr></tbody></table><p>A normal resting ECG with symptoms on exertion is exactly the pattern that sends doctors to the stress test â€” the two tools are designed to be used together.</p><div class="bd-tip reveal" id="clinical-tip"><div class="bd-tip-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.4 1 2.3h6c0-.9.4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg></div><h4>Clinical Tip</h4><p>Before a stress test, avoid caffeine and heavy meals for 2â€“3 hours, and wear comfortable walking shoes. Tell your technician about any medications â€” some beta-blockers blunt the expected heart-rate response.</p></div><div class="bd-quote" id="clinical-perspective"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg><p>The best heart test is the one your doctor orders for the right reason.</p><cite>â€” Dr. Sarah Jenkins, Chief Cardiologist</cite></div><p>If you have chest tightness with exertion, unexplained breathlessness, or a family history of early heart disease, a screening conversation is worth having â€” before symptoms decide the agenda.</p><div class="bd-inline-cta"><div><b>Screen your heart today.</b><span>ECG, stress test, and cardiologist review in one bundle.</span></div><a href="services.html" class="btn btn-accent">Book Heart Screening</a></div>
+                            <div class="bd-foot-row">
+                                <div class="bd-tags">
+                                    <a href="blog.html">Cardiology</a>
+                                    <a href="blog.html">Heart Health</a>
+                                    <a href="blog.html">Screening</a>
+                                </div>
+                                <div class="bd-share">
+                                    <button id="copy-link" title="Copy link" aria-label="Copy article link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+                                    <button class="bd-share-soc" title="Share on X" aria-label="Share on X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></button>
+                                    <button class="bd-share-soc" title="Share on Facebook" aria-label="Share on Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></button>
+                                </div>
+                            </div>
+                            <div class="bd-nav reveal">
+                                <a href="blog-molecular-diagnostics.html">
+                                    <span class="dir"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Previous Article</span>
+                                    <b>PCR and Beyond</b>
+                                </a>
+                                <a href="blog-iron-deficiency.html" class="next">
+                                    <span class="dir">Next Article <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                                    <b>Iron Deficiency Anemia</b>
+                                </a>
+                            </div>
+                        </div>
+                    </article></article>
+
+                    <aside class="bd-sidebar reveal">
+                        <div class="bd-card">
+                            <h4>On This Page</h4>
+                            <nav class="bd-toc"><a href="#two-tests-one-goal">Two Tests, One Goal</a><a href="#when-to-test">When To Test</a><a href="#clinical-tip">Clinical Tip</a><a href="#clinical-perspective">Clinical Perspective</a></nav>
+                        </div>
+                        <div class="bd-card">
+                            <h4>About the Author</h4>
+                            <div class="bd-author-card">
+                                <div class="bd-avatar">SJ</div>
+                                <div>
+                                    <b>Dr. Sarah Jenkins</b>
+                                    <span>Chief Cardiologist</span>
+                                </div>
+                            </div>
+                            <p class="note">Board-certified cardiologist with 15+ years in preventive medicine. Sarah leads LabLink's cardiac risk assessment program.</p>
+                            <a href="about.html" class="btn btn-secondary" style="width: 100%; justify-content: center; text-decoration: none;">View Full Profile</a>
+                        </div>
+                        <div class="bd-card">
+                            <h4>Related Reads</h4><a href="blog-molecular-diagnostics.html" class="bd-rel"><img src="https://i.pinimg.com/1200x/fd/e2/1a/fde21a76ceef18af6c9b2d75f637049b.jpg" alt="PCR and Beyond"><div><span>Technology</span><b>PCR and Beyond</b></div></a><a href="blog-iron-deficiency.html" class="bd-rel"><img src="https://i.pinimg.com/1200x/3b/94/0b/3b940bf50da9246f850faa82edfec006.jpg" alt="Iron Deficiency Anemia"><div><span>Nutrition</span><b>Iron Deficiency Anemia</b></div></a><a href="blog-wearable-health.html" class="bd-rel"><img src="https://i.pinimg.com/1200x/4e/18/6d/4e186d021b6ed79eb40b90a37aa311a8.jpg" alt="Wearable Health Tech"><div><span>Technology</span><b>Wearable Health Tech</b></div></a></div>
+                        <div class="bd-card bd-book">
+                            <h4>Cardiac Screening Bundle</h4>
+                            <b>From $45</b>
+                            <p>Resting ECG, exercise stress test, and a cardiologist-reviewed report within 48 hours.</p>
+                            <a href="services.html" class="btn btn-accent" style="width: 100%; justify-content: center; text-decoration: none;">Book This Test</a>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Articles -->
+        <section class="bd-related py-24">
+            <div class="container">
+                <div class="flex justify-between items-center" style="margin-bottom: var(--spacing-10); flex-wrap: wrap; gap: var(--spacing-6);">
+                    <div>
+                        <span class="eyebrow"><span class="eyebrow-line"></span>Keep Reading</span>
+                        <h2 style="margin-bottom: 0;">More From <span class="text-gradient">The Journal</span></h2>
+                    </div>
+                    <a href="blog.html" class="btn btn-secondary" style="text-decoration: none;">Browse All Articles</a>
+                </div>
+                <div class="grid grid-cols-3 gap-8"><a href="blog-iron-deficiency.html" class="article-card reveal" style="text-decoration: none; display: block;"><div class="article-card-img"><img src="https://i.pinimg.com/1200x/3b/94/0b/3b940bf50da9246f850faa82edfec006.jpg" alt="Iron Deficiency Anemia"></div><div class="article-card-body"><div class="article-tags"><span>Nutrition</span></div><h3>Iron Deficiency Anemia</h3><p>Persistent tiredness may signal more than a busy schedule. Spot the lab signs of low iron before it affects your day.</p><div class="article-card-meta"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> June 29, 2026</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 6 min read</span></div></div></a><a href="blog-wearable-health.html" class="article-card reveal" style="text-decoration: none; display: block;"><div class="article-card-img"><img src="https://i.pinimg.com/1200x/4e/18/6d/4e186d021b6ed79eb40b90a37aa311a8.jpg" alt="Wearable Health Tech"></div><div class="article-card-body"><div class="article-tags"><span>Technology</span></div><h3>Wearable Health Tech</h3><p>How smartwatches and continuous monitors are feeding real-world data into modern diagnostics.</p><div class="article-card-meta"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> June 21, 2026</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 7 min read</span></div></div></a><a href="blog-omega3.html" class="article-card reveal" style="text-decoration: none; display: block;"><div class="article-card-img"><img src="https://i.pinimg.com/1200x/2f/c4/b2/2fc4b2a71df1caec3370af50e39887d8.jpg" alt="Omega-3 and Heart Health"></div><div class="article-card-body"><div class="article-tags"><span>Cardiology</span></div><h3>Omega-3 and Heart Health</h3><p>Separating evidence from marketing around fish oils, triglycerides, and cardiovascular risk reduction.</p><div class="article-card-meta"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> June 13, 2026</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 5 min read</span></div></div></a></div>
+            </div>
+        </section>
+
+        <!-- CTA Band -->
+        <section class="py-24" style="background: linear-gradient(160deg, var(--deep-teal) 0%, var(--medical-emerald) 100%);">
+            <div class="container text-center reveal">
+                <h2 style="color: var(--pearl); font-size: 2.2rem; margin-bottom: var(--spacing-4);">Precision you can <span style="color: var(--champagne);">trust</span>, at home or in lab</h2>
+                <p style="color: var(--soft-aqua); max-width: 560px; margin: 0 auto var(--spacing-8); font-size: 1rem; line-height: 1.8;">Every LabLink panel is analyzed twice, reviewed by a physician, and delivered to your Patient Portal with clear visual guidance.</p>
+                <a href="services.html" class="btn btn-accent">Book Your Test</a>
+            </div>
+        </section>
+    </main>
+
+<footer class="footer" style="background-color: var(--deep-teal); color: var(--pearl); padding: var(--spacing-16) 0 var(--spacing-6); margin-top: auto;">
+    <div class="container grid grid-cols-4 gap-8" style="margin-bottom: var(--spacing-12);">
+        <div>
+<a href="../index.html" style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: var(--spacing-4); text-decoration: none;">
+                <img src="../images/logo.png" alt="LabLink Logo" style="height: 40px;">
+                <div>
+                    <h2 style="color: var(--champagne); font-weight: 700; margin: 0; font-family: var(--font-heading);">Lab<span style="color:var(--pearl)">Link</span></h2>
+                    <span style="display:block; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-secondary); margin-top:2px;">Premium Diagnostics</span>
+                </div>
+            </a>
+            <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-6);">
+                Setting the gold standard in diagnostic medicine. A curated sanctuary where precision meets premium healthcare.
+            </p>
+            <div class="footer-certs">
+                <span>CLIA</span>
+                <span>CAP</span>
+                <span>ISO 15189</span>
+                <span>HIPAA</span>
+                <span>NABL</span>
+            </div>
+<div class="flex gap-4">
+                <a href="https://www.instagram.com/lablink" target="_blank" rel="noopener" aria-label="Instagram" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a href="https://www.facebook.com/lablink" target="_blank" rel="noopener" aria-label="Facebook" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                <a href="https://x.com/lablink" target="_blank" rel="noopener" aria-label="Twitter" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: var(--pearl); text-decoration: none; transition: all 0.3s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            </div>
+        </div>
+        <div>
+            <h4 style="color: var(--champagne); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--spacing-6); font-family: var(--font-body);">Diagnostics</h4>
+            <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-3); margin: 0;">
+                <li><a href="services.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Advanced Pathology</a></li>
+                <li><a href="services.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Molecular Diagnostics</a></li>
+                <li><a href="services.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Corporate Packages</a></li>
+                <li><a href="services.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Home Collection</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: var(--champagne); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--spacing-6); font-family: var(--font-body);">Company</h4>
+            <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-3); margin: 0;">
+                <li><a href="../index.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Home</a></li>
+                <li><a href="about.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">About Us</a></li>
+                <li><a href="services.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Services</a></li>
+                <li><a href="blog.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Health Insights</a></li>
+                <li><a href="contact.html" style="color: var(--soft-aqua); font-size: 0.875rem; text-decoration: none;">Contact</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: var(--champagne); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--spacing-6); font-family: var(--font-body);">Newsletter</h4>
+            <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-4);">
+                Receive exclusive health tips, package discounts, and medical insights before anyone else.
+            </p>
+            <form style="display: flex; gap: var(--spacing-2);" data-success="Subscribed successfully!">
+                <input type="email" placeholder="Your email" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--pearl); padding: var(--spacing-2) var(--spacing-4); border-radius: 4px; width: 100%; outline: none; font-family: var(--font-body); font-size: 0.875rem;">
+                <button type="submit" style="background: var(--champagne); color: var(--deep-teal); border: none; padding: var(--spacing-2) var(--spacing-6); border-radius: 4px; font-weight: 600; cursor: pointer; font-family: var(--font-body); font-size: 0.875rem;">JOIN</button>
+            </form>
+        </div>
+    </div>
+    <div style="border-top: 1px solid rgba(255,255,255,0.1); position: relative; margin-top: var(--spacing-8);">
+        <div style="position: absolute; left: 50%; top: -6px; transform: translateX(-50%); width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); background: var(--deep-teal); display: flex; align-items: center; justify-content: center;">
+            <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--champagne);"></div>
+        </div>
+    </div>
+    <div class="container flex justify-between items-center" style="padding-top: var(--spacing-6); font-size: 0.75rem; color: var(--soft-aqua);">
+        <div>&copy; 2026 LabLink. All rights reserved. Established 2026.</div>
+        <div class="flex gap-6">
+            <a href="privacy.html" style="color: var(--soft-aqua); text-decoration: none;">Privacy Policy</a>
+            <a href="terms.html" style="color: var(--soft-aqua); text-decoration: none;">Terms & Conditions</a>
+            <a href="sitemap.html" style="color: var(--soft-aqua); text-decoration: none;">Sitemap</a>
+        </div>
+    </div>
+</footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bar = document.querySelector('#bd-progress span');
+            const onScroll = () => {
+                const total = document.documentElement.scrollHeight - window.innerHeight;
+                bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            const tocLinks = document.querySelectorAll('.bd-toc a');
+            const targets = ['two-tests-one-goal', 'when-to-test', 'clinical-tip', 'clinical-perspective'];
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            tocLinks.forEach((link) => link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id));
+                        }
+                    });
+                }, { rootMargin: '-20% 0px -70% 0px' });
+                targets.forEach((id) => {
+                    const el = document.getElementById(id);
+                    if (el) observer.observe(el);
+                });
+            }
+
+            document.querySelectorAll('.bd-toc a').forEach((link) => {
+                link.addEventListener('click', (e) => {
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        const y = target.getBoundingClientRect().top + window.scrollY - 96;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            const copyBtn = document.getElementById('copy-link');
+            copyBtn.addEventListener('click', () => {
+                const done = () => {
+                    const toast = document.createElement('div');
+                    toast.className = 'form-toast';
+                    toast.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--medical-emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Article link copied to clipboard</span>';
+                    document.body.appendChild(toast);
+                    requestAnimationFrame(() => toast.classList.add('show'));
+                    setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3000);
+                };
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(window.location.href).then(done, () => done());
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = window.location.href;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try { document.execCommand('copy'); } catch (err) {}
+                    ta.remove();
+                    done();
+                }
+            });
+
+            document.querySelectorAll('.bd-share-soc').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const url = encodeURIComponent(window.location.href);
+                    const title = encodeURIComponent(document.title);
+                    if (btn.getAttribute('aria-label') === 'Share on X') {
+                        window.open('https://twitter.com/intent/tweet?url=' + url + '&text=' + title, '_blank', 'noopener,width=600,height=450');
+                    } else {
+                        window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank', 'noopener,width=600,height=450');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
