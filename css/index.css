@@ -237,6 +237,40 @@ a:hover {
   transform: translateY(0);
 }
 
+/* Profile Dropdown */
+.profile-dropdown { position: relative; }
+
+.profile-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  min-width: 200px;
+  padding: var(--spacing-2);
+  z-index: 1000;
+}
+
+.profile-menu.open { display: block; }
+
+.profile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
+  border-radius: 8px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background var(--transition-fast);
+}
+
+.profile-menu-item:hover { background: var(--soft-aqua); color: var(--medical-emerald); }
+
 /* Responsive */
 @media (max-width: 768px) {
   .grid-cols-2, .grid-cols-3, .grid-cols-4 {
