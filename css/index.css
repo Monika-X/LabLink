@@ -525,6 +525,11 @@ a:hover {
 .menu-toggle.open .menu-bar:nth-child(2) { opacity: 0; }
 .menu-toggle.open .menu-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+/* Dashboards: hide drawer toggle on desktop - sidebar is always visible there */
+@media (min-width: 993px) {
+  .dashboard-layout .menu-toggle { display: none !important; }
+}
+
 @media (max-width: 992px) {
   .logo > a > div { display: flex !important; flex-direction: column !important; justify-content: center !important; }
   .nav-links > a { display: none !important; }

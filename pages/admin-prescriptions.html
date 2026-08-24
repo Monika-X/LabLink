@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Review | LabLink Staff</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        body { background: var(--bg-primary); }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 280px; background: var(--bg-secondary); border-inline-end: 1px solid var(--border-color); position: fixed; inset-block: 0; inset-inline-start: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; }
+        .sidebar-logo { padding: var(--spacing-6) var(--spacing-6) var(--spacing-4); border-bottom: 1px dashed var(--border-color); margin-bottom: var(--spacing-4); }
+        .sidebar-logo .portal-chip { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 0.62rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--medical-emerald); background: var(--soft-aqua); border-radius: 50px; padding: 3px 10px; }
+        .portal-chip.adm-chip { color: var(--champagne); background: rgba(213,183,122,0.16); }
+        .side-staff { margin: 0 var(--spacing-5) var(--spacing-5); padding: var(--spacing-5); border: 1px solid var(--border-color); border-radius: 18px; background: linear-gradient(160deg, rgba(213,183,122,0.10), rgba(213,183,122,0.02)); display: flex; align-items: center; gap: 12px; }
+        .staff-avatar { width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(135deg, var(--champagne), var(--deep-teal)); color: var(--pearl); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.95rem; box-shadow: var(--shadow-sm); }
+        .side-staff b { display: block; color: var(--text-primary); font-size: 0.92rem; }
+        .side-staff span.role { font-size: 0.72rem; color: var(--text-secondary); }
+        .side-staff .gold { display: inline-block; margin-top: 4px; font-size: 0.6rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--champagne); background: rgba(213,183,122,0.15); border: 1px solid rgba(213,183,122,0.35); border-radius: 50px; padding: 2px 8px; }
+        .side-nav { flex: 1; }
+        .side-nav .nav-label { font-size: 0.62rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary); padding: 0 var(--spacing-6) var(--spacing-2); }
+        .nav-item { position: relative; display: flex; align-items: center; gap: 12px; padding: var(--spacing-3) var(--spacing-6); color: var(--text-secondary); font-weight: 600; font-size: 0.88rem; text-decoration: none; transition: all 0.25s ease; }
+        .nav-item svg { min-width: 18px; }
+        .nav-item:hover { color: var(--medical-emerald); background: rgba(22,134,106,0.06); }
+        .nav-item.active { color: var(--medical-emerald); background: rgba(22,134,106,0.1); font-weight: 700; }
+        .nav-item.active::before { content: ""; position: absolute; inset-inline-start: 0; top: 8px; bottom: 8px; width: 4px; border-radius: 0 4px 4px 0; background: linear-gradient(180deg, var(--medical-emerald), var(--champagne)); }
+        .adm-badge { margin-inline-start: auto; font-size: 0.62rem; font-weight: 800; background: rgba(22,134,106,0.14); color: var(--medical-emerald); border-radius: 50px; padding: 2px 8px; }
+        .side-support { margin: var(--spacing-5); padding: var(--spacing-5); border: 1px dashed var(--border-color); border-radius: 16px; }
+        .side-support b { display: block; font-size: 0.8rem; color: var(--text-primary); margin-bottom: 4px; }
+        .side-support p { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 var(--spacing-3); }
+        .side-logout { margin: 0 var(--spacing-5) var(--spacing-6); }
+        .main-content { flex: 1; margin-inline-start: 280px; padding: var(--spacing-8); }
+        .topbar { position: relative; z-index: 100; display: flex; justify-content: space-between; align-items: flex-start; gap: var(--spacing-6); margin-bottom: var(--spacing-8); padding-bottom: var(--spacing-5); border-bottom: 1px solid var(--border-color); flex-wrap: nowrap; }
+        .topbar > div:first-child { flex: 1; min-width: 0; padding-right: 10px; }
+        .topbar h1 { font-size: 1.7rem; margin: 0 0 6px; }
+        .topbar .date-chip { display: inline-flex; align-items: center; gap: 8px; background: var(--soft-aqua); color: var(--medical-emerald); font-size: 0.78rem; font-weight: 700; border-radius: 50px; padding: var(--spacing-2) var(--spacing-4); }
+        .topbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .adm-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--champagne), var(--deep-teal)); color: var(--pearl); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; border: 2px solid rgba(213,183,122,0.3); cursor: default; }
+        .bell-wrap { position: relative; }
+        .bell-wrap .dot { position: absolute; top: 8px; inset-inline-end: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--champagne); border: 2px solid var(--bg-primary); }
+        .dash-panel { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 20px; padding: var(--spacing-6); box-shadow: var(--shadow-sm); }
+        .dash-panel .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-5); gap: var(--spacing-4); flex-wrap: wrap; }
+        .dash-panel .panel-head h3 { margin: 0; font-size: 1.05rem; }
+        .dash-panel .panel-head p { margin: 4px 0 0; font-size: 0.78rem; color: var(--text-secondary); }
+        .info-strip { display: flex; align-items: center; gap: 14px; background: linear-gradient(160deg, rgba(22,134,106,0.08), rgba(22,134,106,0.02)); border: 1px solid rgba(22,134,106,0.25); border-radius: 16px; padding: var(--spacing-4) var(--spacing-5); margin-bottom: var(--spacing-6); }
+        .info-strip svg { min-width: 20px; color: var(--medical-emerald); }
+        .info-strip p { margin: 0; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+        .rx-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--spacing-5); }
+        .rx-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 18px; padding: var(--spacing-5); box-shadow: var(--shadow-sm); transition: all 0.3s ease; display: flex; flex-direction: column; gap: var(--spacing-4); }
+        .rx-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: rgba(22,134,106,0.4); }
+        .rx-card-head { display: flex; align-items: center; gap: 14px; }
+        .rx-card-meta b { display: block; color: var(--text-primary); font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .rx-card-meta span { font-size: 0.72rem; color: var(--text-secondary); }
+        .rx-patient { display: inline-flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 700; color: #16659b; background: rgba(22,101,155,0.1); border-radius: 50px; padding: 3px 10px; width: fit-content; }
+        .rx-actions { display: flex; gap: var(--spacing-3); margin-top: auto; }
+        .verified-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 50px; font-size: 0.68rem; font-weight: 800; letter-spacing: 1px; background: rgba(22,134,106,0.12); color: var(--medical-emerald); }
+        .verified-pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+        .verify-btn { background: var(--medical-emerald); color: var(--pearl); border: none; border-radius: 50px; padding: 8px 16px; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.5px; cursor: pointer; transition: all 0.2s ease; }
+        .verify-btn:hover { filter: brightness(1.1); }
+        .preview-btn { background: none; border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 50px; padding: 8px 16px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+        .preview-btn:hover { border-color: var(--medical-emerald); color: var(--medical-emerald); }
+        .rx-modal { position: fixed; inset: 0; z-index: 2000; display: none; align-items: center; justify-content: center; padding: var(--spacing-6); background: rgba(15,23,42,0.65); backdrop-filter: blur(4px); }
+        .rx-modal.open { display: flex; }
+        .rx-sheet { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 20px; max-width: 720px; width: 100%; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-xl); }
+        .rx-sheet-head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-4); padding: var(--spacing-5) var(--spacing-6); border-bottom: 1px dashed var(--border-color); }
+        .rx-sheet-head b { color: var(--text-primary); font-size: 0.95rem; word-break: break-all; }
+        .rx-close { background: none; border: 1px solid var(--border-color); border-radius: 50%; width: 34px; height: 34px; min-width: 34px; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .rx-close:hover { color: #b91c1c; border-color: rgba(185,28,28,0.4); }
+        .rx-view { overflow: auto; padding: var(--spacing-5) var(--spacing-6) var(--spacing-6); }
+        .rx-view img, .rx-view iframe { width: 100%; max-height: 62vh; border-radius: 12px; border: 1px solid var(--border-color); display: block; background: var(--bg-primary); }
+        @media (max-width: 992px) {
+            .sidebar { z-index: 1001; transition: inset-inline-start 0.3s ease; inset-inline-start: -320px; display: flex !important; }
+            .sidebar.open { inset-inline-start: 0; box-shadow: 20px 0 60px rgba(0,0,0,0.25); }
+            .main-content { margin-inline-start: 0; }
+        }
+        @media (max-width: 640px) {
+            .main-content { padding: var(--spacing-6) var(--spacing-4); }
+            .rx-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <div class="menu-backdrop" id="menu-backdrop"></div>
+        <aside class="sidebar" id="mobile-menu">
+            <div class="sidebar-logo mobile-menu-head">
+                <a href="../index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                    <img src="../images/logo.png" alt="LabLink Logo" style="height: 40px;">
+                    <div>
+                        <h2 style="margin:0; font-weight: 700; color: var(--text-primary); font-size: 1.4rem; line-height: 1.1;">Lab<span style="color:var(--champagne)">Link</span></h2>
+                        <span class="portal-chip adm-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Lab Operations</span>
+                    </div>
+                </a>
+            </div>
+            <div class="side-staff">
+                <div class="staff-avatar">AR</div>
+                <div>
+                    <b>Anika Rao</b>
+                    <span class="role">Lab Administrator</span>
+                    <span class="gold">On Duty</span>
+                </div>
+            </div>
+            <nav class="side-nav">
+                <div class="nav-label">Operations</div>
+                <a href="admin.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                    Dashboard Overview
+                </a>
+                <a href="admin-orders.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><polyline points="9 13 11 15 15 11"/></svg>
+                    Manage Orders
+                    <span class="adm-badge" data-admbadge="queue"></span>
+                </a>
+                <a href="admin-prescriptions.html" class="nav-item active">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    Prescriptions
+                    <span class="adm-badge" data-admbadge="rx"></span>
+                </a>
+                <a href="admin-reports.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    Reports &amp; Release
+                </a>
+                <a href="admin-patients.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Patients
+                </a>
+                <div class="nav-label">Quick Links</div>
+                <a href="../index.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    View Website
+                </a>
+                <a href="dashboard.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Patient View
+                </a>
+            </nav>
+            <div class="side-support">
+                <b>Need assistance?</b>
+                <p>Call the duty pathologist for urgent sample escalations or TAT breaches.</p>
+                <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: var(--medical-emerald); text-decoration: none;">Contact Support</a>
+            </div>
+            <div class="side-logout">
+                <a href="login.html" class="btn btn-secondary" style="width: 100%; justify-content: center; text-decoration: none;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    Logout
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <h1>Prescription Review</h1>
+                    <div class="date-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span id="top-date">Today</span></div>
+                </div>
+                <div class="topbar-actions">
+                    <button id="menu-toggle" class="menu-toggle btn btn-secondary" aria-label="Open menu" style="padding:0; margin-inline-end:8px;"><span class="menu-bar"></span><span class="menu-bar"></span><span class="menu-bar"></span></button>
+                    <button id="theme-toggle" class="btn btn-secondary" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px;" title="Switch theme">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    </button>
+                    <button id="dir-toggle" class="btn btn-secondary" style="padding: var(--spacing-2) var(--spacing-3); border-radius: 50px; font-size: 0.75rem; min-width: 40px; height: 40px;" title="Toggle RTL/LTR">RTL</button>
+                    <button class="btn btn-secondary bell-wrap" style="padding: var(--spacing-2); border-radius: 50%; min-width: 40px; height: 40px; position: relative;" title="Notifications">
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <span class="dot"></span>
+                    </button>
+                    <div class="adm-avatar">AR</div>
+                </div>
+            </header>
+
+            <div class="info-strip">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <p>Files uploaded by patients from the portal appear here instantly. Verify the doctor's details before the sample is accessioned &mdash; verified uploads unlock test booking against that prescription.</p>
+            </div>
+
+            <div class="dash-panel">
+                <div class="panel-head">
+                    <div>
+                        <h3>Uploaded Prescriptions</h3>
+                        <p><span id="rx-summary">Loading...</span></p>
+                    </div>
+                </div>
+                <div class="rx-grid" id="rx-grid"></div>
+            </div>
+        </main>
+    </div>
+
+    <div class="rx-modal" id="rx-modal" role="dialog" aria-modal="true" aria-label="Prescription preview">
+        <div class="rx-sheet">
+            <div class="rx-sheet-head">
+                <b id="rx-title">Preview</b>
+                <button type="button" class="rx-close" id="rx-close" aria-label="Close preview">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="rx-view" id="rx-view"></div>
+        </div>
+    </div>
+
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const LK = window.LK;
+            const LKA = window.LKA;
+
+            const grid = document.getElementById('rx-grid');
+            const summary = document.getElementById('rx-summary');
+            const modal = document.getElementById('rx-modal');
+            const modalTitle = document.getElementById('rx-title');
+            const modalView = document.getElementById('rx-view');
+            const user = LK.getUser();
+            const patientName = ((user.first || '') + ' ' + (user.last || '')).trim() || 'John Doe';
+
+            const thumbHtml = (item) => {
+                const isImg = item.type && item.type.indexOf('image/') === 0;
+                return isImg
+                    ? '<img src="' + item.dataUrl + '" alt="prescription thumbnail">'
+                    : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>';
+            };
+
+            const render = () => {
+                const items = LK.getPrescriptions();
+                const pending = items.filter((it) => !it.reviewed).length;
+                summary.textContent = items.length
+                    ? (items.length + ' upload' + (items.length === 1 ? '' : 's') + ' \u00B7 ' + pending + ' pending verification')
+                    : 'No prescriptions uploaded yet.';
+                if (!items.length) {
+                    grid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">No prescriptions awaiting review. Files uploaded from the patient portal will land here automatically.</div>';
+                    return;
+                }
+                grid.innerHTML = items.map((item) =>
+                    '<div class="rx-card">'
+                    + '<div class="rx-card-head">'
+                    + '<div class="rx-thumb">' + thumbHtml(item) + '</div>'
+                    + '<div class="rx-card-meta"><b>' + LK.esc(item.name) + '</b><span>' + LK.fmtDate(item.date) + ' \u00B7 ' + LK.esc(item.sizeMB || '') + '</span></div>'
+                    + '</div>'
+                    + '<span class="rx-patient"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' + LK.esc(patientName) + '</span>'
+                    + '<div class="rx-actions">'
+                    + '<button type="button" class="preview-btn" data-id="' + item.id + '">Preview</button>'
+                    + (item.reviewed
+                        ? '<span class="verified-pill">VERIFIED</span>'
+                        : '<button type="button" class="verify-btn" data-id="' + item.id + '">Mark Verified</button>')
+                    + '</div>'
+                    + '</div>').join('');
+            };
+
+            const openModal = (item) => {
+                modalTitle.textContent = item.name;
+                const isImg = item.type && item.type.indexOf('image/') === 0;
+                modalView.innerHTML = isImg
+                    ? '<img src="' + item.dataUrl + '" alt="prescription preview">'
+                    : '<iframe src="' + item.dataUrl + '" title="prescription preview" style="min-height:60vh;"></iframe>';
+                modal.classList.add('open');
+            };
+
+            const closeModal = () => {
+                modal.classList.remove('open');
+                setTimeout(() => { modalView.innerHTML = ''; }, 250);
+            };
+
+            grid.addEventListener('click', (e) => {
+                const pv = e.target.closest('.preview-btn');
+                if (pv) {
+                    const item = LK.getPrescriptions().find((it) => it.id === pv.getAttribute('data-id'));
+                    if (item) openModal(item);
+                    return;
+                }
+                const vf = e.target.closest('.verify-btn');
+                if (vf) {
+                    if (LKA.markRxReviewed(vf.getAttribute('data-id'))) {
+                        render();
+                        LKA.refreshBadges();
+                        LK.toast('Prescription verified and logged.', true);
+                    }
+                }
+            });
+
+            document.getElementById('rx-close').addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+            render();
+        });
+    </script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

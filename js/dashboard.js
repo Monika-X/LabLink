@@ -217,8 +217,8 @@
         });
     }
 
-    function downloadReport(booking) {
-        var user = getUser();
+    function downloadReport(booking, person) {
+        var user = person || getUser();
         var dateStr = fmtDate(booking.date);
         var markers = (booking.markers || []).map(function (m) {
             var color = m.flag === 'high' ? '#b91c1c' : (m.flag === 'low' ? '#16659b' : '#16866a');
@@ -301,6 +301,8 @@
         saveUser: saveUser,
         getSettings: getSettings,
         saveSettings: saveSettings,
+        statuses: STATUSES,
+        nextStatus: nextStatus,
         statusInfo: statusInfo,
         statusPillHtml: statusPillHtml,
         fmtDate: fmtDate,
