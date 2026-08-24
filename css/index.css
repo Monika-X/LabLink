@@ -528,6 +528,7 @@ a:hover {
 /* Dashboards: hide drawer toggle on desktop - sidebar is always visible there */
 @media (min-width: 993px) {
   .dashboard-layout .menu-toggle { display: none !important; }
+  .dashboard-layout .mobile-close-btn { display: none !important; }
 }
 
 @media (max-width: 992px) {
