@@ -29,6 +29,13 @@
   --accent: var(--medical-emerald);
   --border-color: var(--gray-200);
 
+  /* Footer theme (Light) */
+  --footer-bg: var(--white);
+  --footer-text: var(--charcoal);
+  --footer-muted: var(--gray-600);
+  --footer-accent: var(--medical-emerald);
+  --footer-border: var(--gray-200);
+
   /* Typography */
   --font-heading: 'DM Serif Display', serif;
   --font-body: 'Manrope', sans-serif;
@@ -71,6 +78,13 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+
+  /* Footer theme (Dark) */
+  --footer-bg: var(--deep-teal);
+  --footer-text: var(--pearl);
+  --footer-muted: var(--soft-aqua);
+  --footer-accent: var(--champagne);
+  --footer-border: rgba(255,255,255,0.12);
 }
 
 /* Reset */
@@ -179,6 +193,22 @@ a:hover {
   color: var(--white);
 }
 
+/* Dark Mode - Primary button hover text readability */
+[data-theme="dark"] .btn-primary {
+  color: var(--pearl);
+}
+
+[data-theme="dark"] .btn-primary:hover,
+[data-theme="dark"] .btn-primary:focus-visible {
+  background-color: var(--deep-teal);
+  color: var(--pearl) !important;
+}
+
+[data-theme="dark"] .header .btn-primary:hover,
+[data-theme="dark"] .header .btn-primary:focus-visible {
+  color: var(--deep-teal) !important;
+}
+
 .btn-secondary {
   background-color: transparent;
   color: var(--medical-emerald);
@@ -222,6 +252,49 @@ a:hover {
 [data-theme="dark"] .glass {
   background: rgba(30, 41, 59, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ============ Brand Logo & Visual Identity ============ */
+.logo a,
+.sidebar-logo a,
+.mobile-menu-head a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.logo img,
+.sidebar-logo img,
+.mobile-menu-head img,
+footer img[alt*="LabLink"] {
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transition: transform var(--transition-normal), filter var(--transition-normal);
+  filter: drop-shadow(0 2px 6px rgba(18, 60, 67, 0.12));
+}
+
+.logo a:hover img,
+.sidebar-logo a:hover img,
+.mobile-menu-head a:hover img {
+  transform: scale(1.06) rotate(1deg);
+  filter: drop-shadow(0 4px 12px rgba(22, 134, 106, 0.28));
+}
+
+/* Footer & Dark Theme Luminous Enhancement */
+footer img[alt*="LabLink"],
+[data-theme="dark"] .logo img,
+[data-theme="dark"] .sidebar-logo img,
+[data-theme="dark"] .mobile-menu-head img {
+  filter: drop-shadow(0 2px 8px rgba(213, 183, 122, 0.35)) drop-shadow(0 0 12px rgba(143, 201, 193, 0.2));
+}
+
+footer a:hover img[alt*="LabLink"],
+[data-theme="dark"] .logo a:hover img,
+[data-theme="dark"] .sidebar-logo a:hover img {
+  transform: scale(1.06) rotate(1deg);
+  filter: drop-shadow(0 4px 14px rgba(213, 183, 122, 0.55)) drop-shadow(0 0 18px rgba(143, 201, 193, 0.35));
 }
 
 /* Animations */
@@ -356,18 +429,20 @@ a:hover {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
 }
 
-/* Nav links — animated gradient underline */
+/* Nav links — animated gradient underline - equal spacing */
 .nav-links {
-  gap: var(--spacing-5);
+  gap: var(--spacing-6);
+  align-items: center;
 }
 
 .nav-links > a {
   position: relative;
   font-weight: 600;
   color: var(--text-primary);
-  padding: var(--spacing-2) 2px;
+  padding: var(--spacing-2) var(--spacing-3);
   letter-spacing: 0.2px;
   text-decoration: none;
+  flex: 0 0 auto;
 }
 
 .nav-links > a::after {
@@ -709,6 +784,16 @@ body.no-scroll {
 /* ============ Premium Footer ============ */
 .footer {
   position: relative;
+  background-color: var(--footer-bg) !important;
+  color: var(--footer-text) !important;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  border-top: 1px solid var(--footer-border);
+}
+
+/* Footer inner decorative dot - sync with footer bg */
+.footer div[style*="background: var(--deep-teal)"] {
+  background: var(--footer-bg) !important;
+  border-color: var(--footer-border) !important;
 }
 
 .footer::before {
@@ -860,4 +945,54 @@ body.no-scroll {
 
 .footer > .container:last-child a:hover {
   color: var(--champagne);
+}
+
+/* Footer tagline & muted text - theme-aware for Light/Dark contrast */
+.footer a > div > span,
+.footer span[style*="0.65rem"] {
+  color: var(--footer-muted) !important;
+}
+
+.footer p[style*="var(--soft-aqua)"],
+.footer ul li a[style*="var(--soft-aqua)"],
+.footer .footer-certs span,
+.footer > .container:last-child,
+.footer > .container:last-child a[style*="var(--soft-aqua)"] {
+  color: var(--footer-muted) !important;
+}
+
+.footer .footer-certs span:hover {
+  color: var(--footer-accent) !important;
+}
+
+.footer h4[style*="var(--champagne)"] {
+  color: var(--footer-accent) !important;
+}
+
+.footer h2[style*="var(--champagne)"] {
+  color: var(--footer-accent) !important;
+}
+
+.footer h2 span[style*="var(--pearl)"] {
+  color: var(--footer-text) !important;
+}
+
+.footer form input[style*="rgba(255,255,255,0.05)"] {
+  background: var(--footer-bg) !important;
+  border-color: var(--footer-border) !important;
+  color: var(--footer-text) !important;
+}
+
+.footer form input::placeholder {
+  color: var(--footer-muted) !important;
+  opacity: 0.8;
+}
+
+.footer div[style*="border-top: 1px solid rgba(255,255,255,0.1)"] {
+  border-top-color: var(--footer-border) !important;
+}
+
+.footer .flex.gap-4 a[style*="rgba(255,255,255,0.2)"] {
+  border-color: var(--footer-border) !important;
+  color: var(--footer-text) !important;
 }

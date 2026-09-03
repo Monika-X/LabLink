@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" dir="ltr" data-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -16,6 +16,8 @@
         .about-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: var(--champagne); font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: var(--spacing-2) var(--spacing-4); border-radius: 50px; margin-bottom: var(--spacing-6); }
         .about-hero h1 { font-size: 4rem; line-height: 1.1; margin-bottom: var(--spacing-6); color: var(--pearl); }
         .text-gradient { background: linear-gradient(92deg, var(--champagne) 0%, #fdf6e3 40%, var(--medical-emerald) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .about-hero .text-gradient { background: linear-gradient(92deg, var(--champagne) 0%, #fdf6e3 40%, var(--medical-emerald) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        [data-theme="light"] section:not(.about-hero) .text-gradient { background: linear-gradient(92deg, #8a6d2b 0%, var(--deep-teal) 55%, var(--medical-emerald) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .about-hero p { color: var(--soft-aqua); font-size: 1.125rem; line-height: 1.8; max-width: 640px; margin: 0 auto var(--spacing-10); }
         .about-stats { display: flex; justify-content: center; gap: var(--spacing-12); flex-wrap: wrap; }
         .about-stats h3 { font-size: 2.2rem; color: var(--champagne); margin-bottom: 2px; }
@@ -55,9 +57,10 @@
         .team-card::before { content: ''; position: absolute; top: 0; inset-inline: 0; height: 4px; background: linear-gradient(90deg, var(--deep-teal), var(--medical-emerald), var(--champagne)); opacity: 0; transition: opacity 0.35s ease; }
         .team-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: rgba(22,134,106,0.45); }
         .team-card:hover::before { opacity: 1; }
-        .team-avatar { width: 96px; height: 96px; margin: 0 auto var(--spacing-5); border-radius: 50%; padding: 4px; background: conic-gradient(from 180deg, var(--medical-emerald), var(--champagne), var(--medical-emerald)); display: flex; }
+        .team-avatar { width: 96px; height: 96px; margin: 0 auto var(--spacing-5); border-radius: 50%; padding: 4px; background: conic-gradient(from 180deg, var(--medical-emerald), var(--champagne), var(--medical-emerald)); display: flex; overflow: hidden; }
         .team-avatar span { flex: 1; border-radius: 50%; background: var(--bg-primary); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: var(--deep-teal); }
-        .team-role { display: inline-block; background: var(--soft-aqua); color: var(--medical-emerald); font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 50px; margin-bottom: var(--spacing-4); }
+        .team-avatar img { flex: 1; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; border: 3px solid var(--bg-primary); }
+        .team-role { display: inline-block; background: var(--soft-aqua); color: var(--deep-teal); font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 50px; margin-bottom: var(--spacing-4); }
         .team-card h3 { margin-bottom: var(--spacing-3); }
         .team-card p:last-child { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.75; margin: 0; }
         @media (max-width: 992px) {
@@ -155,7 +158,7 @@
             <div class="container reveal">
                 <span class="about-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> About LabLink</span>
                 <h1>The Lab Behind<br><span class="text-gradient">25,000+ Healthy Families</span></h1>
-                <p>A legacy of trust, precision, and technological innovation — where human expertise meets robotic automation to deliver results you can stake your health on.</p>
+                <p>A legacy of trust, precision, and technological innovation â€” where human expertise meets robotic automation to deliver results you can stake your health on.</p>
                 <div class="about-stats">
                     <div>
                         <h3>500+</h3>
@@ -233,7 +236,7 @@
                 <div class="text-center reveal" style="max-width: 620px; margin: 0 auto var(--spacing-14);">
                     <span class="eyebrow">Our Quality Promise</span>
                     <h2 style="font-size: 2.75rem; margin-bottom: var(--spacing-4);">Engineered at Every Stage</h2>
-                    <p class="text-secondary">Three layers of defense between your sample and your result — each one independently audited.</p>
+                    <p class="text-secondary">Three layers of defense between your sample and your result â€” each one independently audited.</p>
                 </div>
                 <div class="process-grid">
                     <div class="process-card reveal">
@@ -275,19 +278,19 @@
                 </div>
                 <div class="grid grid-cols-3 gap-8">
                     <div class="team-card reveal">
-                        <div class="team-avatar"><span>DR</span></div>
+                        <div class="team-avatar"><img src="https://i.pravatar.cc/200?img=32" alt="Portrait of Dr. Rebecca Okafor"></div>
                         <h3>Dr. Rebecca Okafor</h3>
                         <span class="team-role">Chief Medical Officer</span>
                         <p>Board-certified pathologist with 18 years in clinical diagnostics, leading our quality assurance and laboratory medicine programs.</p>
                     </div>
                     <div class="team-card reveal" style="transition-delay: 0.1s;">
-                        <div class="team-avatar"><span>VL</span></div>
+                        <div class="team-avatar"><img src="https://i.pravatar.cc/200?img=15" alt="Portrait of Dr. Victor Lin"></div>
                         <h3>Dr. Victor Lin</h3>
                         <span class="team-role">Head of Molecular Diagnostics</span>
                         <p>PhD in molecular biology, specializing in genomics, PCR assay development, and next-generation sequencing platforms.</p>
                     </div>
                     <div class="team-card reveal" style="transition-delay: 0.2s;">
-                        <div class="team-avatar"><span>AM</span></div>
+                        <div class="team-avatar"><img src="https://i.pravatar.cc/200?img=26" alt="Portrait of Amara Mensah"></div>
                         <h3>Amara Mensah</h3>
                         <span class="team-role">Director of Operations</span>
                         <p>Certified laboratory manager overseeing 200+ phlebotomists and processing centers across three states with 99.9% accuracy.</p>
@@ -304,7 +307,7 @@
                 <img src="../images/logo.png" alt="LabLink Logo" style="height: 40px;">
                 <div>
                     <h2 style="color: var(--champagne); font-weight: 700; margin: 0; font-family: var(--font-heading);">Lab<span style="color:var(--pearl)">Link</span></h2>
-                    <span style="display:block; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-secondary); margin-top:2px;">Premium Diagnostics</span>
+                    <span style="display:block; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--soft-aqua); margin-top:2px;">Premium Diagnostics</span>
                 </div>
             </a>
             <p style="color: var(--soft-aqua); font-size: 0.875rem; line-height: 1.8; margin-bottom: var(--spacing-6);">

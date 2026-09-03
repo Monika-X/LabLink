@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#199e7d" />
+      <stop offset="50%" stop-color="#16866a" />
+      <stop offset="100%" stop-color="#123c43" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c5a35d" />
+      <stop offset="50%" stop-color="#d5b77a" />
+      <stop offset="100%" stop-color="#edd9a6" />
+    </linearGradient>
+    <linearGradient id="aquaGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8fc9c1" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#16866a" stop-opacity="0.2" />
+    </linearGradient>
+    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#123c43" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <g filter="url(#subtleGlow)">
+    <!-- Loop 1 Outer (Angled diagnostic link loop) -->
+    <path d="M 170 325 
+             C 120 375, 75 420, 60 400 
+             C 45 380, 80 320, 140 250 
+             L 245 130 
+             C 290 80, 360 40, 410 70 
+             C 455 100, 460 170, 400 235 
+             L 320 325 
+             C 305 340, 280 335, 270 320 
+             C 260 305, 265 285, 280 270 
+             L 360 180 
+             C 390 145, 385 110, 365 95 
+             C 340 80, 295 105, 260 145 
+             L 155 265 
+             C 115 315, 95 345, 105 355 
+             C 115 365, 145 345, 185 305 
+             Z" 
+          fill="url(#emeraldGrad)" />
+
+    <!-- Gold Accent Trim Loop -->
+    <path d="M 185 305 
+             C 145 345, 115 365, 105 355 
+             C 95 345, 115 315, 155 265 
+             L 260 145 
+             C 295 105, 340 80, 365 95 
+             C 385 110, 390 145, 360 180 
+             L 345 195 
+             C 365 170, 360 140, 345 125 
+             C 325 110, 290 130, 255 165 
+             L 150 285 
+             C 120 320, 115 340, 120 345 
+             C 125 350, 145 335, 175 300 
+             Z" 
+          fill="url(#goldGrad)" opacity="0.95" />
+
+    <!-- Primary Vertical 'L' Monogram Stem -->
+    <path d="M 175 55 
+             C 195 55, 205 68, 205 85 
+             L 205 280 
+             C 205 295, 215 305, 230 305 
+             L 280 305 
+             L 280 335 
+             L 190 335 
+             C 165 335, 155 315, 155 290 
+             L 155 85 
+             C 155 68, 165 55, 175 55 
+             Z" 
+          fill="url(#emeraldGrad)" />
+
+    <!-- Secondary Interlocking 'L' Monogram Stem -->
+    <path d="M 285 195 
+             C 305 195, 315 208, 315 225 
+             L 315 420 
+             L 420 420 
+             C 435 420, 445 435, 435 450 
+             C 425 460, 410 460, 395 460 
+             L 270 460 
+             C 245 460, 235 440, 235 415 
+             L 235 225 
+             C 235 208, 245 195, 265 195 
+             Z" 
+          fill="url(#emeraldGrad)" />
+
+    <!-- Beveled Champagne Highlight on Monogram Spine -->
+    <path d="M 200 85 L 200 285 C 200 295, 205 300, 215 300 L 275 300 L 275 308 L 210 308 C 195 308, 190 300, 190 285 L 190 85 Z" fill="url(#goldGrad)" opacity="0.85" />
+    <path d="M 310 225 L 310 425 C 310 435, 315 440, 325 440 L 415 440 L 415 448 L 320 448 C 305 448, 300 440, 300 425 L 300 225 Z" fill="url(#goldGrad)" opacity="0.85" />
+  </g>
+</svg>
